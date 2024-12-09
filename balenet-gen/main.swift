@@ -7,8 +7,8 @@
 
 import Foundation
 
-let sourcePath = "/Users/baleboy/websites/balenet-gen/content"
-let outputPath = "/Users/baleboy/websites/balenet-gen/public"
+let contentPath = "/Users/baleboy/websites/balenet-gen/content"
+let publicPath = "/Users/baleboy/websites/balenet-gen/test/public"
 let postsFoldername = "posts"
 
 struct Post {
@@ -29,16 +29,15 @@ let fileManager = FileManager.default
 
 // 1. parsing
 
-let folders = try fileManager.contentsOfDirectory(atPath: sourcePath + "/" + postsFoldername)
+let folders = try fileManager.contentsOfDirectory(atPath: contentPath + "/" + postsFoldername)
 
 for folder in folders {
     guard !folder.hasPrefix(".") else { continue }
-    let postPath = sourcePath + "/" + postsFoldername + "/" + folder
+    let postPath = contentPath + "/" + postsFoldername + "/" + folder
     let files = try fileManager.contentsOfDirectory(atPath: postPath)
     for file in files {
         if file.hasSuffix(".md") {
-        // parse front matter
-            let post = try parsePost(filePath: postPath + "/" + file)
+            let post = try parsePost(filePath: postPath + "/" + file, folder: folder)
             posts.append(post)
             break; // only parse the first MD file
         }
@@ -51,7 +50,7 @@ for folder in folders {
 // date = "2024-04-14"
 // +++
 // content
-func parsePost(filePath: String) throws -> Post {
+func parsePost(filePath: String, folder: String) throws -> Post {
     let fileContent = try String(contentsOfFile: filePath, encoding: .utf8)
     let components = fileContent.components(separatedBy: "+++")
     guard components.count == 3 else {
@@ -62,7 +61,7 @@ func parsePost(filePath: String) throws -> Post {
 
     let (title, date) = try parseFrontMatter(frontMatter)
 
-    return Post(title: title, date: date, folder: String(filePath.split(separator: "/").last ?? ""), content: content)
+    return Post(title: title, date: date, folder: folder, content: content)
 }
 
 func parseFrontMatter(_ frontMatter: String) throws -> (title: String, date: Date) {
@@ -103,18 +102,75 @@ func parseFrontMatter(_ frontMatter: String) throws -> (title: String, date: Dat
 
 // start generating HTML index page (header)
 
-// for each post in posts starting from the newest
-// 1. generate folder /public/posts/{post.folder}
-// 2. create HTML content as header + content + footer and save as index.html
-// 3. save in folder
-// 4. add link in index page
+let header = """
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balenet</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <!-- Title -->
+    <div class="title">
+      <a href="/">Balenet</a>
+    </div>
 
-// add footer
-// save index
+    <!-- Navigation -->
+    <div class="navigation">
+      <a href="/work/">Work</a>
+      <a href="/about/">About</a>
+    </div>
+"""
+
+let footer = """
+    <!-- Footer -->
+    <div class="footer">
+        <p>Copyright &copy Francesco Balestrieri 2022-2024</p>
+    </div>      
+  </body>
+</html>
+"""
 
 let sortedPosts = posts.sorted { $0.date > $1.date }
+let publicURL = URL(fileURLWithPath: publicPath)
+// Delete public directory if it exists
+if fileManager.fileExists(atPath: publicPath) {
+    try fileManager.removeItem(at: publicURL)
+}
+
+var HtmlIndex = header;
 
 for post in sortedPosts {
-    print("\(post.date): \(post.title)")
-}
+            
+        // Create the post directory
+        let postDir = URL(fileURLWithPath: publicPath)
+        .appendingPathComponent(post.folder)
+        
+        try fileManager.createDirectory(
+            at: postDir,
+            withIntermediateDirectories: true,
+            attributes: nil
+        )
+        
+        // Generate HTML content
+        let htmlContent = header + post.content + footer
+        
+        // Save as index.html in the post directory
+        let indexPath = postDir.appendingPathComponent("index.html")
+        try htmlContent.write(
+            to: indexPath,
+            atomically: true,
+            encoding: .utf8
+        )
+    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateString = dateFormatter.string(from: post.date)
+        // add to index.html
+    HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
+    }
+
+HtmlIndex += footer
+let indexPath = publicURL.appendingPathComponent("index.html")
+try HtmlIndex.write(to: indexPath, atomically: true, encoding: .utf8)
 
