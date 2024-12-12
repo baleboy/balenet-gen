@@ -141,6 +141,17 @@ let header = """
   <head>
     <title>Balenet</title>
     <meta charset="UTF-8">
+    <style>
+    img {
+        max-width: 90%; /* Width margin */
+        max-height: 90vh; /* Height limit: 90% of viewport height */
+        height: auto; /* Maintain aspect ratio */
+        width: auto; /* Allow image to scale down below max-width if needed */
+        display: block;
+        margin: 20px auto;
+        object-fit: contain; /* Ensures image maintains aspect ratio within constraints */
+    }
+    </style>
   </head>
   <body>
     <!-- Title -->
