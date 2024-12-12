@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		253A89B42D096972007CA2A7 /* Ink in Frameworks */ = {isa = PBXBuildFile; productRef = 253A89B32D096972007CA2A7 /* Ink */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		253A89A62D05A445007CA2A7 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -35,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				253A89B42D096972007CA2A7 /* Ink in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +82,7 @@
 			);
 			name = "balenet-gen";
 			packageProductDependencies = (
+				253A89B32D096972007CA2A7 /* Ink */,
 			);
 			productName = "balenet-gen";
 			productReference = 253A89A82D05A445007CA2A7 /* balenet-gen */;
@@ -106,6 +112,9 @@
 			);
 			mainGroup = 253A899F2D05A445007CA2A7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				253A89B22D096972007CA2A7 /* XCRemoteSwiftPackageReference "ink" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 253A89A92D05A445007CA2A7 /* Products */;
 			projectDirPath = "";
@@ -285,6 +294,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		253A89B22D096972007CA2A7 /* XCRemoteSwiftPackageReference "ink" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnsundell/ink.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		253A89B32D096972007CA2A7 /* Ink */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 253A89B22D096972007CA2A7 /* XCRemoteSwiftPackageReference "ink" */;
+			productName = Ink;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 253A89A02D05A445007CA2A7 /* Project object */;
 }

@@ -36,6 +36,7 @@
 //
 
 import Foundation
+import Ink
 
 let contentPath = "/Users/baleboy/websites/balenet-gen/content"
 let publicPath = "/Users/baleboy/websites/balenet-gen/test/public"
@@ -56,6 +57,8 @@ enum ParsingError: Error {
 var posts: [Post] = []
 
 let fileManager = FileManager.default
+let parser = MarkdownParser()
+
 
 // 1. parsing
 
@@ -183,7 +186,7 @@ for post in sortedPosts {
         )
         
         // Generate HTML content
-        let htmlContent = header + post.content + footer
+        let htmlContent = header + parser.html(from: post.content) + footer
         
         // Save as index.html in the post directory
         let indexPath = postDir.appendingPathComponent("index.html")
@@ -197,7 +200,7 @@ for post in sortedPosts {
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: post.date)
         // add to index.html
-    HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
+        HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
     }
 
 HtmlIndex += footer
