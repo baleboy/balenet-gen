@@ -142,6 +142,36 @@ let header = """
     <title>Balenet</title>
     <meta charset="UTF-8">
     <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            padding: 20px;
+            background-color: #000000;
+            color: #33ff33; /* Classic green phosphor color */
+        }
+a {
+    color: #90ff90; /* Lighter green for links */
+    text-decoration: none;
+}
+
+a:visited {
+    color: #55bb55; /* Darker green for visited links */
+}
+
+.title a {
+    color: #33ff33; /* Keep the title the original bright green */
+    font-size: 36px;
+    text-transform: uppercase;
+}
+
+.navigation a {
+    color: #33ff33; /* Keep navigation the original bright green */
+}
+
+/* Hover effect for all links */
+a:hover {
+    background-color: #33ff33;
+    color: #000000;
+}
     img {
         max-width: 90%; /* Width margin */
         max-height: 90vh; /* Height limit: 90% of viewport height */
@@ -151,9 +181,40 @@ let header = """
         margin: 20px auto;
         object-fit: contain; /* Ensures image maintains aspect ratio within constraints */
     }
+.container {
+    max-width: 800px; /* or whatever width you prefer */
+    margin: 0 auto; /* centers the container */
+    padding: 0 20px; /* keeps content from touching edges on mobile */
+}
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.title a {
+    font-size: 36px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.footer{
+text-align: center;
+    }
+
+.navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between navigation links */
+}
+
+.navigation a {
+    text-decoration: none;
+    color: inherit;
+}
     </style>
   </head>
   <body>
+    <div class="container"
     <!-- Title -->
     <div class="title">
       <a href="/">Balenet</a>
@@ -170,10 +231,13 @@ let footer = """
     <!-- Footer -->
     <div class="footer">
         <p>Copyright &copy Francesco Balestrieri 2022-2024</p>
-    </div>      
+    </div>   
+    </div>
   </body>
 </html>
 """
+
+let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
 
 let sortedPosts = posts.sorted { $0.date > $1.date }
 let publicURL = URL(fileURLWithPath: publicPath)
@@ -182,7 +246,7 @@ if fileManager.fileExists(atPath: publicPath) {
     try fileManager.removeItem(at: publicURL)
 }
 
-var HtmlIndex = header;
+var HtmlIndex = header + intro;
 
 for post in sortedPosts {
             
