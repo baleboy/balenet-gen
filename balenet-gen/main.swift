@@ -57,7 +57,6 @@ enum ParsingError: Error {
 var posts: [Post] = []
 
 let fileManager = FileManager.default
-let parser = MarkdownParser()
 
 
 // 1. parsing
@@ -75,6 +74,8 @@ for folder in folders {
             break; // only parse the first MD file
         }
     }
+    posts = posts.sorted { $0.date > $1.date }
+    
 }
 
 // parses a markdown document representing a post. The format is:
@@ -135,13 +136,7 @@ func parseFrontMatter(_ frontMatter: String) throws -> (title: String, date: Dat
 
 // start generating HTML index page (header)
 
-let header = """
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Balenet</title>
-    <meta charset="UTF-8">
-    <style>
+let style = """
         body {
             font-family: Verdana, Geneva, sans-serif;
             padding: 20px;
@@ -211,6 +206,17 @@ text-align: center;
     text-decoration: none;
     color: inherit;
 }
+"""
+
+func header(style: String) -> String {
+    """
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balenet</title>
+    <meta charset="UTF-8">
+    <style>
+    \(style)
     </style>
   </head>
   <body>
@@ -226,6 +232,7 @@ text-align: center;
       <a href="/about/">About</a>
     </div>
 """
+}
 
 let footer = """
     <!-- Footer -->
@@ -239,46 +246,67 @@ let footer = """
 
 let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
 
-let sortedPosts = posts.sorted { $0.date > $1.date }
+func generateHtml(to publicPath: String) {
+    do {
+        try generatePostsHtml(posts: posts, to: publicPath)
+        try generateIndexHtml(to: publicPath)
+    } catch {
+        print("something went wrong")
+    }
+}
+
+func generatePostsHtml(posts: [Post], to publicPath: String) throws {
+    
+    let parser = MarkdownParser()
+    
+    for post in posts {
+                
+            // Create the post directory
+            let postDir = URL(fileURLWithPath: publicPath)
+            .appendingPathComponent(post.folder)
+            
+            try fileManager.createDirectory(
+                at: postDir,
+                withIntermediateDirectories: true,
+                attributes: nil
+            )
+            
+            // Generate HTML content
+        let htmlContent = header(style: style) + parser.html(from: post.content) + footer
+            
+            // Save as index.html in the post directory
+            let indexPath = postDir.appendingPathComponent("index.html")
+            try htmlContent.write(
+                to: indexPath,
+                atomically: true,
+                encoding: .utf8
+            )
+    
+        }
+
+    
+}
+
+func generateIndexHtml(to publicPath: String) throws {
+    var HtmlIndex = header(style: style) + intro;
+
+    for post in posts {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateString = dateFormatter.string(from: post.date)
+        HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
+    }
+    
+    HtmlIndex += footer
+    
+    try HtmlIndex.write(to: URL(fileURLWithPath: publicPath + "/index.html"), atomically: true, encoding: .utf8)
+}
+
 let publicURL = URL(fileURLWithPath: publicPath)
 // Delete public directory if it exists
 if fileManager.fileExists(atPath: publicPath) {
     try fileManager.removeItem(at: publicURL)
 }
 
-var HtmlIndex = header + intro;
-
-for post in sortedPosts {
-            
-        // Create the post directory
-        let postDir = URL(fileURLWithPath: publicPath)
-        .appendingPathComponent(post.folder)
-        
-        try fileManager.createDirectory(
-            at: postDir,
-            withIntermediateDirectories: true,
-            attributes: nil
-        )
-        
-        // Generate HTML content
-        let htmlContent = header + parser.html(from: post.content) + footer
-        
-        // Save as index.html in the post directory
-        let indexPath = postDir.appendingPathComponent("index.html")
-        try htmlContent.write(
-            to: indexPath,
-            atomically: true,
-            encoding: .utf8
-        )
-    
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let dateString = dateFormatter.string(from: post.date)
-        // add to index.html
-        HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
-    }
-
-HtmlIndex += footer
-let indexPath = publicURL.appendingPathComponent("index.html")
-try HtmlIndex.write(to: indexPath, atomically: true, encoding: .utf8)
+generateHtml(to: publicPath)
 
