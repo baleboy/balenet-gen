@@ -8,7 +8,7 @@
 import Foundation
 import Ink
 
-struct HtmlGenerator {
+struct SiteGenerator {
     let fileManager = FileManager.default
     let publicPath = "/Users/baleboy/websites/balenet-gen/test/public"
     let style = """

@@ -37,8 +37,8 @@
 
 import Foundation
 
-var scanner = ContentScanner()
-let generator = HtmlGenerator()
+var scanner = ContentParser()
+let generator = SiteGenerator()
     
 try scanner.scanPosts()
 generator.generate(posts: scanner.posts)

@@ -20,7 +20,7 @@ enum ParsingError: Error {
     case invalidDate
 }
 
-struct ContentScanner {
+struct ContentParser {
     let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
     let fileManager = FileManager.default
