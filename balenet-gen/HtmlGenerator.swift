@@ -22,21 +22,21 @@ struct HtmlGenerator {
         color: #90ff90; /* Lighter green for links */
         text-decoration: none;
     }
-
+    
     a:visited {
         color: #55bb55; /* Darker green for visited links */
     }
-
+    
     .title a {
         color: #33ff33; /* Keep the title the original bright green */
         font-size: 36px;
         text-transform: uppercase;
     }
-
+    
     .navigation a {
         color: #33ff33; /* Keep navigation the original bright green */
     }
-
+    
     /* Hover effect for all links */
     a:hover {
         background-color: #33ff33;
@@ -60,29 +60,29 @@ struct HtmlGenerator {
         text-align: center;
         margin-bottom: 20px;
     }
-
+    
     .title a {
         font-size: 36px;
         text-decoration: none;
         color: inherit;
     }
-
+    
     .footer{
     text-align: center;
         }
-
+    
     .navigation {
         display: flex;
         justify-content: center;
         gap: 20px; /* Space between navigation links */
     }
-
+    
     .navigation a {
         text-decoration: none;
         color: inherit;
     }
     """
-
+    
     func header(style: String) -> String {
         """
     <!DOCTYPE html>
@@ -100,7 +100,7 @@ struct HtmlGenerator {
         <div class="title">
           <a href="/">Balenet</a>
         </div>
-
+    
         <!-- Navigation -->
         <div class="navigation">
           <a href="/work/">Work</a>
@@ -108,7 +108,7 @@ struct HtmlGenerator {
         </div>
     """
     }
-
+    
     let footer = """
         <!-- Footer -->
         <div class="footer">
@@ -118,9 +118,9 @@ struct HtmlGenerator {
       </body>
     </html>
     """
-
+    
     let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
-
+    
     func generate(posts: [Post]) {
         
         do {
@@ -141,36 +141,36 @@ struct HtmlGenerator {
         let parser = MarkdownParser()
         
         for post in posts {
-                    
-                // Create the post directory
-                let postDir = URL(fileURLWithPath: publicPath)
+            
+            // Create the post directory
+            let postDir = URL(fileURLWithPath: publicPath)
                 .appendingPathComponent(post.folder)
-                
-                try fileManager.createDirectory(
-                    at: postDir,
-                    withIntermediateDirectories: true,
-                    attributes: nil
-                )
-                
-                // Generate HTML content
+            
+            try fileManager.createDirectory(
+                at: postDir,
+                withIntermediateDirectories: true,
+                attributes: nil
+            )
+            
+            // Generate HTML content
             let htmlContent = header(style: style) + parser.html(from: post.content) + footer
-                
-                // Save as index.html in the post directory
-                let indexPath = postDir.appendingPathComponent("index.html")
-                try htmlContent.write(
-                    to: indexPath,
-                    atomically: true,
-                    encoding: .utf8
-                )
+            
+            // Save as index.html in the post directory
+            let indexPath = postDir.appendingPathComponent("index.html")
+            try htmlContent.write(
+                to: indexPath,
+                atomically: true,
+                encoding: .utf8
+            )
+            
+        }
         
-            }
-
         
     }
-
+    
     func generateIndexHtml(to publicPath: String, posts: [Post]) throws {
         var HtmlIndex = header(style: style) + intro;
-
+        
         for post in posts {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
@@ -182,5 +182,5 @@ struct HtmlGenerator {
         
         try HtmlIndex.write(to: URL(fileURLWithPath: publicPath + "/index.html"), atomically: true, encoding: .utf8)
     }
-
+    
 }

@@ -24,13 +24,13 @@ struct ContentScanner {
     let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
     let fileManager = FileManager.default
-
+    
     var posts: [Post] = []
     
     
     mutating func scanPosts() throws {
         let folders = try fileManager.contentsOfDirectory(atPath: contentPath + "/" + postsRoot)
-
+        
         for folder in folders {
             guard !folder.hasPrefix(".") else { continue } // skip hidden folders
             
@@ -46,7 +46,7 @@ struct ContentScanner {
                     assets.append(file)
                 }
             }
-                
+            
             if let filename = markdownName {
                 let post = try parsePost(filePath: postPath + "/" + filename, folder: folder, assets: assets)
                 posts.append(post)
@@ -55,7 +55,7 @@ struct ContentScanner {
                 continue
             }
         }
-
+        
         posts = posts.sorted { $0.date > $1.date }
     }
     
@@ -67,12 +67,12 @@ struct ContentScanner {
         }
         let frontMatter = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
         let content = components[2].trimmingCharacters(in: .whitespacesAndNewlines)
-
+        
         let (title, date) = try parseFrontMatter(frontMatter)
-
+        
         return Post(title: title, date: date, folder: folder, content: content, assets: assets)
     }
-
+    
     func parseFrontMatter(_ frontMatter: String) throws -> (title: String, date: Date) {
         var title = ""
         var dateString = ""
@@ -101,5 +101,5 @@ struct ContentScanner {
         
         return (title: title, date: date)
     }
-
+    
 }
