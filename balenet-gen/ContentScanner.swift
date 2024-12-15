@@ -12,7 +12,7 @@ struct Post {
     let date: Date
     let folder: String
     let content: String
-    let assets: [String]
+    let assetPaths: [URL]
 }
 
 enum ParsingError: Error {
@@ -24,42 +24,42 @@ struct ContentScanner {
     let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
     let fileManager = FileManager.default
-    
+
     var posts: [Post] = []
     
     
     mutating func scanPosts() throws {
         let folders = try fileManager.contentsOfDirectory(atPath: contentPath + "/" + postsRoot)
-        
+
         for folder in folders {
             guard !folder.hasPrefix(".") else { continue } // skip hidden folders
             
             let postPath = contentPath + "/" + postsRoot + "/" + folder
             let files = try fileManager.contentsOfDirectory(atPath: postPath)
-            var assets: [String] = []
+            var assetFiles: [String] = []
             var markdownName: String?
             
             for file in files {
                 if file.hasSuffix(".md") && markdownName == nil {
                     markdownName = file
                 } else {
-                    assets.append(file)
+                    assetFiles.append(file)
                 }
             }
-            
+                
             if let filename = markdownName {
-                let post = try parsePost(filePath: postPath + "/" + filename, folder: folder, assets: assets)
+                let post = try parsePost(filePath: postPath + "/" + filename, folder: folder, assetFiles: assetFiles)
                 posts.append(post)
             } else {
                 print("\(postPath): no markdown file found, skipping")
                 continue
             }
         }
-        
+
         posts = posts.sorted { $0.date > $1.date }
     }
     
-    func parsePost(filePath: String, folder: String, assets: [String]) throws -> Post {
+    func parsePost(filePath: String, folder: String, assetFiles: [String]) throws -> Post {
         let fileContent = try String(contentsOfFile: filePath, encoding: .utf8)
         let components = fileContent.components(separatedBy: "+++")
         guard components.count == 3 else {
@@ -67,12 +67,19 @@ struct ContentScanner {
         }
         let frontMatter = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
         let content = components[2].trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         let (title, date) = try parseFrontMatter(frontMatter)
+
+        let assetPaths = assetFiles.map { asset in
+            URL(fileURLWithPath: contentPath)
+                .appendingPathComponent(postsRoot)
+                .appendingPathComponent(folder)
+                .appendingPathComponent(asset)
+        }
         
-        return Post(title: title, date: date, folder: folder, content: content, assets: assets)
+        return Post(title: title, date: date, folder: folder, content: content, assetPaths: assetPaths)
     }
-    
+
     func parseFrontMatter(_ frontMatter: String) throws -> (title: String, date: Date) {
         var title = ""
         var dateString = ""
@@ -101,5 +108,5 @@ struct ContentScanner {
         
         return (title: title, date: date)
     }
-    
+
 }

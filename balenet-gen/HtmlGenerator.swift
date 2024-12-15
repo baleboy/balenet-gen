@@ -132,7 +132,7 @@ struct HtmlGenerator {
             try generatePostsHtml(posts: posts, to: publicPath)
             try generateIndexHtml(to: publicPath, posts: posts)
         } catch {
-            print("something went wrong")
+            print("Error generating HTML: \(error)")
         }
     }
     
@@ -151,6 +151,13 @@ struct HtmlGenerator {
                 withIntermediateDirectories: true,
                 attributes: nil
             )
+            
+            // copy asset files
+            for assetPath in post.assetPaths {
+                let assetName = assetPath.lastPathComponent
+                let destPath = postDir.appendingPathComponent(assetName)
+                try fileManager.copyItem(at: assetPath, to: destPath)
+            }
             
             // Generate HTML content
             let htmlContent = header(style: style) + parser.html(from: post.content) + footer
