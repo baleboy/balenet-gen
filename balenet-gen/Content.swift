@@ -21,43 +21,43 @@ enum ParsingError: Error {
 }
 
 struct Content {
-    let postsRoot = "posts"
+    var contentPath = ""
+    let postsFolder = "posts"
     
     let fileManager = FileManager.default
 
     var posts: [Post] = []
     
     mutating func read(from contentPath: String) throws {
-        let postsPath = contentPath + "/" + postsRoot
-        try posts = scanFolder(at: contentPath, withFolder: postsRoot)
+        self.contentPath = contentPath
+        try posts = scanFolder(contentPath + "/" + postsFolder)
     }
     
-    mutating func scanFolder(at path: String, withFolder postsRoot: String) throws -> [Post] {
+    mutating func scanFolder(_ rootFolder: String) throws -> [Post] {
 
         var result = [Post]()
-        let contentPath = path + "/" + postsRoot
-        let folders = try fileManager.contentsOfDirectory(atPath: path)
-        for folder in folders {
+        let subFolders = try fileManager.contentsOfDirectory(atPath: rootFolder)
+        for folder in subFolders {
             guard !folder.hasPrefix(".") else { continue } // skip hidden folders
             
-            let postPath = contentPath + "/" + postsRoot + "/" + folder
-            let files = try fileManager.contentsOfDirectory(atPath: postPath)
+            let thisPostPath = rootFolder + "/" + folder
+            let files = try fileManager.contentsOfDirectory(atPath: thisPostPath)
             var assetFiles: [String] = []
-            var markdownName: String?
+            var markdownFilename: String?
             
             for file in files {
-                if file.hasSuffix(".md") && markdownName == nil {
-                    markdownName = file
+                if file.hasSuffix(".md") && markdownFilename == nil {
+                    markdownFilename = file
                 } else {
                     assetFiles.append(file)
                 }
             }
                 
-            if let filename = markdownName {
-                let post = try parsePost(filePath: postPath + "/" + filename, folder: folder, assetFiles: assetFiles)
+            if let filename = markdownFilename {
+                let post = try parsePost(rootFolder: rootFolder, filename: filename, folder: folder, assetFiles: assetFiles)
                 result.append(post)
             } else {
-                print("\(postPath): no markdown file found, skipping")
+                print("\(thisPostPath): no markdown file found, skipping")
                 continue
             }
         }
@@ -65,7 +65,8 @@ struct Content {
         return result.sorted { $0.date > $1.date }
     }
     
-    func parsePost(filePath: String, folder: String, assetFiles: [String]) throws -> Post {
+    func parsePost(rootFolder: String, filename: String, folder: String, assetFiles: [String]) throws -> Post {
+        let filePath = rootFolder + "/" + folder + "/" + filename
         let fileContent = try String(contentsOfFile: filePath, encoding: .utf8)
         let components = fileContent.components(separatedBy: "+++")
         guard components.count == 3 else {
@@ -77,8 +78,7 @@ struct Content {
         let (title, date) = try parseFrontMatter(frontMatter)
 
         let assetPaths = assetFiles.map { asset in
-            URL(fileURLWithPath: contentPath)
-                .appendingPathComponent(postsRoot)
+            URL(fileURLWithPath: rootFolder)
                 .appendingPathComponent(folder)
                 .appendingPathComponent(asset)
         }
