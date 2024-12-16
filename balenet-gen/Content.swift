@@ -23,14 +23,17 @@ enum ParsingError: Error {
 struct Content {
     var contentPath = ""
     let postsFolder = "posts"
+    let projectsFolder = "work"
     
     let fileManager = FileManager.default
 
     var posts: [Post] = []
+    var projects: [Post] = []
     
     mutating func read(from contentPath: String) throws {
         self.contentPath = contentPath
         try posts = scanFolder(contentPath + "/" + postsFolder)
+        try projects = scanFolder(contentPath + "/" + projectsFolder)
     }
     
     mutating func scanFolder(_ rootFolder: String) throws -> [Post] {

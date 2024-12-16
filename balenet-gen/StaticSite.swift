@@ -130,6 +130,8 @@ struct StaticSite {
             }
             try generatePostsHtml(posts: content.posts, to: publicPath)
             try generateIndexHtml(to: publicPath, posts: content.posts)
+            try generatePostsHtml(posts: content.projects, to: publicPath + "/work")
+            try generateIndexHtml(to: publicPath + "/work", posts: content.projects)
         } catch {
             print("Error generating HTML: \(error)")
         }
@@ -181,7 +183,7 @@ struct StaticSite {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
             let dateString = dateFormatter.string(from: post.date)
-            HtmlIndex += "<p>\(dateString): <a href=\"/\(post.folder)\">\(post.title)</a></p>"
+            HtmlIndex += "<p>\(dateString): <a href=\"\(post.folder)\">\(post.title)</a></p>"
         }
         
         HtmlIndex += footer
