@@ -41,4 +41,4 @@ var content = Content()
 try content.readFrom("/Users/baleboy/websites/balenet-gen/content")
 
 let site = StaticSite()
-site.generate(content: content)
+site.generate(content: content, toFolder: "/Users/baleboy/websites/balenet-gen/public")

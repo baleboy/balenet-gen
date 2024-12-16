@@ -10,7 +10,6 @@ import Ink
 
 struct StaticSite {
     let fileManager = FileManager.default
-    let publicPath = "/Users/baleboy/websites/balenet-gen/test/public"
     let style = """
             body {
                 font-family: Verdana, Geneva, sans-serif;
@@ -121,7 +120,7 @@ struct StaticSite {
     
     let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
     
-    func generate(content: Content) {
+    func generate(content: Content, toFolder publicPath: String) {
         
         do {
             let publicURL = URL(fileURLWithPath: publicPath)
