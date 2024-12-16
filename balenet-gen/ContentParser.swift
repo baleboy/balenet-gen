@@ -30,10 +30,10 @@ struct ContentParser {
     
     mutating func scan() throws {
         let postsPath = contentPath + "/" + postsRoot
-        try posts = scanPosts(path: postsPath)
+        try posts = scanFolder(at: postsPath)
     }
     
-    mutating func scanPosts(path: String) throws -> [Post] {
+    mutating func scanFolder(at path: String) throws -> [Post] {
 
         var result = [Post]()
         
