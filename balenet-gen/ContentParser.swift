@@ -23,14 +23,21 @@ enum ParsingError: Error {
 struct ContentParser {
     let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
+    
     let fileManager = FileManager.default
 
     var posts: [Post] = []
     
+    mutating func scan() throws {
+        let postsPath = contentPath + "/" + postsRoot
+        try posts = scanPosts(path: postsPath)
+    }
     
-    mutating func scanPosts() throws {
-        let folders = try fileManager.contentsOfDirectory(atPath: contentPath + "/" + postsRoot)
+    mutating func scanPosts(path: String) throws -> [Post] {
 
+        var result = [Post]()
+        
+        let folders = try fileManager.contentsOfDirectory(atPath: path)
         for folder in folders {
             guard !folder.hasPrefix(".") else { continue } // skip hidden folders
             
@@ -49,14 +56,14 @@ struct ContentParser {
                 
             if let filename = markdownName {
                 let post = try parsePost(filePath: postPath + "/" + filename, folder: folder, assetFiles: assetFiles)
-                posts.append(post)
+                result.append(post)
             } else {
                 print("\(postPath): no markdown file found, skipping")
                 continue
             }
         }
 
-        posts = posts.sorted { $0.date > $1.date }
+        return result.sorted { $0.date > $1.date }
     }
     
     func parsePost(filePath: String, folder: String, assetFiles: [String]) throws -> Post {

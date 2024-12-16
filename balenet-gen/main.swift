@@ -40,5 +40,5 @@ import Foundation
 var scanner = ContentParser()
 let generator = SiteGenerator()
     
-try scanner.scanPosts()
+try scanner.scan()
 generator.generate(posts: scanner.posts)
