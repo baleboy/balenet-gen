@@ -8,7 +8,7 @@
 import Foundation
 import Ink
 
-struct SiteGenerator {
+struct StaticSite {
     let fileManager = FileManager.default
     let publicPath = "/Users/baleboy/websites/balenet-gen/test/public"
     let style = """
@@ -121,7 +121,7 @@ struct SiteGenerator {
     
     let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
     
-    func generate(posts: [Post]) {
+    func generate(content: Content) {
         
         do {
             let publicURL = URL(fileURLWithPath: publicPath)
@@ -129,8 +129,8 @@ struct SiteGenerator {
             if fileManager.fileExists(atPath: publicPath) {
                 try fileManager.removeItem(at: publicURL)
             }
-            try generatePostsHtml(posts: posts, to: publicPath)
-            try generateIndexHtml(to: publicPath, posts: posts)
+            try generatePostsHtml(posts: content.posts, to: publicPath)
+            try generateIndexHtml(to: publicPath, posts: content.posts)
         } catch {
             print("Error generating HTML: \(error)")
         }

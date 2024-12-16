@@ -20,7 +20,7 @@ enum ParsingError: Error {
     case invalidDate
 }
 
-struct ContentParser {
+struct Content {
     let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
     
@@ -28,7 +28,7 @@ struct ContentParser {
 
     var posts: [Post] = []
     
-    mutating func scan() throws {
+    mutating func readFrom(_ contentPath: String) throws {
         let postsPath = contentPath + "/" + postsRoot
         try posts = scanFolder(at: postsPath)
     }
