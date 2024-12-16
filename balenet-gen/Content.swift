@@ -21,22 +21,21 @@ enum ParsingError: Error {
 }
 
 struct Content {
-    let contentPath = "/Users/baleboy/websites/balenet-gen/content"
     let postsRoot = "posts"
     
     let fileManager = FileManager.default
 
     var posts: [Post] = []
     
-    mutating func readFrom(_ contentPath: String) throws {
+    mutating func read(from contentPath: String) throws {
         let postsPath = contentPath + "/" + postsRoot
-        try posts = scanFolder(at: postsPath)
+        try posts = scanFolder(at: contentPath, withFolder: postsRoot)
     }
     
-    mutating func scanFolder(at path: String) throws -> [Post] {
+    mutating func scanFolder(at path: String, withFolder postsRoot: String) throws -> [Post] {
 
         var result = [Post]()
-        
+        let contentPath = path + "/" + postsRoot
         let folders = try fileManager.contentsOfDirectory(atPath: path)
         for folder in folders {
             guard !folder.hasPrefix(".") else { continue } // skip hidden folders
