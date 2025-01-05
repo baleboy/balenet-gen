@@ -38,7 +38,7 @@
 import Foundation
 
 var content = Content()
-try content.read(from: "/Users/baleboy/websites/balenet-gen/content")
+try content.read(from: Settings.inputDir)
 
 let site = StaticSite()
-site.generate(content: content, toFolder: "/Users/baleboy/websites/balenet-gen/test/public")
+site.generate(content: content, toFolder: Settings.outputDir)
