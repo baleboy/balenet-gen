@@ -139,7 +139,8 @@ struct StaticSite {
     
     func generatePostsHtml(posts: [Post], to publicPath: String) throws {
         
-        let parser = MarkdownParser()
+        var parser = MarkdownParser()
+        parser.addModifier(.youtubeEmbed())
         
         for post in posts {
             
@@ -191,4 +192,29 @@ struct StaticSite {
         try HtmlIndex.write(to: URL(fileURLWithPath: publicPath + "/index.html"), atomically: true, encoding: .utf8)
     }
     
+}
+
+extension Modifier {
+    static func youtubeEmbed() -> Modifier {
+        return Modifier(target: .links) { html, markdown in
+            // Match either youtube.com/watch?v=ID or youtu.be/ID
+            let pattern = "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/)([a-zA-Z0-9_-]+)"
+            
+            guard let regex = try? NSRegularExpression(pattern: pattern, options: []),
+                  let match = regex.firstMatch(in: html, options: [], range: NSRange(html.startIndex..., in: html)),
+                  let videoIdRange = Range(match.range(at: 1), in: html) else {
+                return html
+            }
+            
+            let videoId = String(html[videoIdRange])
+            return """
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/\(videoId)" 
+                            frameborder="0" 
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                """
+        }
+    }
 }
