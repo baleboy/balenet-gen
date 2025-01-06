@@ -120,7 +120,7 @@ struct StaticSite {
     
     let intro = "<p>Welcome to Balenet, personal website of Francesco Balestrieri. Here you can find my thoughts about various topics, but mostly software engineering and pizza.</p>"
     
-    func generate(content: Content, toFolder publicPath: String) {
+    func generate(from content: Content, to publicPath: String) {
         
         do {
             let publicURL = URL(fileURLWithPath: publicPath)

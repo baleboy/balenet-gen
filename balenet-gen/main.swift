@@ -41,4 +41,4 @@ var content = Content()
 try content.read(from: Settings.inputDir)
 
 let site = StaticSite()
-site.generate(content: content, toFolder: Settings.outputDir)
+site.generate(from: content, to: Settings.outputDir)
