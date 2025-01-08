@@ -132,6 +132,7 @@ struct StaticSite {
             try generateIndexHtml(to: publicPath, posts: content.posts)
             try generatePostsHtml(posts: content.projects, to: publicPath + "/work")
             try generateIndexHtml(to: publicPath + "/work", posts: content.projects)
+            try generateAboutHtml(from: content.aboutPage, to: publicPath + "/about")
         } catch {
             print("Error generating HTML: \(error)")
         }
@@ -190,6 +191,29 @@ struct StaticSite {
         HtmlIndex += footer
         
         try HtmlIndex.write(to: URL(fileURLWithPath: publicPath + "/index.html"), atomically: true, encoding: .utf8)
+    }
+    
+    func generateAboutHtml(from aboutPage: Post?, to publicPath: String) throws {
+        guard let about = aboutPage else {
+            fatalError("About page not found")
+        }
+        var parser = MarkdownParser()
+        parser.addModifier(.youtubeEmbed())
+        let aboutHtml = header(style: style) + parser.html(from: about.content) + footer
+        
+        // Create the about directory
+        let aboutDir = URL(fileURLWithPath: publicPath)
+        try fileManager.createDirectory(
+            at: aboutDir,
+            withIntermediateDirectories: true,
+            attributes: nil
+        )
+        let aboutPath = aboutDir.appendingPathComponent("index.html")
+        try aboutHtml.write(
+            to: aboutPath,
+            atomically: true,
+            encoding: .utf8
+        )
     }
     
 }

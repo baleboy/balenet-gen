@@ -24,16 +24,19 @@ struct Content {
     var contentPath = ""
     let postsFolder = "posts"
     let projectsFolder = "work"
+    let aboutFolder = "about"
     
     let fileManager = FileManager.default
 
     var posts: [Post] = []
     var projects: [Post] = []
+    var aboutPage: Post?
     
     mutating func read(from contentPath: String) throws {
         self.contentPath = contentPath
         try posts = scanFolder(contentPath + "/" + postsFolder)
         try projects = scanFolder(contentPath + "/" + projectsFolder)
+        try aboutPage = parsePost(rootFolder: contentPath, filename: "index.md", folder: aboutFolder, assetFiles: [])
     }
     
     mutating func scanFolder(_ rootFolder: String) throws -> [Post] {
