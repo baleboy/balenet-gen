@@ -40,8 +40,10 @@ struct StaticSite {
             try fileManager.copyItem(at: URL(fileURLWithPath: Settings.staticPath), to: buildURL)
 
             try generateAboutPage()
+            
             let projectList = try generateProjects()
             try generateProjectsPage(projectList)
+            
             let postlist = try generatePosts()
             try generateHomepage(postlist)
             
@@ -50,6 +52,12 @@ struct StaticSite {
         }
     }
     
+    struct PostItem {
+        let title: String
+        let date: Date
+        let path: String
+    }
+
     func generateHomepage(_ postlist: [PostItem]) throws {
         let homepageHTML = template.getHomePage(intro: Settings.introText, postlist: postlist)
         let homepagePath = Settings.buildPath + "/index.html"
@@ -86,11 +94,6 @@ struct StaticSite {
     }
     
     // generate posts and return an HTML list of the posts
-    struct PostItem {
-        let title: String
-        let date: Date
-        let path: String
-    }
     
     func generatePosts() throws -> [PostItem] {
         
@@ -210,34 +213,5 @@ struct StaticSite {
         try projectHtml.write(toFile: buildFilePath, atomically: true, encoding: .utf8)
 
         return projectItem
-    }
-}
-
-extension Modifier {
-    static func youtubeEmbed() -> Modifier {
-        return Modifier(target: .links) { html, markdown in
-            // Only process links that end with #embed
-            guard html.contains("#embed") else {
-                return html
-            }
-            
-            let pattern = "(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/)([a-zA-Z0-9_-]+)"
-            
-            guard let regex = try? NSRegularExpression(pattern: pattern, options: []),
-                  let match = regex.firstMatch(in: html, options: [], range: NSRange(html.startIndex..., in: html)),
-                  let videoIdRange = Range(match.range(at: 1), in: html) else {
-                return html
-            }
-            
-            let videoId = String(html[videoIdRange])
-            return """
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/\(videoId)" 
-                            frameborder="0" 
-                            allowfullscreen>
-                    </iframe>
-                </div>
-                """
-        }
     }
 }
