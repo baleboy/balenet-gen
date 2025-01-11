@@ -55,7 +55,7 @@ struct Template {
         return header + content + footer
     }
     
-    func getHomePage(intro: String, postlist: [StaticSite.PostItem]) -> String {
+    func getHomePage(intro: String, postlist: [PostItem]) -> String {
         
         var homePageContent = """
             <p>\(intro)</p>
@@ -77,7 +77,7 @@ struct Template {
         return getPage(withContent: homePageContent)
     }
     
-    func getProjectsPage(intro: String, projectlist: [StaticSite.ProjectItem]) -> String {
+    func getProjectsPage(intro: String, projectlist: [ProjectItem]) -> String {
         
         var pageContent = """
             <h2>Work</h2>
@@ -101,24 +101,24 @@ struct Template {
     }
 
     
-    func getPost(title: String, date: Date, content: String) -> String {
+    func getPost(post: PostItem) -> String {
         let body =  """
                 <article>
-                    <h2>\(title)</h2>
-                    <time>\(dateToString(date))</time>
+                    <h2>\(post.title)</h2>
+                    <time>\(dateToString(post.date))</time>
                     <p></p>
-                    \(content)
+                    \(post.html)
                 </article>
             """
         return getPage(withContent: body)
     }
     
-    func getProject(title: String, content: String) -> String {
+    func getProject(project: ProjectItem) -> String {
         let body =  """
                 <article>
-                    <h2>\(title)</h2>
+                    <h2>\(project.title)</h2>
                     <p></p>
-                    \(content)
+                    \(project.html)
                 </article>
             """
         return getPage(withContent: body)

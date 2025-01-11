@@ -10,5 +10,4 @@
 
 import Foundation
 
-let site = StaticSite(title: Settings.title)
-site.generate()
+BuildCommand.main()
