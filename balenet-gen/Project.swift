@@ -5,7 +5,7 @@
 //  Created by Francesco Balestrieri on 11.1.2025.
 //
 
-struct ProjectItem {
+struct Project {
     let title: String
     let order: Int
     let image: String

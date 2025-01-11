@@ -27,7 +27,7 @@ struct BuildCommand: ParsableCommand {
         print("Generating site from \(sourceURL.path) to \(outputURL.path)")
         
         let site = StaticSite(
-            title: Settings.title,
+            title: Config.title,
             sourceURL: sourceURL,
             buildURL: outputURL
         )

@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct PostItem {
+struct Post {
     let title: String
     let date: Date
     let path: String

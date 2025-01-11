@@ -5,7 +5,7 @@
 //  Created by Francesco Balestrieri on 1.1.2025.
 //
 
-struct Settings {
+struct Config {
     static let title = "Balenet"
     
     static let introText = """

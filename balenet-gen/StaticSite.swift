@@ -84,7 +84,7 @@ struct StaticSite {
         
         let postlist = try generatePosts()
         
-        let homepageHTML = template.getHomePage(intro: Settings.introText, postlist: postlist)
+        let homepageHTML = template.getHomePage(intro: Config.introText, postlist: postlist)
         let homepageURL = buildURL.appendingPathComponent("index.html")
         try homepageHTML.write(
             to: homepageURL,
@@ -96,7 +96,7 @@ struct StaticSite {
     func generateProjectsPage() throws {
         let projectlist = try generateProjects()
         
-        let pageHTML = template.getProjectsPage(intro: Settings.projectsIntroText, projectlist: projectlist)
+        let pageHTML = template.getProjectsPage(intro: Config.projectsIntroText, projectlist: projectlist)
         let targetURL = buildURL.appendingPathComponent("work/index.html")
         try pageHTML.write(
             to: targetURL,
@@ -127,8 +127,8 @@ struct StaticSite {
     
     // generate posts and return an HTML list of the posts
     
-    func generatePosts() throws -> [PostItem] {
-        var postList: [PostItem] = []
+    func generatePosts() throws -> [Post] {
+        var postList: [Post] = []
         let postsURL = contentURL.appendingPathComponent("posts")
         // Use URL-based directory enumeration
         let subFolderURLs = try fileManager.contentsOfDirectory(
@@ -176,7 +176,7 @@ struct StaticSite {
         return postList.sorted { $0.date > $1.date }
     }
     
-    func parsePost(folder: String, markdownURL: URL) throws -> PostItem {
+    func parsePost(folder: String, markdownURL: URL) throws -> Post {
         let postContent = try String(contentsOf: markdownURL, encoding: .utf8)
         let parsed = parser.parse(postContent)
         
@@ -189,10 +189,10 @@ struct StaticSite {
             throw ParsingError.invalidDate
         }
 
-        return PostItem(title: title, date: date, path: "/posts/\(folder)/", html: parsed.html)
+        return Post(title: title, date: date, path: "/posts/\(folder)/", html: parsed.html)
     }
     
-    func generatePostHtml (folder: String, markdownURL: URL) throws -> PostItem {
+    func generatePostHtml (folder: String, markdownURL: URL) throws -> Post {
 
         let postItem = try parsePost(folder: folder, markdownURL: markdownURL)
 
@@ -205,8 +205,8 @@ struct StaticSite {
         return postItem
     }
         
-    func generateProjects() throws -> [ProjectItem] {
-       var projectList: [ProjectItem] = []
+    func generateProjects() throws -> [Project] {
+       var projectList: [Project] = []
        
        // Use URL-based directory enumeration
        let subFolderURLs = try fileManager.contentsOfDirectory(
@@ -254,7 +254,7 @@ struct StaticSite {
        return projectList.sorted { $0.order > $1.order }
     }
     
-    func parseProject(folder: String, markdownURL: URL) throws -> ProjectItem {
+    func parseProject(folder: String, markdownURL: URL) throws -> Project {
         let projectContent = try String(contentsOf: markdownURL, encoding: .utf8)
         let parsed = parser.parse(projectContent)
         
@@ -272,11 +272,11 @@ struct StaticSite {
         
         let html = parsed.html
         
-        let projectItem = ProjectItem(title: title, order: order, image: "\(folder)/\(image)", path: "/work/\(folder)/", html: html)
+        let projectItem = Project(title: title, order: order, image: "\(folder)/\(image)", path: "/work/\(folder)/", html: html)
         return projectItem
     }
     
-    func generateProjectHtml (folder: String, markdownURL: URL) throws -> ProjectItem {
+    func generateProjectHtml (folder: String, markdownURL: URL) throws -> Project {
         let projectItem = try parseProject(folder: folder, markdownURL: markdownURL)
         
         let buildProjectURL = buildURL.appendingPathComponent("work").appendingPathComponent(folder)
