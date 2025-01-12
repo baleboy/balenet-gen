@@ -46,7 +46,7 @@ struct StaticSite {
         case missingFrontMatter
         case invalidDate
     }
-
+    
     func build() {
         
         do {
@@ -82,8 +82,9 @@ struct StaticSite {
     
     func generateHomepage() throws {
         
-        let postlist = try generatePosts()
-        
+        let postlist = try generateItemsFromDirectory(type: .post).sorted {
+            ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
+        }
         let homepageHTML = template.getHomePage(intro: Config.introText, postlist: postlist)
         let homepageURL = buildURL.appendingPathComponent("index.html")
         try homepageHTML.write(
@@ -94,7 +95,9 @@ struct StaticSite {
     }
     
     func generateProjectsPage() throws {
-        let projectlist = try generateProjects()
+        let projectlist = try generateItemsFromDirectory(type: .project).sorted {
+            ($0.order ?? 0) > ($1.order ?? 0)
+        }
         
         let pageHTML = template.getProjectsPage(intro: Config.projectsIntroText, projectlist: projectlist)
         let targetURL = buildURL.appendingPathComponent("work/index.html")
@@ -110,9 +113,9 @@ struct StaticSite {
             let markdownURL = contentURL.appendingPathComponent("about.md")
             let markdown = try String(contentsOf: markdownURL, encoding: .utf8)
             let aboutHTML = template.getPage(withContent: parser.html(from: markdown))
-        
+            
             let aboutFolderURL = buildURL.appendingPathComponent("about")
-
+            
             try fileManager.createDirectory(at: aboutFolderURL, withIntermediateDirectories: true)
             let aboutFileURL = aboutFolderURL.appendingPathComponent("index.html")
             try aboutHTML.write(
@@ -125,16 +128,14 @@ struct StaticSite {
         }
     }
     
-    // generate posts and return an HTML list of the posts
-    
-    func generatePosts() throws -> [Post] {
-        var postList: [Post] = []
-        let postsURL = contentURL.appendingPathComponent("posts")
-        // Use URL-based directory enumeration
+    func generateItemsFromDirectory(type: ContentItemType) throws -> [ContentItem] {
+        var itemList: [ContentItem] = []
+        let folderURL = contentURL.appendingPathComponent(type.subFolder)
+        
         let subFolderURLs = try fileManager.contentsOfDirectory(
-            at: postsURL,
+            at: folderURL,
             includingPropertiesForKeys: [.isDirectoryKey],
-            options: .skipsHiddenFiles  // This replaces our manual hidden folder check
+            options: .skipsHiddenFiles
         )
         
         for folderURL in subFolderURLs {
@@ -147,24 +148,25 @@ struct StaticSite {
                 options: []
             )
             
-            // Create post subfolder in build directory
-            let buildPostURL = buildURL.appendingPathComponent("posts")
-                                     .appendingPathComponent(folder)
+            // Create appropriate subfolder in build directory
+            let buildFolderURL = buildURL.appendingPathComponent(type.subFolder)
+                .appendingPathComponent(folder)
             try fileManager.createDirectory(
-                at: buildPostURL,
+                at: buildFolderURL,
                 withIntermediateDirectories: true
             )
             
             for fileURL in fileURLs {
                 if fileURL.pathExtension == "md" {
-                    let postItem = try generatePostHtml(
+                    let contentItem = try generateHtmlFromMarkdown(
+                        type: type,
                         folder: folder,
                         markdownURL: fileURL
                     )
-                    postList.append(postItem)
+                    itemList.append(contentItem)
                 } else {
                     // copy post asset files to build folder
-                    let destinationURL = buildPostURL.appendingPathComponent(fileURL.lastPathComponent)
+                    let destinationURL = buildFolderURL.appendingPathComponent(fileURL.lastPathComponent)
                     try fileManager.copyItem(
                         at: fileURL,
                         to: destinationURL
@@ -173,119 +175,46 @@ struct StaticSite {
             }
         }
         
-        return postList.sorted { $0.date > $1.date }
+        return itemList
     }
     
-    func parsePost(folder: String, markdownURL: URL) throws -> Post {
-        let postContent = try String(contentsOf: markdownURL, encoding: .utf8)
-        let parsed = parser.parse(postContent)
+    func parseItem(type: ContentItemType, folder: String, markdownURL: URL) throws -> ContentItem {
+        let content = try String(contentsOf: markdownURL, encoding: .utf8)
+        let parsed = parser.parse(content)
         
-        guard let dateString = parsed.metadata["date"],
-              let title = parsed.metadata["title"] else {
-            throw ParsingError.missingFrontMatter
-        }
-        
-        guard let date = dateFormatter.date(from: dateString) else {
-            throw ParsingError.invalidDate
-        }
-
-        return Post(title: title, date: date, path: "/posts/\(folder)/", html: parsed.html)
-    }
-    
-    func generatePostHtml (folder: String, markdownURL: URL) throws -> Post {
-
-        let postItem = try parsePost(folder: folder, markdownURL: markdownURL)
-
-        let buildPostURL = buildURL.appendingPathComponent("posts").appendingPathComponent(folder)
-        
-        let postHtml = template.getPost(post: postItem)
-        let buildFileURL = buildPostURL.appendingPathComponent("index.html")
-        try postHtml.write(to: buildFileURL, atomically: true, encoding: .utf8)
-
-        return postItem
-    }
-        
-    func generateProjects() throws -> [Project] {
-       var projectList: [Project] = []
-       
-       // Use URL-based directory enumeration
-       let subFolderURLs = try fileManager.contentsOfDirectory(
-           at: projectsURL,
-           includingPropertiesForKeys: [.isDirectoryKey],
-           options: .skipsHiddenFiles
-       )
-       
-       for folderURL in subFolderURLs {
-           let folder = folderURL.lastPathComponent
-           
-           // Get all files in the current project directory
-           let fileURLs = try fileManager.contentsOfDirectory(
-               at: folderURL,
-               includingPropertiesForKeys: [.isRegularFileKey],
-               options: []
-           )
-           
-           // Create project subfolder in build directory
-           let buildProjectURL = buildURL.appendingPathComponent("work")
-                                       .appendingPathComponent(folder)
-           try fileManager.createDirectory(
-               at: buildProjectURL,
-               withIntermediateDirectories: true
-           )
-           
-           for fileURL in fileURLs {
-               if fileURL.pathExtension == "md" {
-                   let projectItem = try generateProjectHtml(
-                       folder: folder,
-                       markdownURL: fileURL
-                   )
-                   projectList.append(projectItem)
-               } else {
-                   // copy project asset files to build folder
-                   let destinationURL = buildProjectURL.appendingPathComponent(fileURL.lastPathComponent)
-                   try fileManager.copyItem(
-                       at: fileURL,
-                       to: destinationURL
-                   )
-               }
-           }
-       }
-       
-       return projectList.sorted { $0.order > $1.order }
-    }
-    
-    func parseProject(folder: String, markdownURL: URL) throws -> Project {
-        let projectContent = try String(contentsOf: markdownURL, encoding: .utf8)
-        let parsed = parser.parse(projectContent)
-        
-        guard let title = parsed.metadata["title"],
-              let orderString = parsed.metadata["order"],
-              let image = parsed.metadata["image"] else {
-            print("Missing fields in front matter in folder \(folder)")
-            throw ParsingError.missingFrontMatter
-        }
-        
-        guard let order = Int(orderString) else {
-            print("Could not parse order")
-            throw ParsingError.missingFrontMatter
-        }
-        
+        let title = parsed.metadata["title"] ?? "Untitled"
+        let path = "/\(type.subFolder)/\(folder)/"
         let html = parsed.html
         
-        let projectItem = Project(title: title, order: order, image: "\(folder)/\(image)", path: "/work/\(folder)/", html: html)
-        return projectItem
+        switch type {
+        case .post:
+            let dateString = parsed.metadata["date"] ?? ""
+            let date = dateFormatter.date(from: dateString) ?? Date()
+            return .post(title: title, date: date, path: path, html: html)
+        case .project:
+            let orderString = parsed.metadata["order"] ?? ""
+            let order = Int(orderString) ?? 0
+            let image = "\(folder)/\(parsed.metadata["image"] ?? "")"
+            return .project(title: title, order: order, path: path, image: image, html: html)
+        }
     }
     
-    func generateProjectHtml (folder: String, markdownURL: URL) throws -> Project {
-        let projectItem = try parseProject(folder: folder, markdownURL: markdownURL)
+    func generateHtmlFromMarkdown(type: ContentItemType, folder: String, markdownURL: URL) throws -> ContentItem {
         
-        let buildProjectURL = buildURL.appendingPathComponent("work").appendingPathComponent(folder)
-
-
-        let projectHtml = template.getProject(project: projectItem)
-        let buildFileURL = buildProjectURL.appendingPathComponent("index.html")
-        try projectHtml.write(to: buildFileURL, atomically: true, encoding: .utf8)
-
-        return projectItem
+        let item = try parseItem(type: type, folder: folder, markdownURL: markdownURL)
+        
+        let buildFolderURL = buildURL.appendingPathComponent(type.subFolder).appendingPathComponent(folder)
+        
+        let pageHtml: String
+        switch type {
+        case .post:
+            pageHtml = template.getPost(post: item)
+        case .project:
+            pageHtml = template.getProject(project: item)
+        }
+        let buildFileURL = buildFolderURL.appendingPathComponent("index.html")
+        try pageHtml.write(to: buildFileURL, atomically: true, encoding: .utf8)
+        
+        return item
     }
 }

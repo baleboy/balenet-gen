@@ -55,7 +55,7 @@ struct Template {
         return header + content + footer
     }
     
-    func getHomePage(intro: String, postlist: [Post]) -> String {
+    func getHomePage(intro: String, postlist: [ContentItem]) -> String {
         
         var homePageContent = """
             <p>\(intro)</p>
@@ -68,7 +68,7 @@ struct Template {
             <li>
                 <h3>
                     <a href="\(post.path)">\(post.title)</a></h3>
-                    <time>\(dateToString(post.date))</time>    
+                    <time>\(dateToString(post.date!))</time>    
                 </li>
             """
         }.joined()
@@ -77,7 +77,7 @@ struct Template {
         return getPage(withContent: homePageContent)
     }
     
-    func getProjectsPage(intro: String, projectlist: [Project]) -> String {
+    func getProjectsPage(intro: String, projectlist: [ContentItem]) -> String {
         
         var pageContent = """
             <h2>Work</h2>
@@ -89,7 +89,7 @@ struct Template {
             """
                 <a href="\(project.path)">
                     <div class="card">
-                        <img src="\(project.image)" alt="\(project.title)">                        
+                        <img src="\(project.headerImage!)" alt="\(project.title)">
                         <h3>\(project.title)</h3>
                     </div>
                 </a>
@@ -101,11 +101,11 @@ struct Template {
     }
 
     
-    func getPost(post: Post) -> String {
+    func getPost(post: ContentItem) -> String {
         let body =  """
                 <article>
                     <h2>\(post.title)</h2>
-                    <time>\(dateToString(post.date))</time>
+                    <time>\(dateToString(post.date!))</time>
                     <p></p>
                     \(post.html)
                 </article>
@@ -113,7 +113,7 @@ struct Template {
         return getPage(withContent: body)
     }
     
-    func getProject(project: Project) -> String {
+    func getProject(project: ContentItem) -> String {
         let body =  """
                 <article>
                     <h2>\(project.title)</h2>
