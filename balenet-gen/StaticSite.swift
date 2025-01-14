@@ -159,7 +159,6 @@ struct StaticSite {
             for fileURL in fileURLs {
                 if fileURL.pathExtension == "md" {
                     let contentItem = try generateHtmlFromMarkdown(
-                        type: type,
                         folder: folder,
                         markdownURL: fileURL
                     )
@@ -178,9 +177,10 @@ struct StaticSite {
         return itemList
     }
     
-    func parseItem(type: ContentItemType, folder: String, markdownURL: URL) throws -> ContentItem {
+    func parseItem(folder: String, markdownURL: URL) throws -> ContentItem {
         let content = try String(contentsOf: markdownURL, encoding: .utf8)
         let parsed = parser.parse(content)
+        let type = try ContentItemType.infer(from: parsed.metadata)
         
         let title = parsed.metadata["title"] ?? "Untitled"
         let path = "/\(type.subFolder)/\(folder)/"
@@ -199,14 +199,14 @@ struct StaticSite {
         }
     }
     
-    func generateHtmlFromMarkdown(type: ContentItemType, folder: String, markdownURL: URL) throws -> ContentItem {
+    func generateHtmlFromMarkdown(folder: String, markdownURL: URL) throws -> ContentItem {
         
-        let item = try parseItem(type: type, folder: folder, markdownURL: markdownURL)
+        let item = try parseItem(folder: folder, markdownURL: markdownURL)
         
-        let buildFolderURL = buildURL.appendingPathComponent(type.subFolder).appendingPathComponent(folder)
+        let buildFolderURL = buildURL.appendingPathComponent(item.type.subFolder).appendingPathComponent(folder)
         
         let pageHtml: String
-        switch type {
+        switch item.type {
         case .post:
             pageHtml = template.getPost(post: item)
         case .project:

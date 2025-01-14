@@ -11,6 +11,16 @@ enum ContentItemType {
     case post
     case project
     
+    static func infer(from metadata: [String: String]) throws -> ContentItemType {
+        // Check for distinctive metadata
+        if metadata["date"] != nil {
+            return .post
+        } else if metadata["order"] != nil && metadata["image"] != nil {
+            return .project
+        }
+        throw GenerationError(message: "Could not infer content item type")
+    }
+    
     var subFolder: String {
         switch self {
             case .post: return "posts"
