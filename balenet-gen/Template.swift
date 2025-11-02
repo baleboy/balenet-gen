@@ -8,119 +8,114 @@
 import Foundation
 
 struct Template {
-    let title: String
-    
-    var header: String {
-        return """
-        <!DOCTYPE html>
-        <html>
-          <head>
-            <title>\(title)</title>
-            <meta charset="UTF-8">
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
-            <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
-            <link rel="stylesheet" type="text/css" href="/style.css">
-            <link rel="icon" type="image/x-icon" href="/favicon.ico">
-          </head>
-          <body>
-            <header>
-                <div class="title-wrapper">
-                    <h1><a href="/">\(title)</a></h1>
-                </div>
-                <nav>
-                  <ul>
-                    <li><a href="/work/">Work</a></li>
-                    <li><a href="/about/">About</a></li>
-                  </ul>
-                </nav>
-              </header>
-            <main>
-        """
+    enum TemplateError: Error, LocalizedError {
+        case missingTemplateDirectory([URL])
+        case failedToLoadTemplate(String)
+        
+        var errorDescription: String? {
+            switch self {
+            case .missingTemplateDirectory(let candidates):
+                let paths = candidates.map(\.path).joined(separator: ", ")
+                return "Could not locate templates directory. Checked: \(paths)"
+            case .failedToLoadTemplate(let name):
+                return "Failed to load template \(name)"
+            }
+        }
     }
     
-    var footer: String {
-        return """
-            </main>
-            <footer>
-                <p>Copyright &copy Bale 2023</p>
-              </footer>      
-          </body>
-        </html>
-        """
+    let title: String
+    
+    private let headerTemplate: String
+    private let footerTemplate: String
+    private let homepageTemplate: String
+    private let postItemTemplate: String
+    private let projectsTemplate: String
+    private let projectCardTemplate: String
+    private let postTemplate: String
+    private let projectTemplate: String
+    
+    init(title: String, directory: URL) throws {
+        self.title = title
+        
+        headerTemplate = try Template.loadTemplate(named: "header.html", in: directory)
+        footerTemplate = try Template.loadTemplate(named: "footer.html", in: directory)
+        homepageTemplate = try Template.loadTemplate(named: "homepage.html", in: directory)
+        postItemTemplate = try Template.loadTemplate(named: "post_item.html", in: directory)
+        projectsTemplate = try Template.loadTemplate(named: "projects.html", in: directory)
+        projectCardTemplate = try Template.loadTemplate(named: "project_card.html", in: directory)
+        postTemplate = try Template.loadTemplate(named: "post.html", in: directory)
+        projectTemplate = try Template.loadTemplate(named: "project.html", in: directory)
     }
     
     func getPage(withContent content: String) -> String {
-        return header + content + footer
+        let header = render(headerTemplate, with: ["title": title])
+        return header + content + footerTemplate
     }
     
     func getHomePage(intro: String, postlist: [ContentItem]) -> String {
-        
-        var homePageContent = """
-            <p>\(intro)</p>
-            <h2>Posts</h2>
-            <ul class="post-list">
-        """
-        
-        homePageContent += postlist.map { post in
-            """
-            <li>
-                <h3>
-                    <a href="\(post.path)">\(post.title)</a></h3>
-                    <time>\(dateToString(post.date!))</time>    
-                </li>
-            """
+        let posts = postlist.map { post in
+            render(
+                postItemTemplate,
+                with: [
+                    "path": post.path,
+                    "title": post.title,
+                    "date": dateToString(post.date ?? Date())
+                ]
+            )
         }.joined()
-
-        homePageContent += "</ul>"
-        return getPage(withContent: homePageContent)
+        
+        let body = render(
+            homepageTemplate,
+            with: [
+                "intro": intro,
+                "posts": posts
+            ]
+        )
+        return getPage(withContent: body)
     }
     
     func getProjectsPage(intro: String, projectlist: [ContentItem]) -> String {
-        
-        var pageContent = """
-            <h2>Work</h2>
-            <p>\(intro)</p>
-            <div class="card-container work">
-        """
-        
-        pageContent += projectlist.map { project in
-            """
-                <a href="\(project.path)">
-                    <div class="card">
-                        <img src="\(project.headerImage!)" alt="\(project.title)">
-                        <h3>\(project.title)</h3>
-                    </div>
-                </a>
-            """
+        let projects = projectlist.map { project in
+            render(
+                projectCardTemplate,
+                with: [
+                    "path": project.path,
+                    "image": project.headerImage ?? "",
+                    "title": project.title
+                ]
+            )
         }.joined()
-
-        pageContent += "</div>"
-        return getPage(withContent: pageContent)
+        
+        let body = render(
+            projectsTemplate,
+            with: [
+                "intro": intro,
+                "projects": projects
+            ]
+        )
+        return getPage(withContent: body)
     }
-
     
     func getPost(post: ContentItem) -> String {
-        let body =  """
-                <article>
-                    <h2>\(post.title)</h2>
-                    <time>\(dateToString(post.date!))</time>
-                    <p></p>
-                    \(post.html)
-                </article>
-            """
+        let body = render(
+            postTemplate,
+            with: [
+                "title": post.title,
+                "date": dateToString(post.date ?? Date()),
+                "body": post.html
+            ]
+        )
         return getPage(withContent: body)
     }
     
     func getProject(project: ContentItem) -> String {
-        let body =  """
-                <article>
-                    <h2>\(project.title)</h2>
-                    <p></p>
-                    \(project.html)
-                </article>
-            """
+        let body = render(
+            projectTemplate,
+            with: [
+                "title": project.title,
+                "body": project.html
+            ]
+        )
         return getPage(withContent: body)
     }
     
@@ -128,5 +123,85 @@ struct Template {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.string(from: date)
+    }
+    
+    private func render(_ template: String, with data: [String: String]) -> String {
+        var result = template
+        for (key, value) in data {
+            result = result.replacingOccurrences(
+                of: "{{\(key)}}",
+                with: value
+            )
+        }
+        return result
+    }
+    
+    private static func loadTemplate(named name: String, in directory: URL) throws -> String {
+        let url = directory.appendingPathComponent(name)
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            throw TemplateError.failedToLoadTemplate(name)
+        }
+        return try String(contentsOf: url, encoding: .utf8)
+    }
+}
+
+extension Template {
+    static func resolveTemplateDirectory(providedPath: String?, sourceURL: URL) throws -> URL {
+        let preferredDirectories = preferredTemplateDirectories(
+            for: sourceURL,
+            providedPath: providedPath
+        )
+        
+        for directory in preferredDirectories {
+            if directory.isExistingDirectory {
+                return directory
+            }
+        }
+        
+        throw TemplateError.missingTemplateDirectory(preferredDirectories)
+    }
+    
+    private static func preferredTemplateDirectories(for sourceURL: URL, providedPath: String?) -> [URL] {
+        var candidates: [URL] = []
+        
+        if let providedPath {
+            let providedURL: URL
+            if providedPath.hasPrefix("/") {
+                providedURL = URL(fileURLWithPath: providedPath)
+            } else {
+                providedURL = URL(fileURLWithPath: providedPath, relativeTo: sourceURL)
+            }
+            candidates.append(providedURL.standardizedFileURL)
+        }
+        
+        candidates.append(sourceURL.appendingPathComponent("templates").standardizedFileURL)
+        
+        let executableURL = URL(fileURLWithPath: CommandLine.arguments.first ?? "")
+        let executableDirectory = executableURL.deletingLastPathComponent()
+        candidates.append(executableDirectory.appendingPathComponent("templates").standardizedFileURL)
+        
+        let sourceDirectory = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .appendingPathComponent("templates")
+        candidates.append(sourceDirectory.standardizedFileURL)
+        
+        // Deduplicate while preserving order
+        var seen: Set<URL> = []
+        let uniqueCandidates = candidates.filter { candidate in
+            if seen.contains(candidate) {
+                return false
+            }
+            seen.insert(candidate)
+            return true
+        }
+        return uniqueCandidates
+    }
+}
+
+private extension URL {
+    var isExistingDirectory: Bool {
+        var isDirectory: ObjCBool = false
+        let exists = FileManager.default.fileExists(atPath: path, isDirectory: &isDirectory)
+        return exists && isDirectory.boolValue
     }
 }

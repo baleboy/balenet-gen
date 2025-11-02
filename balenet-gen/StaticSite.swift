@@ -31,7 +31,7 @@ struct StaticSite {
     let contentURL: URL
     let projectsURL: URL
     
-    init(title: String, sourceURL: URL, buildURL: URL) {
+    init(title: String, sourceURL: URL, buildURL: URL, templateDirectory: URL) throws {
         
         self.title = title
         self.sourceURL = sourceURL
@@ -39,7 +39,7 @@ struct StaticSite {
         self.contentURL = sourceURL.appendingPathComponent("content")
         self.projectsURL = contentURL.appendingPathComponent("work")
         
-        template = Template(title: title)
+        template = try Template(title: title, directory: templateDirectory)
     }
     
     enum ParsingError: Error {

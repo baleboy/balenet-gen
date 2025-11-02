@@ -19,17 +19,28 @@ struct BuildCommand: ParsableCommand {
     )
     var output: String = "build"
     
+    @Option(
+        name: .shortAndLong,
+        help: "Template directory (defaults to <source>/templates or bundled defaults)"
+    )
+    var templates: String?
+    
     func run() throws {
         let sourceURL = URL(fileURLWithPath: source ?? FileManager.default.currentDirectoryPath)
         
         let outputURL = URL(fileURLWithPath: output, relativeTo: sourceURL)
+        let templateDirectory = try Template.resolveTemplateDirectory(
+            providedPath: templates,
+            sourceURL: sourceURL
+        )
         
         print("Generating site from \(sourceURL.path) to \(outputURL.path)")
         
-        let site = StaticSite(
+        let site = try StaticSite(
             title: Config.title,
             sourceURL: sourceURL,
-            buildURL: outputURL
+            buildURL: outputURL,
+            templateDirectory: templateDirectory
         )
         site.build()
     }
