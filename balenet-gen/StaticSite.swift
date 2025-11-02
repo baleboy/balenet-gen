@@ -85,7 +85,7 @@ struct StaticSite {
         let postlist = try generateItemsFromDirectory(type: .post).sorted {
             ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
         }
-        let homepageHTML = template.getHomePage(intro: Config.introText, postlist: postlist)
+        let homepageHTML = template.getHomePage(postlist: postlist)
         let homepageURL = buildURL.appendingPathComponent("index.html")
         try homepageHTML.write(
             to: homepageURL,
@@ -99,7 +99,7 @@ struct StaticSite {
             ($0.order ?? 0) > ($1.order ?? 0)
         }
         
-        let pageHTML = template.getProjectsPage(intro: Config.projectsIntroText, projectlist: projectlist)
+        let pageHTML = template.getProjectsPage(projectlist: projectlist)
         let targetURL = buildURL.appendingPathComponent("work/index.html")
         try pageHTML.write(
             to: targetURL,

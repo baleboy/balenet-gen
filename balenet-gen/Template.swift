@@ -52,7 +52,7 @@ struct Template {
         return header + content + footerTemplate
     }
     
-    func getHomePage(intro: String, postlist: [ContentItem]) -> String {
+    func getHomePage(postlist: [ContentItem]) -> String {
         let posts = postlist.map { post in
             render(
                 postItemTemplate,
@@ -67,14 +67,13 @@ struct Template {
         let body = render(
             homepageTemplate,
             with: [
-                "intro": intro,
                 "posts": posts
             ]
         )
         return getPage(withContent: body)
     }
     
-    func getProjectsPage(intro: String, projectlist: [ContentItem]) -> String {
+    func getProjectsPage(projectlist: [ContentItem]) -> String {
         let projects = projectlist.map { project in
             render(
                 projectCardTemplate,
@@ -89,7 +88,6 @@ struct Template {
         let body = render(
             projectsTemplate,
             with: [
-                "intro": intro,
                 "projects": projects
             ]
         )
