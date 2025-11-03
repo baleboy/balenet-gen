@@ -57,7 +57,14 @@ struct TemplateEngine {
                 "topics_navigation": renderTopicsNavigation(navigationTopics)
             ]
         )
-        return header + content + footerTemplate
+        let footer = render(
+            footerTemplate,
+            with: [
+                "title": title,
+                "year": currentYear()
+            ]
+        )
+        return header + content + footer
     }
     
     func renderHomePage(postlist: [ContentItem], navigationTopics: [Topic]) -> String {
@@ -163,6 +170,12 @@ struct TemplateEngine {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.string(from: date)
+    }
+    
+    private func currentYear() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: Date())
     }
     
     private func render(_ template: String, with data: [String: String]) -> String {

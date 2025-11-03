@@ -42,6 +42,6 @@ test:
 	@./scripts/test.sh
 
 .PHONY: serve
-serve: render
+serve: generate 
 	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
 	@cd $(SITE_DIR) && python3 -m http.server --directory build

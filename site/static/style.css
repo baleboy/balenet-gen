@@ -1,0 +1,248 @@
+@font-face {
+    font-family: 'SpectNext';
+    src: url('fonts/SpectNext-Regular.otf') format('opentype');
+  }
+
+body {
+    background-color: #000000;
+    background-image: url('images/rainbow.jpeg');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+    background-position: right bottom;
+    color: #ffffff;
+    font-family: 'Inconsolata', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 20px;
+  }
+  
+  
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .social-icons {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    align-self: flex-start;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    margin-left: 10px;
+    font-size: 1.2em;
+  }
+  
+  .social-icons a:hover {
+    color: #ffa500;
+  }
+  
+  /* adjust icon size as needed */
+  .social-icons i {
+    font-size: 1rem;
+  }
+  
+
+  h2, h3, h4, h5, h6 {
+    font-weight: bold;
+    border-bottom: 1px solid #ffffff;
+  }
+
+  h1 {
+    font-family: 'SpectNext', sans-serif;
+    font-weight: normal;
+    border-bottom: 0px;
+    font-size: 3rem;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 16px;
+  }
+  
+  .primary-nav {
+    justify-content: flex-end;
+  }
+  
+  .topics-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  nav li {
+    display: inline-flex;
+  }
+  
+  a:hover {
+    color: #00ff40;
+  }
+  
+  .intro {
+    margin-bottom: 30px;
+  }
+  
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .post-list li {
+    margin-bottom: 16px;
+  }
+  
+  .post-list h3 {
+    font-size: 18px;
+    margin-bottom: 2px;
+    border-bottom: 0px;
+  }
+
+  .post-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  
+  .post-meta time {
+    font-size: 14px;
+    color: #80ff80;
+  }
+  
+  .topic-labels {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .post-heading .topic-labels {
+    margin-left: 4px;
+  }
+  
+  .topic-label {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: #80ff80;
+    color: #000;
+    font-size: 12px;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .topic-label:hover,
+  .topic-label:focus {
+    background-color: #a0ffa0;
+    color: #000;
+  }
+   
+  img {
+    max-width: 100%;
+  }
+  
+  figcaption {
+    font-size: 14px;
+    color: #808080;
+  }
+  
+  footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #808080;
+  }
+  /* Work page */
+  .work {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+  }
+  
+  .card {
+    background-color: #212121;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card h3,
+  .card p {
+    margin: 10px;
+    color: #ffffff;
+    border-bottom: 0px;
+  }
+  
+  .card:hover {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    margin-bottom: 20px;
+  }
+  
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .profile_pic {
+    margin-left: 20px;  
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+  }
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 10px;
+}
