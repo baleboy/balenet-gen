@@ -29,7 +29,7 @@ struct BuildCommand: ParsableCommand {
         let sourceURL = URL(fileURLWithPath: source ?? FileManager.default.currentDirectoryPath)
         
         let outputURL = URL(fileURLWithPath: output, relativeTo: sourceURL)
-        let templateDirectory = try Template.resolveTemplateDirectory(
+        let templateDirectory = try TemplateEngine.resolveTemplateDirectory(
             providedPath: templates,
             sourceURL: sourceURL
         )

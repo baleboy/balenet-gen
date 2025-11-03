@@ -10,7 +10,7 @@ import Ink
 
 struct StaticSite {
     let title: String
-    let template: Template
+    let template: TemplateEngine
     
     let fileManager = FileManager.default
     
@@ -39,7 +39,7 @@ struct StaticSite {
         self.contentURL = sourceURL.appendingPathComponent("content")
         self.projectsURL = contentURL.appendingPathComponent("work")
         
-        template = try Template(title: title, directory: templateDirectory)
+        template = try TemplateEngine(title: title, directory: templateDirectory)
     }
     
     enum ParsingError: Error {
@@ -85,7 +85,7 @@ struct StaticSite {
         let postlist = try generateItemsFromDirectory(type: .post).sorted {
             ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
         }
-        let homepageHTML = template.getHomePage(postlist: postlist)
+        let homepageHTML = template.renderHomePage(postlist: postlist)
         let homepageURL = buildURL.appendingPathComponent("index.html")
         try homepageHTML.write(
             to: homepageURL,
@@ -99,7 +99,7 @@ struct StaticSite {
             ($0.order ?? 0) > ($1.order ?? 0)
         }
         
-        let pageHTML = template.getProjectsPage(projectlist: projectlist)
+        let pageHTML = template.renderProjectsPage(projectlist: projectlist)
         let targetURL = buildURL.appendingPathComponent("work/index.html")
         try pageHTML.write(
             to: targetURL,
@@ -112,7 +112,7 @@ struct StaticSite {
         do {
             let markdownURL = contentURL.appendingPathComponent("about.md")
             let markdown = try String(contentsOf: markdownURL, encoding: .utf8)
-            let aboutHTML = template.getPage(withContent: parser.html(from: markdown))
+            let aboutHTML = template.renderPage(withContent: parser.html(from: markdown))
             
             let aboutFolderURL = buildURL.appendingPathComponent("about")
             
@@ -208,9 +208,9 @@ struct StaticSite {
         let pageHtml: String
         switch item.type {
         case .post:
-            pageHtml = template.getPost(post: item)
+            pageHtml = template.renderPost(post: item)
         case .project:
-            pageHtml = template.getProject(project: item)
+            pageHtml = template.renderProject(project: item)
         }
         let buildFileURL = buildFolderURL.appendingPathComponent("index.html")
         try pageHtml.write(to: buildFileURL, atomically: true, encoding: .utf8)

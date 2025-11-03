@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Template {
+struct TemplateEngine {
     enum TemplateError: Error, LocalizedError {
         case missingTemplateDirectory([URL])
         case failedToLoadTemplate(String)
@@ -37,22 +37,22 @@ struct Template {
     init(title: String, directory: URL) throws {
         self.title = title
         
-        headerTemplate = try Template.loadTemplate(named: "header.html", in: directory)
-        footerTemplate = try Template.loadTemplate(named: "footer.html", in: directory)
-        homepageTemplate = try Template.loadTemplate(named: "homepage.html", in: directory)
-        postItemTemplate = try Template.loadTemplate(named: "post_item.html", in: directory)
-        projectsTemplate = try Template.loadTemplate(named: "projects.html", in: directory)
-        projectCardTemplate = try Template.loadTemplate(named: "project_card.html", in: directory)
-        postTemplate = try Template.loadTemplate(named: "post.html", in: directory)
-        projectTemplate = try Template.loadTemplate(named: "project.html", in: directory)
+        headerTemplate = try TemplateEngine.loadTemplate(named: "header.html", in: directory)
+        footerTemplate = try TemplateEngine.loadTemplate(named: "footer.html", in: directory)
+        homepageTemplate = try TemplateEngine.loadTemplate(named: "homepage.html", in: directory)
+        postItemTemplate = try TemplateEngine.loadTemplate(named: "post_item.html", in: directory)
+        projectsTemplate = try TemplateEngine.loadTemplate(named: "projects.html", in: directory)
+        projectCardTemplate = try TemplateEngine.loadTemplate(named: "project_card.html", in: directory)
+        postTemplate = try TemplateEngine.loadTemplate(named: "post.html", in: directory)
+        projectTemplate = try TemplateEngine.loadTemplate(named: "project.html", in: directory)
     }
     
-    func getPage(withContent content: String) -> String {
+    func renderPage(withContent content: String) -> String {
         let header = render(headerTemplate, with: ["title": title])
         return header + content + footerTemplate
     }
     
-    func getHomePage(postlist: [ContentItem]) -> String {
+    func renderHomePage(postlist: [ContentItem]) -> String {
         let posts = postlist.map { post in
             render(
                 postItemTemplate,
@@ -70,10 +70,10 @@ struct Template {
                 "posts": posts
             ]
         )
-        return getPage(withContent: body)
+        return renderPage(withContent: body)
     }
     
-    func getProjectsPage(projectlist: [ContentItem]) -> String {
+    func renderProjectsPage(projectlist: [ContentItem]) -> String {
         let projects = projectlist.map { project in
             render(
                 projectCardTemplate,
@@ -91,10 +91,10 @@ struct Template {
                 "projects": projects
             ]
         )
-        return getPage(withContent: body)
+        return renderPage(withContent: body)
     }
     
-    func getPost(post: ContentItem) -> String {
+    func renderPost(post: ContentItem) -> String {
         let body = render(
             postTemplate,
             with: [
@@ -103,10 +103,10 @@ struct Template {
                 "body": post.html
             ]
         )
-        return getPage(withContent: body)
+        return renderPage(withContent: body)
     }
     
-    func getProject(project: ContentItem) -> String {
+    func renderProject(project: ContentItem) -> String {
         let body = render(
             projectTemplate,
             with: [
@@ -114,7 +114,7 @@ struct Template {
                 "body": project.html
             ]
         )
-        return getPage(withContent: body)
+        return renderPage(withContent: body)
     }
     
     func dateToString(_ date: Date) -> String {
@@ -143,7 +143,7 @@ struct Template {
     }
 }
 
-extension Template {
+extension TemplateEngine {
     static func resolveTemplateDirectory(providedPath: String?, sourceURL: URL) throws -> URL {
         let preferredDirectories = preferredTemplateDirectories(
             for: sourceURL,
