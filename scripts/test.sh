@@ -27,6 +27,8 @@ assert_contains() {
 
 assert_contains "${BUILD_DIR}/index.html" "I finally read Smart & Gets Things Done"
 assert_contains "${BUILD_DIR}/index.html" 'href="/topics/gaming/"'
+assert_contains "${BUILD_DIR}/index.html" 'class="post-year"'
+assert_contains "${BUILD_DIR}/index.html" 'class="post-date"'
 assert_contains "${BUILD_DIR}/topics/gaming/index.html" "It took me 236 hours but I finished Elden Ring!"
 assert_contains "${BUILD_DIR}/about/index.html" "<main>"
 

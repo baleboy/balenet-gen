@@ -19,6 +19,15 @@
     gap: 0.25rem;
 }
 
+.post-group {
+    margin-bottom: 1.5rem;
+}
+
+.post-year {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
 .post-heading .topic-labels {
     margin-left: 0.25rem;
 }

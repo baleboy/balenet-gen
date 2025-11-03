@@ -113,6 +113,23 @@ body {
     margin: 0;
     padding: 0;
   }
+
+  .post-group {
+    margin-bottom: 32px;
+  }
+
+  .post-year {
+    font-size: 1.4rem;
+    margin: 32px 0 12px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .post-group:first-of-type .post-year {
+    margin-top: 0;
+  }
   
   .post-list li {
     margin-bottom: 16px;
@@ -129,6 +146,11 @@ body {
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+  }
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #80ff80;
+    min-width: 4.5rem;
   }
   
   .post-meta {

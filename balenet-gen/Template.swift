@@ -68,12 +68,23 @@ struct TemplateEngine {
     }
     
     func renderHomePage(postlist: [ContentItem], navigationTopics: [Topic]) -> String {
-        let posts = postlist.map(renderPostListItem).joined()
-        
+        let groupedPosts = groupPostsByYear(postlist)
+        let sections = groupedPosts.map { year, posts -> String in
+            let items = posts.map { renderPostListItem($0, includeYear: false) }.joined()
+            return """
+<section class="post-group">
+    <h3 class="post-year">\(year)</h3>
+    <ul class="post-list">
+    \(items)
+    </ul>
+</section>
+"""
+        }.joined(separator: "\n")
+
         let body = render(
             homepageTemplate,
             with: [
-                "posts": posts
+                "post_groups": sections
             ]
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
@@ -125,7 +136,7 @@ struct TemplateEngine {
     }
     
     func renderTopicPage(topic: Topic, postlist: [ContentItem], navigationTopics: [Topic]) -> String {
-        let posts = postlist.map(renderPostListItem).joined()
+        let posts = postlist.map { renderPostListItem($0, includeYear: true) }.joined()
         let body = render(
             topicTemplate,
             with: [
@@ -136,13 +147,13 @@ struct TemplateEngine {
         return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
     
-    private func renderPostListItem(_ post: ContentItem) -> String {
+    private func renderPostListItem(_ post: ContentItem, includeYear: Bool) -> String {
         render(
             postItemTemplate,
             with: [
                 "path": post.path,
                 "title": post.title,
-                "date": dateToString(post.date ?? Date()),
+                "date": dateToString(post.date ?? Date(), includeYear: includeYear),
                 "topics": renderTopicLabels(for: post.topics)
             ]
         )
@@ -166,16 +177,42 @@ struct TemplateEngine {
         }.joined()
     }
     
-    func dateToString(_ date: Date) -> String {
+    func dateToString(_ date: Date, includeYear: Bool = true) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        if includeYear {
+            dateFormatter.dateFormat = "d MMMM yyyy"
+        } else {
+            dateFormatter.dateFormat = "d MMM"
+        }
         return dateFormatter.string(from: date)
     }
     
     private func currentYear() -> String {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy"
         return formatter.string(from: Date())
+    }
+    
+    private func groupPostsByYear(_ posts: [ContentItem]) -> [(String, [ContentItem])] {
+        var buckets: [String: [ContentItem]] = [:]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        for post in posts {
+            let date = post.date ?? Date()
+            let year = formatter.string(from: date)
+            buckets[year, default: []].append(post)
+        }
+        func sortDescending(_ posts: [ContentItem]) -> [ContentItem] {
+            posts.sorted {
+                ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
+            }
+        }
+        
+        return buckets
+            .map { ($0.key, sortDescending($0.value)) }
+            .sorted { lhs, rhs in lhs.0 > rhs.0 }
     }
     
     private func render(_ template: String, with data: [String: String]) -> String {
