@@ -136,7 +136,7 @@ struct TemplateEngine {
     }
     
     func renderTopicPage(topic: Topic, postlist: [ContentItem], navigationTopics: [Topic]) -> String {
-        let posts = postlist.map { renderPostListItem($0, includeYear: true) }.joined()
+        let posts = postlist.map { renderPostListItem($0, includeYear: true, hiddenTopics: [topic]) }.joined()
         let body = render(
             topicTemplate,
             with: [
@@ -147,22 +147,25 @@ struct TemplateEngine {
         return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
     
-    private func renderPostListItem(_ post: ContentItem, includeYear: Bool) -> String {
+    private func renderPostListItem(_ post: ContentItem, includeYear: Bool, hiddenTopics: [Topic] = []) -> String {
         render(
             postItemTemplate,
             with: [
                 "path": post.path,
                 "title": post.title,
                 "date": dateToString(post.date ?? Date(), includeYear: includeYear),
-                "topics": renderTopicLabels(for: post.topics)
+                "topics": renderTopicLabels(for: post.topics, hiding: hiddenTopics)
             ]
         )
     }
     
-    private func renderTopicLabels(for topics: [Topic]) -> String {
-        guard !topics.isEmpty else { return "" }
+    private func renderTopicLabels(for topics: [Topic], hiding hiddenTopics: [Topic] = []) -> String {
+        let visibleTopics = topics.filter { topic in
+            !hiddenTopics.contains(where: { $0.slug == topic.slug })
+        }
+        guard !visibleTopics.isEmpty else { return "" }
         
-        let labels = topics.map { topic in
+        let labels = visibleTopics.map { topic in
             "<a class=\"topic-label\" href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a>"
         }.joined(separator: " ")
         
@@ -183,7 +186,7 @@ struct TemplateEngine {
         if includeYear {
             dateFormatter.dateFormat = "d MMMM yyyy"
         } else {
-            dateFormatter.dateFormat = "d MMM"
+            dateFormatter.dateFormat = "d MMMM"
         }
         return dateFormatter.string(from: date)
     }
