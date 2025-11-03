@@ -1,13 +1,15 @@
 # Makefile for balenet-gen
 
-PREFIX ?= $(HOME)/.local
-INSTALL_PATH = $(PREFIX)/bin
 BINARY_NAME = balenet-gen
-XCODE_BUILD_DIR = $(shell xcodebuild -project balenet-gen.xcodeproj -scheme balenet-gen -configuration Release -showBuildSettings 2>/dev/null | grep "^\s*BUILT_PRODUCTS_DIR" | sed 's/.*= //')
+BUILD_ROOT = .build
+RELEASE_DIR = $(BUILD_ROOT)/Build/Products/Release
+RELEASE_BINARY = $(RELEASE_DIR)/$(BINARY_NAME)
+SITE_DIR = site
+SITE_BUILD_DIR = $(SITE_DIR)/build
 
-.PHONY: all build install uninstall clean
+.PHONY: all build render clean clean-site clean-build test serve
 
-all: build
+all: build render
 
 build:
 	@echo "Building balenet-gen with Xcode..."
@@ -17,28 +19,29 @@ build:
 		-derivedDataPath .build \
 		build
 
-install:
-	@if [ "$$EUID" -eq 0 ] && [ -n "$$SUDO_USER" ]; then \
-		echo "Building balenet-gen with Xcode as $$SUDO_USER..."; \
-		sudo -u "$$SUDO_USER" $(MAKE) build; \
-	else \
-		$(MAKE) build; \
-	fi
-	@echo "Installing balenet-gen to $(INSTALL_PATH)..."
-	@mkdir -p $(INSTALL_PATH)
-	@cp -f .build/Build/Products/Release/$(BINARY_NAME) $(INSTALL_PATH)/$(BINARY_NAME)
-	@echo "✅ Installed successfully! Run 'balenet-gen --help' to verify."
-
-uninstall:
-	@echo "Uninstalling balenet-gen from $(INSTALL_PATH)..."
-	@rm -f $(INSTALL_PATH)/$(BINARY_NAME)
-	@echo "✅ Uninstalled successfully."
+render: build
+	@echo "Rendering site into $(SITE_BUILD_DIR)..."
+	@rm -rf $(SITE_BUILD_DIR)
+	@$(RELEASE_BINARY) -s $(SITE_DIR) -o build
 
 clean:
 	@echo "Cleaning build artifacts..."
-	@rm -rf .build
+	@rm -rf $(BUILD_ROOT)
+	@echo "✅ Clean complete."
+
+clean-site:
+	@echo "Cleaning generated site..."
+	@rm -rf $(SITE_BUILD_DIR)
+	@echo "✅ Site clean complete."
+
+clean-build: clean
 	@echo "✅ Clean complete."
 
 .PHONY: test
 test:
 	@./scripts/test.sh
+
+.PHONY: serve
+serve: render
+	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
+	@cd $(SITE_DIR) && python3 -m http.server --directory build
