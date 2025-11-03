@@ -102,9 +102,9 @@ done
 - Posts have: title, date, path, html
 - Projects have: title, order, path, headerImage, html
 
-**Template** (Template.swift:10) - HTML generation
+**TemplateEngine** (Template.swift:10) - HTML generation
 - Generates all HTML output using string interpolation
-- Provides: `getHomePage()`, `getProjectsPage()`, `getPost()`, `getProject()`, `getPage()`
+- Provides: `renderHomePage()`, `renderProjectsPage()`, `renderPost()`, `renderProject()`, `renderPage()`
 - Contains common header/footer with site navigation and styling
 
 **BuildCommand** (BuildCommand.swift:4) - CLI entry point

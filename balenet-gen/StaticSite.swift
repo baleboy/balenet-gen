@@ -8,6 +8,11 @@
 import Foundation
 import Ink
 
+private struct RenderTarget {
+    let item: ContentItem
+    let outputDirectory: URL
+}
+
 struct StaticSite {
     let title: String
     let template: TemplateEngine
@@ -52,9 +57,28 @@ struct StaticSite {
         do {
             deleteBuildDirectory()
             copyStaticFiles()
-            try generateHomepage()
-            try generateProjectsPage()
-            generateAboutPage()
+            
+            let postTargets = try generateItemsFromDirectory(type: .post)
+            let posts = postTargets.map(\.item)
+            let sortedPosts = sortPostsByDate(posts)
+            let topicIndex = buildTopicIndex(from: posts)
+            let navigationTopics = topicIndex.keys.sorted {
+                $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+            }
+            
+            try render(renderTargets: postTargets, navigationTopics: navigationTopics)
+            
+            let projectTargets = try generateItemsFromDirectory(type: .project)
+            let projects = projectTargets.map(\.item).sorted {
+                ($0.order ?? 0) > ($1.order ?? 0)
+            }
+            
+            try render(renderTargets: projectTargets, navigationTopics: navigationTopics)
+            
+            try generateHomepage(postlist: sortedPosts, navigationTopics: navigationTopics)
+            try generateTopicPages(topicIndex: topicIndex, navigationTopics: navigationTopics)
+            try generateProjectsPage(projectlist: projects, navigationTopics: navigationTopics)
+            try generateAboutPage(navigationTopics: navigationTopics)
         } catch {
             fatalError("Error generating HTML: \(error)")
         }
@@ -80,12 +104,11 @@ struct StaticSite {
         }
     }
     
-    func generateHomepage() throws {
-        
-        let postlist = try generateItemsFromDirectory(type: .post).sorted {
-            ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
-        }
-        let homepageHTML = template.renderHomePage(postlist: postlist)
+    func generateHomepage(postlist: [ContentItem], navigationTopics: [Topic]) throws {
+        let homepageHTML = template.renderHomePage(
+            postlist: postlist,
+            navigationTopics: navigationTopics
+        )
         let homepageURL = buildURL.appendingPathComponent("index.html")
         try homepageHTML.write(
             to: homepageURL,
@@ -94,12 +117,11 @@ struct StaticSite {
         )
     }
     
-    func generateProjectsPage() throws {
-        let projectlist = try generateItemsFromDirectory(type: .project).sorted {
-            ($0.order ?? 0) > ($1.order ?? 0)
-        }
-        
-        let pageHTML = template.renderProjectsPage(projectlist: projectlist)
+    func generateProjectsPage(projectlist: [ContentItem], navigationTopics: [Topic]) throws {
+        let pageHTML = template.renderProjectsPage(
+            projectlist: projectlist,
+            navigationTopics: navigationTopics
+        )
         let targetURL = buildURL.appendingPathComponent("work/index.html")
         try pageHTML.write(
             to: targetURL,
@@ -107,29 +129,97 @@ struct StaticSite {
             encoding: .utf8
         )
     }
-    
-    func generateAboutPage() {
-        do {
-            let markdownURL = contentURL.appendingPathComponent("about.md")
-            let markdown = try String(contentsOf: markdownURL, encoding: .utf8)
-            let aboutHTML = template.renderPage(withContent: parser.html(from: markdown))
-            
-            let aboutFolderURL = buildURL.appendingPathComponent("about")
-            
-            try fileManager.createDirectory(at: aboutFolderURL, withIntermediateDirectories: true)
-            let aboutFileURL = aboutFolderURL.appendingPathComponent("index.html")
-            try aboutHTML.write(
-                to: aboutFileURL,
+
+    func generateTopicPages(topicIndex: [Topic: [ContentItem]], navigationTopics: [Topic]) throws {
+        guard !topicIndex.isEmpty else { return }
+        
+        let topicsDirectory = buildURL.appendingPathComponent("topics")
+        try fileManager.createDirectory(at: topicsDirectory, withIntermediateDirectories: true)
+        
+        let sortedTopics = topicIndex.keys.sorted {
+            $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
+        }
+        
+        for topic in sortedTopics {
+            guard let posts = topicIndex[topic] else { continue }
+            let pageHTML = template.renderTopicPage(
+                topic: topic,
+                postlist: posts,
+                navigationTopics: navigationTopics
+            )
+            let topicDirectory = topicsDirectory.appendingPathComponent(topic.slug)
+            try fileManager.createDirectory(at: topicDirectory, withIntermediateDirectories: true)
+            let fileURL = topicDirectory.appendingPathComponent("index.html")
+            try pageHTML.write(
+                to: fileURL,
                 atomically: true,
                 encoding: .utf8
             )
-        } catch {
-            fatalError("Error creating about page: \(error)")
         }
     }
     
-    func generateItemsFromDirectory(type: ContentItemType) throws -> [ContentItem] {
-        var itemList: [ContentItem] = []
+    func generateAboutPage(navigationTopics: [Topic]) throws {
+        let markdownURL = contentURL.appendingPathComponent("about.md")
+        let markdown = try String(contentsOf: markdownURL, encoding: .utf8)
+        let aboutHTML = template.renderPage(
+            withContent: parser.html(from: markdown),
+            navigationTopics: navigationTopics
+        )
+        
+        let aboutFolderURL = buildURL.appendingPathComponent("about")
+        
+        try fileManager.createDirectory(at: aboutFolderURL, withIntermediateDirectories: true)
+        let aboutFileURL = aboutFolderURL.appendingPathComponent("index.html")
+        try aboutHTML.write(
+            to: aboutFileURL,
+            atomically: true,
+            encoding: .utf8
+        )
+    }
+
+    private func render(renderTargets: [RenderTarget], navigationTopics: [Topic]) throws {
+        for target in renderTargets {
+            let pageHtml: String
+            switch target.item.type {
+            case .post:
+                pageHtml = template.renderPost(post: target.item, navigationTopics: navigationTopics)
+            case .project:
+                pageHtml = template.renderProject(project: target.item, navigationTopics: navigationTopics)
+            }
+            
+            let buildFileURL = target.outputDirectory.appendingPathComponent("index.html")
+            try pageHtml.write(
+                to: buildFileURL,
+                atomically: true,
+                encoding: .utf8
+            )
+        }
+    }
+
+    private func sortPostsByDate(_ posts: [ContentItem]) -> [ContentItem] {
+        posts.sorted {
+            ($0.date ?? Date.distantPast) > ($1.date ?? Date.distantPast)
+        }
+    }
+
+    private func buildTopicIndex(from posts: [ContentItem]) -> [Topic: [ContentItem]] {
+        var grouped: [Topic: [ContentItem]] = [:]
+        for post in posts {
+            for topic in post.topics {
+                grouped[topic, default: []].append(post)
+            }
+        }
+        
+        var sortedIndex: [Topic: [ContentItem]] = [:]
+        for (topic, topicPosts) in grouped {
+            sortedIndex[topic] = sortPostsByDate(topicPosts)
+        }
+        
+        return sortedIndex
+    }
+    
+    private func generateItemsFromDirectory(type: ContentItemType) throws -> [RenderTarget] {
+        var targets: [RenderTarget] = []
         let folderURL = contentURL.appendingPathComponent(type.subFolder)
         
         let subFolderURLs = try fileManager.contentsOfDirectory(
@@ -158,11 +248,12 @@ struct StaticSite {
             
             for fileURL in fileURLs {
                 if fileURL.pathExtension == "md" {
-                    let contentItem = try generateHtmlFromMarkdown(
-                        folder: folder,
-                        markdownURL: fileURL
+                    let item = try parseItem(folder: folder, markdownURL: fileURL)
+                    let target = RenderTarget(
+                        item: item,
+                        outputDirectory: buildFolderURL
                     )
-                    itemList.append(contentItem)
+                    targets.append(target)
                 } else {
                     // copy post asset files to build folder
                     let destinationURL = buildFolderURL.appendingPathComponent(fileURL.lastPathComponent)
@@ -174,7 +265,7 @@ struct StaticSite {
             }
         }
         
-        return itemList
+        return targets
     }
     
     func parseItem(folder: String, markdownURL: URL) throws -> ContentItem {
@@ -190,7 +281,8 @@ struct StaticSite {
         case .post:
             let dateString = parsed.metadata["date"] ?? ""
             let date = dateFormatter.date(from: dateString) ?? Date()
-            return .post(title: title, date: date, path: path, html: html)
+            let topics = Topic.parseList(from: parsed.metadata["topics"])
+            return .post(title: title, date: date, path: path, html: html, topics: topics)
         case .project:
             let orderString = parsed.metadata["order"] ?? ""
             let order = Int(orderString) ?? 0
@@ -199,22 +291,4 @@ struct StaticSite {
         }
     }
     
-    func generateHtmlFromMarkdown(folder: String, markdownURL: URL) throws -> ContentItem {
-        
-        let item = try parseItem(folder: folder, markdownURL: markdownURL)
-        
-        let buildFolderURL = buildURL.appendingPathComponent(item.type.subFolder).appendingPathComponent(folder)
-        
-        let pageHtml: String
-        switch item.type {
-        case .post:
-            pageHtml = template.renderPost(post: item)
-        case .project:
-            pageHtml = template.renderProject(project: item)
-        }
-        let buildFileURL = buildFolderURL.appendingPathComponent("index.html")
-        try pageHtml.write(to: buildFileURL, atomically: true, encoding: .utf8)
-        
-        return item
-    }
 }

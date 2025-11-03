@@ -14,3 +14,11 @@ OPTIONS:
   -o, --output <output>   Output directory for generated site (default: build)
   -h, --help              Show help information.
 ```
+
+## Development
+
+Run the smoke test against the bundled fixture to verify rendering works end-to-end:
+
+```
+make test
+```

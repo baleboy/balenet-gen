@@ -19,7 +19,7 @@ rm -rf "${BUILD_DIR}"
 assert_contains() {
   local file=$1
   local needle=$2
-  if ! grep -q "${needle}" "${file}"; then
+  if ! grep -Fq "${needle}" "${file}"; then
     echo "Expected '${needle}' in ${file}" >&2
     exit 1
   fi
@@ -29,5 +29,9 @@ assert_contains "${BUILD_DIR}/index.html" "Hello World"
 assert_contains "${BUILD_DIR}/about/index.html" "smoke test"
 assert_contains "${BUILD_DIR}/work/index.html" "Sample Project"
 assert_contains "${BUILD_DIR}/posts/hello/index.html" "hello world"
+assert_contains "${BUILD_DIR}/index.html" 'href="/topics/swift/"'
+assert_contains "${BUILD_DIR}/index.html" 'class="topic-label"'
+assert_contains "${BUILD_DIR}/topics/swift/index.html" "Hello World"
+assert_contains "${BUILD_DIR}/about/index.html" 'href="/topics/swift/"'
 
-echo "✅ Smoke test passed"
+echo "✅ Test passed"

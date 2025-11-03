@@ -33,6 +33,7 @@ struct TemplateEngine {
     private let projectCardTemplate: String
     private let postTemplate: String
     private let projectTemplate: String
+    private let topicTemplate: String
     
     init(title: String, directory: URL) throws {
         self.title = title
@@ -45,24 +46,22 @@ struct TemplateEngine {
         projectCardTemplate = try TemplateEngine.loadTemplate(named: "project_card.html", in: directory)
         postTemplate = try TemplateEngine.loadTemplate(named: "post.html", in: directory)
         projectTemplate = try TemplateEngine.loadTemplate(named: "project.html", in: directory)
+        topicTemplate = try TemplateEngine.loadTemplate(named: "topic.html", in: directory)
     }
     
-    func renderPage(withContent content: String) -> String {
-        let header = render(headerTemplate, with: ["title": title])
+    func renderPage(withContent content: String, navigationTopics: [Topic]) -> String {
+        let header = render(
+            headerTemplate,
+            with: [
+                "title": title,
+                "topics_navigation": renderTopicsNavigation(navigationTopics)
+            ]
+        )
         return header + content + footerTemplate
     }
     
-    func renderHomePage(postlist: [ContentItem]) -> String {
-        let posts = postlist.map { post in
-            render(
-                postItemTemplate,
-                with: [
-                    "path": post.path,
-                    "title": post.title,
-                    "date": dateToString(post.date ?? Date())
-                ]
-            )
-        }.joined()
+    func renderHomePage(postlist: [ContentItem], navigationTopics: [Topic]) -> String {
+        let posts = postlist.map(renderPostListItem).joined()
         
         let body = render(
             homepageTemplate,
@@ -70,10 +69,10 @@ struct TemplateEngine {
                 "posts": posts
             ]
         )
-        return renderPage(withContent: body)
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
     
-    func renderProjectsPage(projectlist: [ContentItem]) -> String {
+    func renderProjectsPage(projectlist: [ContentItem], navigationTopics: [Topic]) -> String {
         let projects = projectlist.map { project in
             render(
                 projectCardTemplate,
@@ -91,22 +90,23 @@ struct TemplateEngine {
                 "projects": projects
             ]
         )
-        return renderPage(withContent: body)
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
     
-    func renderPost(post: ContentItem) -> String {
+    func renderPost(post: ContentItem, navigationTopics: [Topic]) -> String {
         let body = render(
             postTemplate,
             with: [
                 "title": post.title,
                 "date": dateToString(post.date ?? Date()),
-                "body": post.html
+                "body": post.html,
+                "topics": renderTopicLabels(for: post.topics)
             ]
         )
-        return renderPage(withContent: body)
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
     
-    func renderProject(project: ContentItem) -> String {
+    func renderProject(project: ContentItem, navigationTopics: [Topic]) -> String {
         let body = render(
             projectTemplate,
             with: [
@@ -114,7 +114,49 @@ struct TemplateEngine {
                 "body": project.html
             ]
         )
-        return renderPage(withContent: body)
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
+    }
+    
+    func renderTopicPage(topic: Topic, postlist: [ContentItem], navigationTopics: [Topic]) -> String {
+        let posts = postlist.map(renderPostListItem).joined()
+        let body = render(
+            topicTemplate,
+            with: [
+                "topic_name": topic.displayName,
+                "posts": posts
+            ]
+        )
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
+    }
+    
+    private func renderPostListItem(_ post: ContentItem) -> String {
+        render(
+            postItemTemplate,
+            with: [
+                "path": post.path,
+                "title": post.title,
+                "date": dateToString(post.date ?? Date()),
+                "topics": renderTopicLabels(for: post.topics)
+            ]
+        )
+    }
+    
+    private func renderTopicLabels(for topics: [Topic]) -> String {
+        guard !topics.isEmpty else { return "" }
+        
+        let labels = topics.map { topic in
+            "<a class=\"topic-label\" href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a>"
+        }.joined(separator: " ")
+        
+        return "<span class=\"topic-labels\">\(labels)</span>"
+    }
+    
+    private func renderTopicsNavigation(_ topics: [Topic]) -> String {
+        guard !topics.isEmpty else { return "" }
+        
+        return topics.map { topic in
+            "<li class=\"nav-topic\"><a href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a></li>"
+        }.joined()
     }
     
     func dateToString(_ date: Date) -> String {
@@ -126,10 +168,15 @@ struct TemplateEngine {
     private func render(_ template: String, with data: [String: String]) -> String {
         var result = template
         for (key, value) in data {
-            result = result.replacingOccurrences(
-                of: "{{\(key)}}",
-                with: value
-            )
+            let tokens = [
+                "{{\(key)}}",
+                "{{ \(key) }}",
+                "{{\(key) }}",
+                "{{ \(key)}}"
+            ]
+            for token in tokens {
+                result = result.replacingOccurrences(of: token, with: value)
+            }
         }
         return result
     }

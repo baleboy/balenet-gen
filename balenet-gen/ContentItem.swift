@@ -29,6 +29,71 @@ enum ContentItemType {
     }
 }
 
+struct Topic: Hashable {
+    let name: String
+    let slug: String
+    
+    var displayName: String {
+        name.capitalized
+    }
+    
+    init?(rawValue: String) {
+        let trimmed = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+        
+        let slugValue = Topic.slugify(trimmed)
+        guard !slugValue.isEmpty else { return nil }
+        
+        name = trimmed
+        slug = slugValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(slug)
+    }
+    
+    static func == (lhs: Topic, rhs: Topic) -> Bool {
+        lhs.slug == rhs.slug
+    }
+}
+
+extension Topic {
+    static func parseList(from metadataValue: String?) -> [Topic] {
+        guard let metadataValue else { return [] }
+        
+        var uniqueTopics: [Topic] = []
+        var seenTopics: Set<Topic> = []
+        
+        for component in metadataValue.split(separator: ",") {
+            let rawValue = String(component)
+            guard let topic = Topic(rawValue: rawValue) else { continue }
+            if seenTopics.insert(topic).inserted {
+                uniqueTopics.append(topic)
+            }
+        }
+        
+        return uniqueTopics
+    }
+    
+    private static func slugify(_ value: String) -> String {
+        let allowed = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: " -_"))
+        let filteredScalars = value.lowercased().unicodeScalars.filter { scalar in
+            allowed.contains(scalar)
+        }
+        
+        var slug = String(String.UnicodeScalarView(filteredScalars))
+        slug = slug.replacingOccurrences(of: "_", with: "-")
+        slug = slug.replacingOccurrences(of: " ", with: "-")
+        
+        while slug.contains("--") {
+            slug = slug.replacingOccurrences(of: "--", with: "-")
+        }
+        
+        slug = slug.trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+        return slug
+    }
+}
+
 struct ContentItem {
 
     let type: ContentItemType
@@ -37,6 +102,7 @@ struct ContentItem {
     let title: String
     let html: String
     let path: String
+    let topics: [Topic]
 
     // post specific
     let date: Date?
@@ -46,12 +112,13 @@ struct ContentItem {
     let headerImage: String?
     
     // Factory
-    static func post(title: String, date: Date, path: String, html: String) -> ContentItem {
+    static func post(title: String, date: Date, path: String, html: String, topics: [Topic]) -> ContentItem {
         ContentItem(
             type: .post,
             title: title,
             html: html,
             path: path,
+            topics: topics,
             date: date,
             order: nil,
             headerImage: nil
@@ -64,12 +131,11 @@ struct ContentItem {
             title: title,
             html: html,
             path: path,
+            topics: [],
             date: nil,
             order: order,
             headerImage: image
         )
     }
 }
-
-
 
