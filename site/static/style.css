@@ -106,7 +106,7 @@ body {
   }
   
   a:hover {
-    color: #00ff40;
+    color: #00CACE;
   }
   
   .intro {
@@ -154,7 +154,7 @@ body {
   }
     font-size: 0.85rem;
     font-weight: 600;
-    color: #80ff80;
+    color: #00CACE;
     min-width: 4.5rem;
   }
   
@@ -167,7 +167,7 @@ body {
   
   .post-meta time {
     font-size: 14px;
-    color: #80ff80;
+    color: #00CACE;
   }
   
   .topic-labels {
@@ -182,20 +182,21 @@ body {
   .topic-label {
     display: inline-flex;
     align-items: center;
-    padding: 2px 8px;
-    border-radius: 999px;
-    background-color: #80ff80;
-    color: #000;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background-color: #6f7f93;
+    color: #ffffff;
     font-size: 12px;
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
   }
   
   .topic-label:hover,
   .topic-label:focus {
-    background-color: #a0ffa0;
-    color: #000;
+    background-color: #7f8fa5;
+    color: #ffffff;
   }
    
   img {

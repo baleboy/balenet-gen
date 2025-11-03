@@ -64,18 +64,23 @@ header {
 }
 
 .topic-label {
-    display: inline-block;
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
-    background-color: #111;
-    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    background-color: #6f7f93;
+    color: #ffffff;
     font-size: 0.75rem;
     text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.4);
 }
 
 .topic-label:hover,
 .topic-label:focus {
-    background-color: #333;
+    background-color: #7f8fa5;
+    color: #ffffff;
 }
 
 .topics-nav {
