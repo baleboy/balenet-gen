@@ -27,6 +27,7 @@ xcuserdata/
 .DS_Store
 .AppleDouble
 .LSOverride
+.env
 
 # Thumbnails
 ._*
@@ -41,4 +42,3 @@ xcuserdata/
 
 # Backup files
 *.bak
-

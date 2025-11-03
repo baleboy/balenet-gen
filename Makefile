@@ -7,7 +7,7 @@ RELEASE_BINARY = $(RELEASE_DIR)/$(BINARY_NAME)
 SITE_DIR = site
 SITE_BUILD_DIR = $(SITE_DIR)/build
 
-.PHONY: all build generate clean clean-site clean-build test serve
+.PHONY: all build render clean clean-site clean-build test serve publish
 
 all: build render
 
@@ -19,7 +19,7 @@ build:
 		-derivedDataPath .build \
 		build
 
-generate: build
+render: build
 	@echo "Rendering site into $(SITE_BUILD_DIR)..."
 	@rm -rf $(SITE_BUILD_DIR)
 	@$(RELEASE_BINARY) -s $(SITE_DIR) -o build
@@ -42,6 +42,10 @@ test:
 	@./scripts/test.sh
 
 .PHONY: serve
-serve: generate 
+serve: render 
 	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
 	@cd $(SITE_DIR) && python3 -m http.server --directory build
+
+.PHONY: publish
+publish: render
+	@./scripts/publish.sh
