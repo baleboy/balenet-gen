@@ -1,4 +1,4 @@
-A Swift static-site generator plus the full balenet.com source tree.
+A Swift static-site generator for my personal website, www.balenet.com.
 
 ## Layout
 
