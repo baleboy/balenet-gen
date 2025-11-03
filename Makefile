@@ -1,6 +1,6 @@
 # Makefile for balenet-gen
 
-PREFIX ?= /usr/local
+PREFIX ?= $(HOME)/.local
 INSTALL_PATH = $(PREFIX)/bin
 BINARY_NAME = balenet-gen
 XCODE_BUILD_DIR = $(shell xcodebuild -project balenet-gen.xcodeproj -scheme balenet-gen -configuration Release -showBuildSettings 2>/dev/null | grep "^\s*BUILT_PRODUCTS_DIR" | sed 's/.*= //')
@@ -38,3 +38,7 @@ clean:
 	@echo "Cleaning build artifacts..."
 	@rm -rf .build
 	@echo "✅ Clean complete."
+
+.PHONY: test
+test:
+	@./scripts/test.sh
