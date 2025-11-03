@@ -17,7 +17,13 @@ build:
 		-derivedDataPath .build \
 		build
 
-install: build
+install:
+	@if [ "$$EUID" -eq 0 ] && [ -n "$$SUDO_USER" ]; then \
+		echo "Building balenet-gen with Xcode as $$SUDO_USER..."; \
+		sudo -u "$$SUDO_USER" $(MAKE) build; \
+	else \
+		$(MAKE) build; \
+	fi
 	@echo "Installing balenet-gen to $(INSTALL_PATH)..."
 	@mkdir -p $(INSTALL_PATH)
 	@cp -f .build/Build/Products/Release/$(BINARY_NAME) $(INSTALL_PATH)/$(BINARY_NAME)
