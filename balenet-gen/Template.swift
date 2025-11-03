@@ -84,7 +84,8 @@ struct TemplateEngine {
         let body = render(
             homepageTemplate,
             with: [
-                "post_groups": sections
+                "post_groups": sections,
+                "topics_navigation": renderTopicsNavigation(navigationTopics)
             ]
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
@@ -141,7 +142,8 @@ struct TemplateEngine {
             topicTemplate,
             with: [
                 "topic_name": topic.displayName,
-                "posts": posts
+                "posts": posts,
+                "topics_navigation": renderTopicsNavigation(navigationTopics)
             ]
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
@@ -175,9 +177,10 @@ struct TemplateEngine {
     private func renderTopicsNavigation(_ topics: [Topic]) -> String {
         guard !topics.isEmpty else { return "" }
         
-        return topics.map { topic in
+        let items = topics.map { topic in
             "<li class=\"nav-topic\"><a href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a></li>"
         }.joined()
+        return "<ul class=\"topics-nav\">\(items)</ul>"
     }
     
     func dateToString(_ date: Date, includeYear: Bool = true) -> String {

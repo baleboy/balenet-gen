@@ -22,13 +22,22 @@ body {
   
   header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 12px;
   }
   
   .title-wrapper {
     display: flex;
     align-items: center;
+    flex: 1 1 auto;
   }
   
   .social-icons {
@@ -72,32 +81,28 @@ body {
     cursor: pointer;
   }
   
-  nav {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 6px;
-  }
-  
-  nav ul {
+  .primary-nav,
+  .topics-nav {
     list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 16px;
   }
-  
+
   .primary-nav {
-    justify-content: flex-end;
+    gap: 20px;
+    margin-left: auto;
   }
-  
-  .topics-nav {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  nav li {
+
+  .primary-nav li,
+  .topics-nav li {
     display: inline-flex;
+  }
+
+  .topics-nav {
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 20px;
   }
   
   a:hover {
