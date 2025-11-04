@@ -38,6 +38,7 @@ struct BuildCommand: ParsableCommand {
         
         let site = try StaticSite(
             title: Config.title,
+            baseURL: Config.siteURL,
             sourceURL: sourceURL,
             buildURL: outputURL,
             templateDirectory: templateDirectory

@@ -16,6 +16,7 @@ private struct RenderTarget {
 struct StaticSite {
     let title: String
     let template: TemplateEngine
+    let baseURL: URL
     
     let fileManager = FileManager.default
     
@@ -27,6 +28,8 @@ struct StaticSite {
     
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
@@ -36,9 +39,10 @@ struct StaticSite {
     let contentURL: URL
     let projectsURL: URL
     
-    init(title: String, sourceURL: URL, buildURL: URL, templateDirectory: URL) throws {
+    init(title: String, baseURL: URL, sourceURL: URL, buildURL: URL, templateDirectory: URL) throws {
         
         self.title = title
+        self.baseURL = baseURL
         self.sourceURL = sourceURL
         self.buildURL = buildURL
         self.contentURL = sourceURL.appendingPathComponent("content")
@@ -79,6 +83,11 @@ struct StaticSite {
             try generateTopicPages(topicIndex: topicIndex, navigationTopics: navigationTopics)
             try generateProjectsPage(projectlist: projects, navigationTopics: navigationTopics)
             try generateAboutPage(navigationTopics: navigationTopics)
+            try generateSitemap(
+                posts: sortedPosts,
+                projects: projects,
+                topicIndex: topicIndex
+            )
         } catch {
             fatalError("Error generating HTML: \(error)")
         }
@@ -291,4 +300,60 @@ struct StaticSite {
         }
     }
     
+}
+
+extension StaticSite {
+    private struct SitemapEntry {
+        let path: String
+        let lastModified: Date?
+    }
+    
+    fileprivate func generateSitemap(posts: [ContentItem], projects: [ContentItem], topicIndex: [Topic: [ContentItem]]) throws {
+        var entries: [SitemapEntry] = []
+        
+        let latestPostDate = posts.first?.date
+        entries.append(SitemapEntry(path: "/", lastModified: latestPostDate))
+        entries.append(SitemapEntry(path: "/about/", lastModified: nil))
+        entries.append(SitemapEntry(path: "/work/", lastModified: nil))
+        
+        for post in posts {
+            entries.append(SitemapEntry(path: post.path, lastModified: post.date))
+        }
+        
+        for project in projects {
+            entries.append(SitemapEntry(path: project.path, lastModified: nil))
+        }
+        
+        let sortedTopics = topicIndex.keys.sorted {
+            $0.slug.localizedCaseInsensitiveCompare($1.slug) == .orderedAscending
+        }
+        for topic in sortedTopics {
+            let topicPosts = topicIndex[topic] ?? []
+            let lastModified = topicPosts.first?.date
+            entries.append(SitemapEntry(path: "/topics/\(topic.slug)/", lastModified: lastModified))
+        }
+        
+        let sitemapEntries = entries.compactMap { entry -> String? in
+            guard let location = URL(string: entry.path, relativeTo: baseURL)?.absoluteURL else {
+                print("Skipping invalid sitemap entry for path \(entry.path)")
+                return nil
+            }
+            var xml = "    <url>\n        <loc>\(location.absoluteString)</loc>\n"
+            if let lastModified = entry.lastModified {
+                xml += "        <lastmod>\(dateFormatter.string(from: lastModified))</lastmod>\n"
+            }
+            xml += "    </url>"
+            return xml
+        }.joined(separator: "\n")
+        
+        let sitemap = """
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+\(sitemapEntries)
+</urlset>
+"""
+        
+        let sitemapURL = buildURL.appendingPathComponent("sitemap.xml")
+        try sitemap.write(to: sitemapURL, atomically: true, encoding: .utf8)
+    }
 }

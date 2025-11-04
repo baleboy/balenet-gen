@@ -143,7 +143,6 @@ body {
 
   .topics-nav .nav-topic a {
     color: inherit;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
     display: inline-flex;
