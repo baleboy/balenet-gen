@@ -1,5 +1,5 @@
 ---
-title: I finally read Smart & Gets Things Done by Joel Spolsky, and I regret it
+title: Book notes: Smart & Gets Things Done
 date: 2025-04-12
 topics: books, leadership
 ---
