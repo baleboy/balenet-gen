@@ -1,7 +1,7 @@
 ---
 title: My standard pizza recipe with poolish
 date: 2025-04-16
-topics: food
+topics: pizza
 ---
 ![A good looking pizza if I say so myself](pizza.jpeg)
 

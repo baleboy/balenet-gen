@@ -1,7 +1,7 @@
 ---
 title:  Book notes: How big things get done
 date:  2024-11-06
-topics: books, leadership
+topics: books, management
 ---
 
 ![Image.tiff](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/7A7FC6D7-AF61-4A98-BB7D-E5C6766690BA/5A729E7F-0C5B-4B75-9ED4-4030960DADF6_2/jmldQrSjKPqcphkB5yq3iwiF2K95DaHxVSKMMVyCgAAz/Image.tiff)

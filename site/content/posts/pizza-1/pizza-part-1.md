@@ -1,7 +1,7 @@
 ---
 title:  Everything I know about pizza - part 1
 date:  2024-02-13
-topics: food
+topics: pizza
 ---
 
 ![Pizza-Margarita--1536x1423.jpeg](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/fb72ecaf-9fdb-4473-acad-43e2918ab432/B1CDDF3C-1463-4F1E-9260-1BF3B1E605ED_2/TId8xhQ0x6ogyWYo142MQsm6Yz1Zc6ybg43XCLrnYWQz/Pizza-Margarita--1536x1423.jpeg)

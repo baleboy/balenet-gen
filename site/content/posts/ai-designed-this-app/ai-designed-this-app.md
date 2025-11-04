@@ -1,7 +1,7 @@
 ---
 title:  AI designed this app
 date:  2024-04-14
-topics: ai, tech
+topics: ai, programming
 ---
 
 Lately I've been working on an [intermittent fasting app](https://github.com/baleboy/fastTrack) to learn SwiftUI. I used ChatGPT through the process to help me figure out the code, and it's been a great learning tool. But so far I haven't paid too much attention to the design, and it shows. Since recently ChatGPT added the ability to upload and generate images, I wondered if I could use this feature to create a better design for my app.
