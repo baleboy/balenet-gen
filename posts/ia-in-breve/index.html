@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balenet</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+  <body>
+    <div class="social-icons">
+      <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
+    </div>
+    <header>
+      <div class="header-top">
+        <div class="title-wrapper">
+          <h1><a href="/">Balenet</a></h1>
+        </div>
+        <ul class="primary-nav">
+          <li><a href="/work/">Projects</a></li>
+          <li><a href="/about/">About</a></li>
+        </ul>
+      </div>
+    </header>
+    <main>
+<article>
+    <h2>(In Italian) L'intelligenza artificiale in breve</h2>
+    <div class="post-meta">
+        <time>9 May 2024</time>
+        <span class="topic-labels"><a class="topic-label" href="/topics/ai/">Ai</a></span>
+    </div>
+    <p>Mi è stato chiesto un link a un articolo breve che spiegasse l’intelligenza artificiale in maniera non troppo superficiale. Non avendolo trovato, ho deciso di scriverlo io.</p><p>Con "Intelligenza artificiale" (IA) si intende la capacità di un computer di svolgere compiti tipicamente considerati prerogativa degli esseri umani. Guidare un'automobile, interpretare testi, riconoscere immagini e parlato, e cosí via. Al momento, chiamarla intelligenza è offensivo se con intelligenza si intende anche la creatività e l’intuito, ma in futuro questo potrebbe non essere più il caso.</p><p>Quando si parla di IA oggi si intende per lo più l’apprendimento meccanico (<em>machine learning</em>), cioè una serie di algoritmi che vengono programmati non con istruzioni successive, ma sulla base di esempi. L’intelligenza sta nel fatto che con un numero di esempi sufficiente, l’algoritmo riesce a generalizzare e produrre risultati corretti anche con ingressi mai visti prima.</p><p>Il principio di base è quello della regressione: dati un certo numero di campioni e un certo tipo di funzione, si cercano i parametri della funzione che minimizzano la differenza tra la funzione e i campioni, e si usa poi la funzione per generare valori al di fuori dei campioni.</p><img src="https://realpython.com/cdn-cgi/image/width=600,format=auto/https://files.realpython.com/media/poly-reg.5790f47603d8.png" alt="Image.tiff"/><p>Un particolare tipo di funzione di regressione è la rete neurale, ispirata a osservazioni fatte sul cervello umano. Non è però una riproduzione elettronica del cervello né fornisce nuove spiegazioni su come funzioni.</p><p>Una moderna rete neurale è caratterizzata da avere moltissime (migliaia, milioni) variabili di ingresso e moltissimi (miliardi) parametri, detti pesi, e una funzione di costo che viene minimizzata variando i pesi tramite iterazioni successive su un grande numero di campioni. Questo processo iterativo si chiama “apprendimento”. L’apprendimento puo’ essere “supervisionato” (gli esempi includono sia ingressi che uscite) o “non supervisionato” (gli esempi includono solo ingressi e la rete neurale arriva da sola a un meccanismo di classificazione).</p><p>Le reti neurali hanno avuto molto successo nel riconoscimento di immagini, un campo tradizionalmente difficile per l’informatica ma estremamente semplice per un essere umano (un altro colpo al termine “intelligenza”). Invece di cercare un algoritmo che estragga le caratteristiche da una immagine, si addestra una rete neurale con un gran numero di immagini di esempio specificandone il contenuto (“qui c’e’un gatto” o “qui c’e una persona”). Non sempre funziona, come in questa immagine in cui molte reti neurali non riescono a distingure tra un Chihuahua e un muffin.</p><img src="https://cdn-media-1.freecodecamp.org/images/C9OQH-2w3g-1Ayj08mjYLwlpI46QAbxgtyqa" alt="Image.tiff"/><p>Le diverse configurazioni di reti neurali si chiamano modelli. Una categoria di modelli che hanno avuto molto successo, ma che sono computazionalmente molto complessi, è quella delle reti neurali "profonde" (<em>deep neural networks</em> e l’associato <em>deep learning</em>) in cui la rete neurale è organizzata in strati successivi. Trovare il modello giusto di rete neurale per un particolare tipo di problema è un’arte basata su tentativi e intuizioni. Questo vuole dire anche che è praticamente impossible garantire che il risultato di una rete neurale sarà sempre corretto.</p><img src="https://imgs.xkcd.com/comics/machine_learning.png" alt="Image.tiff"/><p>L’intelligenza artificiale esiste dagli anni 50 e le reti neurali dagli anni 80. Perchè se ne parla tanto solo adesso? Per due motivi: la quantità di dati disponibili con l’avvento dell’informazione digitale, e gli avanzamenti nella velocità di elaborazione di tali informazioni. Questo consente di creare reti neurali molto complesse e di avere un quantitativo di dati sufficiente ad addestrarle, e di farlo in tempi accettabili.</p><p>Recentemente sono emersi i modelli "generativi", in grado di creare informazioni complesse, come testi, immagini e video, partendo da un esempio minimo (una breve descrizione o un’immagine). Per esempio si può chiedere di scrivere una poesia sul viaggio spaziale nello stile di Leopardi, creare un’immagine di un maiale come se lo avesse dipinto Van Gogh o un video di una persona che balla basandosi su una sua foto. Questi modelli vengono addestrati usando enormi quantità di dati raccolti da internet. Sono estremamente complicati e addestrarli richiede tempo e un grande numero di potentissimi e costosi elaboratori. Per questo la loro “conoscenza” si ferma ad una certa data, la data dell’ultimo addestramento, e tra un addestramento e l’altro possono passare mesi.</p><p>A seconda dei dati usati per addestrarla, l'IA puo' mostrare una certa "parzialità" (<em>bias</em>). Per esempio le IA generative tenderanno a produrre immagini con persone di una certa etnia se sono state addestrate con immagini che contengono prevalentmente quella etnia.</p><p>Perchè si parla di etica e intelligenza artificiale? Più questa tecnologia diventa avanzata e di facile accesso, più le vengono affidati compiti delicati senza supervisione. Si pongono quindi problemi del tipo:</p><ul><li>Se una macchina autonoma si trova in una situazione in cui può scegliere se salvare un passante che attraversa la strada deviando in un burrone e uccidere così il guidatore, o salvare il guidatore e investire il passante, che deve fare?</li><li>Se un algoritmo di riconoscimento facciale identifica erroneamente una persona scambiandola per un ricercato, di chi è colpa se viene messa ingiustamente in galera?</li><li>Se un'IA generativa crea un’immagine basandosi su immagini pubblicate su internet, di chi sono i diritti di autore? Stessa cosa per articoli, musiche ecc.</li><li>Se ho un lavoro ripetitivo e poco creativo che una IA può fare altrettanto bene, chi mi protegge dal licenziamento?</li><li>Chi garantisce l'imparzialità dei dati usati per addestrare una IA?</li><li>Chi garantisce che le informazioni pubblicate siano vere e non generate da IA? Chi è in grado di vedere la differenza?</li><li>Come faccio a proteggermi dalla creazione e distribuzione di video falsi con le mie fattezze?</li><li>È giusto che una ditta tenga segreto il suo algoritmo di IA?</li><li>Chi pensa all’impatto ambientale ed energetico degli elaboratori usati per addestrare le reti neurali?</li></ul><p>Il campo dell'IA ha fatto progressi strabilianti negli ultimi anni. Cosa possiamo aspettarci dal futuro? Secondo i ricercatori in questo campo, il prossimo passo è l'intelligenza artificiale generale (<em>Artificial General Intelligence, AGI</em>), ovvero "vera intelligenza". In altre parole la capacità di un computer di prendere decisioni autonome, riflettere, inventare e in generale essere completamente indistinguibile da un essere umano. A questo punto l'IA sarebbe capace non solo di eguagliare l'essere umano, ma di superarlo. L'ultima considerazione etica dunque è se si debba permettere di arrivare a questo punto.<br><br>P.S.: non ho usato IA per scrivere questo articolo.</p>
+</article>
+    </main>
+    <footer>
+        <p>&copy; 2025 Balenet</p>
+    </footer>
+  </body>
+</html>

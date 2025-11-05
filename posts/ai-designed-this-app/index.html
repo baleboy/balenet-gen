@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Balenet</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  </head>
+  <body>
+    <div class="social-icons">
+      <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
+    </div>
+    <header>
+      <div class="header-top">
+        <div class="title-wrapper">
+          <h1><a href="/">Balenet</a></h1>
+        </div>
+        <ul class="primary-nav">
+          <li><a href="/work/">Projects</a></li>
+          <li><a href="/about/">About</a></li>
+        </ul>
+      </div>
+    </header>
+    <main>
+<article>
+    <h2>AI designed this app</h2>
+    <div class="post-meta">
+        <time>14 April 2024</time>
+        <span class="topic-labels"><a class="topic-label" href="/topics/ai/">Ai</a> <a class="topic-label" href="/topics/programming/">Programming</a></span>
+    </div>
+    <p>Lately I've been working on an <a href="https://github.com/baleboy/fastTrack">intermittent fasting app</a> to learn SwiftUI. I used ChatGPT through the process to help me figure out the code, and it's been a great learning tool. But so far I haven't paid too much attention to the design, and it shows. Since recently ChatGPT added the ability to upload and generate images, I wondered if I could use this feature to create a better design for my app.</p><p>The conclusion is ChatGPT can definitely help, but doesn't produce anything that you would upload to the App Store. However its ability to understand pictures and generate code from them is astonishing.</p><h2>The test</h2><p>As a first test, I uploaded the current UI of my app and asked Chat GPT to “make it better”. This is the image I submitted (like I said, not a contender for the “App design of the year” award):</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/19E7D80C-FEA6-455F-82A2-047A60CBEAEC_2/CBGDBvPn2QQdxEmZ8p638RU7yKKYvISmB8IoP5alzmMz/Simulator%20Screenshot%20-%20iPhone%2015%20Pro%20-%202024-03-16%20at%2011.50.46.png" alt="Simulator Screenshot - iPhone 15 Pro - 2024-03-16 at 11.50.46.png"/><p>And this is what I asked:</p><p><code>Me: this is a screenshot of my fasting application. Can you make it look better?</code></p><p>After some generic advice on principles of UI design, ChatGPT answered with the following:</p><p><code>Let's try to create a more visually appealing version of your fasting app interface. I'll design a concept image for you.</code></p><p><code>Here's a redesigned concept for your fasting app interface. The design is modern and clean, with a minimalistic approach and a soothing color palette to maintain focus. You can see how the important features like the current fasting status and the 'Start Fasting' button are highlighted for ease of use. The bottom tabs provide quick navigation. What do you think?</code></p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/5BF0D9A8-281B-4EFD-9046-CD4C622C01C0_2/W5epHik6c5HXrqJXKMrbnKjFMDHWWdzEty2mfirxflIz/DALLE%202024-03-18%2009.26.52%20-%20Design%20a%20modern%20and%20visually%20appealing%20interface%20for%20a%20fasting%20tracker%20mobile%20application.%20The%20interface%20should%20be%20clean%20and%20minimalistic%20with%20a%20color.png" alt="DALL·E 2024-03-18 09.26.52 - Design a modern and visually appealing interface for a fasting tracker mobile application. The interface should be clean and minimalistic with a color.png"/><p>I didn't want to hurt its feelings, but this isn't very useful. The color scheme is nice, but the added UI elements make no sense especially since the text is gibberish. Also, it's not really usable for the actual development of the application. Admittedly my prompt was rather generic, but I decided to try a different approach. What if I drew the UI, and asked ChatGPT to create the code?</p><h2>Hand-drawn UI as an input</h2><p>For a quick-n-dirty test, I drew the UI by hand:</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/B8520D33-54C1-4D6C-881D-406D8BD06534_2/UMaZImSlXDzum19OamxybvuCOYEwrawDl9xYFDQbBHUz/IMG_6110.jpeg" alt="IMG_6110.jpeg"/><p>And then asked to recreate it in code:</p><p>Me: can you write the SwiftUI code to create a UI Like the one in this picture?</p><p>ChatGPT: Certainly! To create a SwiftUI view that resembles the sketch you've provided, which seems to be a timer with a stop button, you can use the following code as a starting point:</p><pre><code class="language-swift">import SwiftUI
+
+struct TimerView: View {
+  @State private var timeRemaining = 222 // Replace with actual remaining time in seconds
+  let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+  var body: some View {
+    VStack {
+      ZStack {
+        Circle()
+        .stroke(lineWidth: 20)
+        .opacity(0.3)
+        .foregroundColor(Color.gray)
+
+        Circle()
+        .trim(from: 0.0, to: CGFloat(min(self.timeRemaining, 3600)) / 3600)
+        .stroke(style: StrokeStyle(lineWidth: 20, lineCap: .round,   lineJoin: .round))
+        .foregroundColor(Color.blue)
+        .rotationEffect(Angle(degrees: 270.0))
+        .animation(.linear, value: timeRemaining)
+
+        Text("(timeString(from: timeRemaining))")
+        .font(.largeTitle)
+        .bold()
+      }
+      .padding(40)
+
+      Button(action: {
+      // Stop the timer here
+        self.timer.upstream.connect().cancel()
+      }) {
+        Text("STOP")
+        .foregroundColor(.white)
+        .padding()
+        .background(Color.red)
+        .cornerRadius(40)
+      }
+      .padding()
+    }
+    .onReceive(timer) { _ in
+      if self.timeRemaining &gt; 0 {
+        self.timeRemaining -= 1
+      }
+    }
+  }
+
+  func timeString(from totalSeconds: Int) -&gt; String {
+    let hours = totalSeconds / 3600
+    let minutes = (totalSeconds / 60) % 60
+    let seconds = totalSeconds % 60
+    return String(format: "%02d:%02d", minutes, seconds)
+  }
+}
+
+struct TimerView_Previews: PreviewProvider {
+  static var previews: some View {
+    TimerView()
+  }
+}
+</code></pre><p>And this is what it looks like, with no changes:</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/31502AE0-4400-4BFD-A73C-FF07D1076E9A_2/ywlMAqs15swGnbMxoCAMcre2F9z7yh7HkVhw0k3vmZwz/Screenshot%202024-03-17%20at%2010.01.08.png" alt="Screenshot 2024-03-17 at 10.01.08.png"/><p>This was better. It's pretty amazing how I went from paper to code in one step. Plus, it works! The timer runs and stops and the button changes state as expected.</p><p>This was simple, so I tried a little more complex UI with colors.</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/1C9C7215-50F7-4916-8BA1-4CFFDF7CF441_2/Tgt6cE9dHB6bAPvrzjouJuFzpbFSAWpvT5TpBXC6c8Yz/IMG_6111.jpeg" alt="IMG_6111.jpeg"/><p>The result isn't perfect but it's a good starting point. Notice how ChatGPT understood my scribbling! The list of fasts wasn't updated though, but that would have been asking too much.</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/EF9E172E-BFAD-4D6E-A28B-7044D4FD52E5_2/bvVeRy7E1lfSDzg0F4DVixsBKRGs1opd4h9niYv64xQz/Screenshot%202024-03-17%20at%2010.19.50.png" alt="Screenshot 2024-03-17 at 10.19.50.png"/><h2>Copying with pride</h2><p>As a last test, I tried with a screenshot of <a href="https://zerolongevity.com">Zero</a>, a fasting app I like and that I am trying to emulate.</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/6A0C2F15-EC98-4122-ADFE-537B508694E1_2/fuxnVG4g60WaII6u4ztD1VXpYMofIlgOpAq18WVrTMUz/IMG_6112.png" alt="IMG_6112.png"/><p>This is what the code generated by ChatGPT looked like. Again, a good starting point, but not quite there.</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/8F82EB22-B161-44CA-8EB9-6843D8217DF2_2/LmBxCfTDFGif3GVHJAgJNMESnoKs5AwiOxjQP4qE7YIz/Screenshot%202024-03-17%20at%2010.32.35.png" alt="Screenshot 2024-03-17 at 10.32.35.png"/><h2>Just give me the code</h2><p>Finally, I wondered what would happen if I gave ChatGPT my original SwiftUI code for the app at the beginning of this post instead of the image, and ask it to modify the code to improve the design. This was the (not too impressive given everything I've seen so far) result:</p><img src="https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/F2E78A5D-41A8-4FB8-89A9-A6367593C180/07EBF2C0-2CD8-44EC-B7A7-3EF888148992_2/krr3O7NRtONIsU4hLdur5TmCV5E9VdAbVjlG7WOSxxUz/Screenshot%202024-03-17%20at%2012.40.43.png" alt="Screenshot 2024-03-17 at 12.40.43.png"/><h2>Conclusions</h2><p>It's pretty amazing how much ChatGPT can understand from a picture, even if drawn by hand in a hurry. I think this is definitely where the software development and design tools are going, it's a bit early but it's easy to imagine that they will get better.</p>
+</article>
+    </main>
+    <footer>
+        <p>&copy; 2025 Balenet</p>
+    </footer>
+  </body>
+</html>
