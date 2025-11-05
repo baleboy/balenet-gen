@@ -21,25 +21,33 @@ make build     # Compile the Swift generator into .build/…/balenet-gen
 make render    # Build + render the real site into site/build/
 make serve     # Render then serve site/build/ via python3 -m http.server
 make test      # Run the end-to-end test script against site/
-make publish   # Render and upload site/build/ via FTP (see .env section)
+make publish   # Render and push site/build/ to the gh-pages branch for GitHub Pages
 make clean     # Remove .build/
 make clean-site# Remove site/build/
 ```
 
-## FTP Publishing
+## GitHub Pages Publishing
 
-`make publish` calls `scripts/publish.sh`, which expects FTP credentials in environment variables. Create an `.env` file in the repo root (ignored by git) or export them in your shell:
+`make publish` compiles the generator, renders the site into `site/build/`, and pushes that directory to the `gh-pages` branch using a temporary git worktree.
+
+Before running it the first time:
+
+1. Enable GitHub Pages for this repository, selecting the `gh-pages` branch and the root folder. Pages will create the initial branch if it doesn’t exist.
+2. If you use a custom domain, create or update `site/static/CNAME` with the domain so that every publish keeps the mapping.
+
+With that in place:
 
 ```
-FTP_HOST=ftp.example.com
-FTP_USER=your-user
-FTP_PASSWORD=your-password
-# optional:
-# FTP_TARGET_DIR=/path/on/server
-# FTP_SSL=false
+make publish
 ```
 
-`publish.sh` loads `.env` when present, then uses `lftp` to mirror `site/build/` to the remote server.
+The script will reuse the existing branch (creating it on demand), commit the rendered files, and push them to origin. You can override the branch or commit message without editing the script:
+
+```
+GITHUB_PAGES_BRANCH=production-pages \
+GITHUB_PAGES_COMMIT_MESSAGE="Publish site for launch" \
+make publish
+```
 
 ## Command-line Usage
 
