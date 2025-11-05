@@ -42,9 +42,16 @@ test:
 	@./scripts/test.sh
 
 .PHONY: serve
-serve: render 
+serve: render
 	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
-	@cd $(SITE_DIR) && python3 -m http.server --directory build
+	@cd $(SITE_DIR) && ( \
+		python3 -m http.server --directory build & \
+		SERVER_PID=$$!; \
+		sleep 1; \
+		echo "Opening default browser..."; \
+		python3 -m webbrowser http://localhost:8000/ >/dev/null 2>&1 || true; \
+		wait $$SERVER_PID \
+	)
 
 .PHONY: publish
 publish: render
