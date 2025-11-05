@@ -11,7 +11,7 @@ This blog is a random dump of things I learn or find interesting, mainly around 
 
 ### Credits
 
-This site was generated using [balenet-gen](https://github.com/baleboy/balenet-gen), my own static site generator written in Swift. It uses the [Ink](https://github.com/JohnSundell/Ink) markdown parser by John Sundell.
+This site was generated using [balenet-gen](https://github.com/baleboy/balenet-gen), my own static site generator written in Swift with the help of OpenAI Codex. It uses the [Ink](https://github.com/JohnSundell/Ink) markdown parser by John Sundell.
 
 The theme of this site is loosely inspired by the [ZX Spectrum](https://en.wikipedia.org/wiki/ZX_Spectrum), my first computer.
 
