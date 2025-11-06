@@ -2,7 +2,7 @@
 
 ## About
 
-This blog is a random dump of things I learn or find interesting, mainly around programming, videogames, cooking (especially pizza) and family related stuff. I write for myself, but if you find anything interesting or helpful I'd love to know!
+This blog is a random dump of things I learn or find interesting, mainly around programming, videogames, cooking (especially pizza) and family-related stuff. I write for myself, but if you find anything interesting or helpful I'd love to know!
 
 ### Contact
 
