@@ -24,12 +24,6 @@ The next thing I wanted to do was take the templates out of the generator and ma
 
 Anyway, at this point I was really getting into the groove, and started to come up with features just for the sake of it. I had become a power-hungry product manager! In rapid succession I asked for categorization of posts by topic, automated tests, automated publishing via FTP, more Spectrum-like look and feel… the agent did all this nearly flawlessly. The visual part is what I had the most trouble with, the CSS wasn’t always correct or doing what I had asked, and it was harder to describe what I wanted without showing pictures as I did in some previous experiments using the ChatGPT UI (later I found out that you CAN give pictures to Codex as well). But nevertheless the speed of development was breathtaking, I implemented things in a few hours that would have taken me several days otherwise. The hardest part was to restrain myself.
 
-## Some reflections
-
-Despite my best intentions, I quickly drifted to vibe coding. I quickly lost track of where the code was going, which made me anxious, and, most importantly, learned absolutely nothing. It felt like cheating at a videogame. So I started to accept everything the agent was doing without checking and asked for changes after testing. 
-
-Sometimes the agent does its own thing even if you didn’t ask. For example at some point I had changed the “work” link to “projects” and after a while I realized that it had silently changed it back. Since the agent is also in charge of writing the tests, I wouldn’t trust it not to update the tests to make it look like everything is fine. This is a common complaint and another source of anxiety when developing software this way. The whole thing feels like standing on shifting sands.
-
 ## Final touches and moving to a new host
 
 The next step was asking Codex to help me improve the search ranking of my site, which wasn’t showing up on Google when searching for my name. It suggested adding a robots.txt and a sitemap, and was happy to implement sitemap support in the generator, another of the features in my backlog that I thought about doing “some day”.
@@ -42,8 +36,20 @@ I asked Codex and it suggested Netlify and Github Pages. Since I’m already usi
 
 ## Coding from anywhere!
 
-Both Claude Code and Codex offer a web-based version, which runs the agentic session in a VM in the cloud. At first I couldn’t see the point: why would I do this from a browser when I anyway need to run the program in my local environment? But later, while I was out, I started to have ideas about the next feature and I used the Cloud version of Codex to tell it to start code it and the epiphany hit me: I could now give instructions to my agent from wherever I was, and let it work while I was doing the shopping or running errands. I’ve done this with meetings and chats for several years now, and now it has come to coding as well. Is this how work will look like a year from now?
+Both Claude Code and Codex offer a web-based version, which runs the agentic session in a VM in the cloud. At first I couldn’t see the point: why would I do this from a browser when I anyway need to run the program in my local environment? But later, while I was out, I started to have ideas about the next feature and I used the Cloud version of Codex to tell it to start code it and the epiphany hit me: I could now give instructions to my agent from wherever I was, and let it work while I was doing the shopping or running errands. I’ve done this with meetings and chats for several years now, and now it has come to coding as well. But why stop there? Just give the Jira backlog to the agent and let it work while you drink pina coladas. This is why I think that OpenAI will buy Linear, you’ve heard it here first!
+
+The next day at work I wanted to update this post but would have to wait until I got home. But wait, I fired up Codex Web, asked it how to make the publishing run from a github action, and after checking the plan told it to implement it. Within minutes I had "publish on commit" working and I could edit my site from within Github's text editor. I haven't had my mind blown like this in a very long time.
 
 ## Conclusions
 
-I am 100% sold on agentic coding for personal projects. I’m more hesitant about using it in a professional environment, because I would never inflict AI-generated code to my colleagues for review without first understanding it myself, and that might take as much time as writing it. I would feel more comfortable with Copilot style autocomplete. But it’s now clear to me that whatever happens to the AI hype, the software industry is going to change for good.
+It is clear to me that these tools are here to stay, and I am in awe of what they can become considering how much they have already evolved in the last couple of years. My Linkedin feed is full of skeptics and detractors, but I can only assume that they haven't given this a serious look, because I don't see how they couldn't be as enthusiastic as I am otherwise.
+
+There are pitfalls and downsides of course. Despite my best intentions, I tended to drift into vibe coding. I quickly lost track of where the code was going, so I started to accept everything the agent was doing without checking and asked for changes after testing. But by doing this I didn't learn anythign at all, which was the main reason for developing my own generator in the first place.
+
+Sometimes the agent does its own thing. For example at some point I had changed the “work” link to “projects” and after a while I realized that it had silently changed it back. Since the agent is also in charge of writing the tests, I wouldn’t trust it not to update the tests to make it look like everything is fine. This is a common complaint and another source of anxiety when developing software this way. Especially long contexts tend to deteriorate and give diminishing returns. The whole thing feels like standing on shifting sands after a while.
+
+While I am 100% sold on agentic coding for personal projects, I’m more hesitant about using it in a professional environment. I would never inflict AI-generated code to my colleagues for review without first understanding it myself, and that might take as much time as writing it. I would feel more comfortable with Copilot style autocomplete. 
+
+But as a manager with rusty techincal skills, I think I am the perfect audience for these tools. Giving instructions and writing clear Jira tickets suddenly becomes a useful skill! No more being ignored by rebellious devs! I feel like I trained for the past 15 years for this.
+
+Finally, just a few days ago a [new episode of Pragmatic Programmer](https://newsletter.pragmaticengineer.com/p/beyond-vibe-coding-with-addy-osmani) came out, with an interview with Addy Osmany about AI-assisted coding. He explains many of the things I tried to write here, in a much better way.
