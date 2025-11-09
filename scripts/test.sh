@@ -34,11 +34,11 @@ assert_not_contains() {
   fi
 }
 
-assert_contains "${BUILD_DIR}/index.html" "I finally read Smart & Gets Things Done"
+assert_contains "${BUILD_DIR}/index.html" "Book notes: Smart & Gets Things Done"
 assert_contains "${BUILD_DIR}/index.html" 'href="/topics/gaming/"'
 assert_contains "${BUILD_DIR}/index.html" 'class="post-year"'
 assert_contains "${BUILD_DIR}/topics/gaming/index.html" "It took me 236 hours but I finished Elden Ring!"
-assert_not_contains "${BUILD_DIR}/topics/gaming/index.html" 'class="topic-label" href="/topics/gaming/"'
+assert_contains "${BUILD_DIR}/topics/gaming/index.html" 'class="topic-label" href="/topics/gaming/"'
 assert_contains "${BUILD_DIR}/about/index.html" "<main>"
 
 echo "✅ Test passed"
