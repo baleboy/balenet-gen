@@ -52,13 +52,13 @@ body {
   }
   
   .social-icons a {
-    color: #fff;
+    color: #FFFFFF;
     margin-left: 10px;
     font-size: 1.2em;
   }
   
   .social-icons a:hover {
-    color: #ffa500;
+    color: #00FFFF;
   }
   
   /* adjust icon size as needed */
