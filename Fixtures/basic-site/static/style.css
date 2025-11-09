@@ -25,8 +25,20 @@ a {
     transition: color 0.2s ease;
 }
 
-.title-wrapper a {
-    color: inherit;
+.title-wrapper a,
+.primary-nav a,
+.post-list a {
+    color: #FFFFFF;
+}
+
+.title-wrapper a:hover,
+.primary-nav a:hover,
+.post-list a:hover {
+    color: #00FFFF;
+}
+
+.post-body a:hover {
+    color: #BFBFBF;
 }
 
 a:hover {
@@ -51,14 +63,6 @@ a:hover {
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
-}
-
-.post-list a {
-    color: #FFFFFF;
-}
-
-.post-list a:hover {
-    color: #00FFFF;
 }
 
 .post-meta {
