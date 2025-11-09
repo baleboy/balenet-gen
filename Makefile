@@ -45,9 +45,16 @@ test:
 serve: render
 	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
 	@cd $(SITE_DIR) && ( \
+		cleanup() { \
+			if [ -n "$$SERVER_PID" ] && kill -0 $$SERVER_PID 2>/dev/null; then \
+				kill $$SERVER_PID 2>/dev/null || true; \
+				wait $$SERVER_PID 2>/dev/null || true; \
+			fi; \
+		}; \
 		python3 -m http.server --directory build & \
 		SERVER_PID=$$!; \
-		trap 'if kill -0 $$SERVER_PID 2>/dev/null; then kill $$SERVER_PID; fi' INT TERM EXIT; \
+		trap 'cleanup; exit 0' INT TERM; \
+		trap cleanup EXIT; \
 		sleep 1; \
 		echo "Opening default browser..."; \
 		python3 -m webbrowser http://localhost:8000/ >/dev/null 2>&1 || true; \
