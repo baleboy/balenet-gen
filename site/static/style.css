@@ -80,9 +80,14 @@ body {
   }
 
   a {
-    color: inherit;
+    color: #00FFFF;
     text-decoration: none;
     cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .title-wrapper a {
+    color: inherit;
   }
   
   .primary-nav,
@@ -156,7 +161,7 @@ body {
   }
   
   a:hover {
-    color: #00E04B;
+    color: #FFFFFF;
   }
   
   .intro {
@@ -167,6 +172,14 @@ body {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  .post-list a {
+    color: #FFFFFF;
+  }
+
+  .post-list a:hover {
+    color: #00FFFF;
   }
 
   .post-group {

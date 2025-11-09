@@ -47,6 +47,7 @@ serve: render
 	@cd $(SITE_DIR) && ( \
 		python3 -m http.server --directory build & \
 		SERVER_PID=$$!; \
+		trap 'if kill -0 $$SERVER_PID 2>/dev/null; then kill $$SERVER_PID; fi' INT TERM EXIT; \
 		sleep 1; \
 		echo "Opening default browser..."; \
 		python3 -m webbrowser http://localhost:8000/ >/dev/null 2>&1 || true; \

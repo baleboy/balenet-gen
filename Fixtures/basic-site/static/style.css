@@ -18,6 +18,21 @@ header {
     flex: 1 1 auto;
 }
 
+a {
+    color: #00FFFF;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.title-wrapper a {
+    color: inherit;
+}
+
+a:hover {
+    color: #FFFFFF;
+}
+
 .primary-nav {
     list-style: none;
     margin: 0;
@@ -36,6 +51,14 @@ header {
     align-items: center;
     gap: 0.5rem;
     flex-wrap: wrap;
+}
+
+.post-list a {
+    color: #FFFFFF;
+}
+
+.post-list a:hover {
+    color: #00FFFF;
 }
 
 .post-meta {
