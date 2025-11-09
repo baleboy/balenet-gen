@@ -171,3 +171,15 @@ a:hover {
     filter: brightness(1.35);
     transform: translateY(-1px);
 }
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+article img,
+.post-body img {
+    display: block;
+    max-width: 80%;
+    margin: 1.5rem auto;
+}
