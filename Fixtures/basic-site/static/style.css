@@ -1,5 +1,16 @@
 /* smoke test asset */
 
+body {
+    margin: 0;
+    font-family: 'Inconsolata', monospace;
+  }
+
+.page-shell {
+    width: min(100%, 800px);
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 2rem;
+  }
+
 header {
     display: flex;
     flex-direction: column;

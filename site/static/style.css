@@ -7,20 +7,39 @@
     font-display: swap;
   }
 
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+:root {
+    font-size: 16px;
+    color-scheme: dark;
+  }
+
 body {
     background-color: #000000;
     background-image: url('images/rainbow.jpeg');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     background-attachment: fixed;
-    background-position: right bottom;
+    background-position: center bottom;
     color: #ffffff;
     font-family: 'Inconsolata', monospace;
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 20px auto;
-    max-width: 800px;
-    padding: 0 20px;
+    font-size: clamp(1rem, 0.95rem + 0.3vw, 1.12rem);
+    line-height: 1.65;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+.page-shell {
+    width: min(100%, 820px);
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 48px) clamp(18px, 5vw, 64px) 48px;
+  }
+
+main {
+    margin-top: 24px;
+    display: block;
   }
   
   
@@ -46,14 +65,14 @@ body {
   
   .social-icons {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
-    margin-right: 20px;
-    align-self: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
   }
   
   .social-icons a {
     color: #FFFFFF;
-    margin-left: 10px;
     font-size: 1.2em;
   }
   
@@ -238,6 +257,7 @@ body {
   .topic-labels {
     display: inline-flex;
     gap: 6px;
+    flex-wrap: wrap;
   }
 
   .post-heading .topic-labels {
@@ -346,4 +366,52 @@ table, th, td {
 
 td, th {
   padding: 10px;
+}
+
+@media (max-width: 700px) {
+  body {
+    background-attachment: scroll;
+    background-position: center top;
+  }
+
+  .page-shell {
+    padding: 20px 18px 36px;
+  }
+
+  .social-icons {
+    justify-content: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .primary-nav {
+    margin-left: 0;
+    width: 100%;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  h1 {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+  }
+
+  .post-heading,
+  .post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .topics-nav {
+    font-size: 0.95rem;
+  }
+
+  article img,
+  .post-body img {
+    max-width: 100%;
+  }
 }
