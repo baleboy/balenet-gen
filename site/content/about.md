@@ -1,15 +1,4 @@
-![Selfie](/images/face.jpg)
-
-## About
-
-This blog is a random dump of things I learn or find interesting, mainly around programming, videogames, cooking (especially pizza) and family-related stuff. I write for myself, but if you find anything interesting or helpful I'd love to know!
-
-### Contact
-
-* [Linkedin](https://linkedin.com/in/frbale)
-* [Github](https://github.com/baleboy)
-
-### Credits
+## Credits
 
 This site was generated using [balenet-gen](https://github.com/baleboy/balenet-gen), my own static site generator written in Swift with the help of OpenAI Codex. It uses the [Ink](https://github.com/JohnSundell/Ink) markdown parser by John Sundell.
 
