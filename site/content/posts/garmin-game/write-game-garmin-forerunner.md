@@ -1,7 +1,7 @@
 ---
 title:  Challenge accepted: write a game for the Garmin Forerunner 235
 date:  2023-04-14
-topics: programming, gaming, ai
+topics: programming, ai
 ---
 
 My son got a hold of my [Garmin Forerunner 235](https://www.garmin.com/en-US/p/pn/010-03717-54) sports watch and immediately found a [FlappyBird clone](https://apps.garmin.com/en-US/apps/baff701c-a71e-4854-bf0e-5a775793a838) in the Garmin Connect app store. He wanted to make a game of his own and went as far as installing the Garmin SDK and VS Code following a [tutorial](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=video&cd=&cad=rja&uact=8&ved=2ahUKEwjp09Cblav-AhWJuosKHSbqBf8QtwJ6BAgJEAI&url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D_sHBqQKpIZg&usg=AOvVaw1F1FyR10Uw1RRgL3d1Z8kV) he found on the net. That's motivation! For a while I've been looking for an excuse to get him into programming and this seemed like the perfect one, so I decided to accept the challenge.
