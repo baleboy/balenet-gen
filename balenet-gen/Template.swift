@@ -34,6 +34,11 @@ struct TemplateEngine {
     private let postTemplate: String
     private let projectTemplate: String
     private let topicTemplate: String
+    private let devlogTemplate: String
+    private let devlogEntryTemplate: String
+    private let devlogItemTemplate: String
+    private let devlogsIndexTemplate: String
+    private let devlogProjectItemTemplate: String
     
     init(title: String, directory: URL) throws {
         self.title = title
@@ -47,6 +52,11 @@ struct TemplateEngine {
         postTemplate = try TemplateEngine.loadTemplate(named: "post.html", in: directory)
         projectTemplate = try TemplateEngine.loadTemplate(named: "project.html", in: directory)
         topicTemplate = try TemplateEngine.loadTemplate(named: "topic.html", in: directory)
+        devlogTemplate = try TemplateEngine.loadTemplate(named: "devlog.html", in: directory)
+        devlogEntryTemplate = try TemplateEngine.loadTemplate(named: "devlog_entry.html", in: directory)
+        devlogItemTemplate = try TemplateEngine.loadTemplate(named: "devlog_item.html", in: directory)
+        devlogsIndexTemplate = try TemplateEngine.loadTemplate(named: "devlogs_index.html", in: directory)
+        devlogProjectItemTemplate = try TemplateEngine.loadTemplate(named: "devlog_project_item.html", in: directory)
     }
     
     func renderPage(withContent content: String, navigationTopics: [Topic]) -> String {
@@ -148,6 +158,63 @@ struct TemplateEngine {
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
     }
+
+    func renderDevlogPage(projectName: String, entries: [ContentItem], description: String?, navigationTopics: [Topic]) -> String {
+        let entryList = entries.map { renderDevlogListItem($0) }.joined()
+        let githubURL = entries.first(where: { $0.github != nil })?.github ?? ""
+        let githubIcon = githubURL.isEmpty ? "" : " <a href=\"\(githubURL)\"><i class=\"fab fa-github\"></i></a>"
+        let descriptionHTML = description.map { "<p class=\"project-description\">\($0)</p>" } ?? ""
+        let body = render(
+            devlogTemplate,
+            with: [
+                "project_name": projectName,
+                "entries": entryList,
+                "github_icon": githubIcon,
+                "description": descriptionHTML
+            ]
+        )
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
+    }
+
+    func renderDevlogEntry(entry: ContentItem, navigationTopics: [Topic]) -> String {
+        let body = render(
+            devlogEntryTemplate,
+            with: [
+                "title": entry.title,
+                "date": dateToString(entry.date ?? Date()),
+                "body": entry.html,
+                "topics": renderTopicLabels(for: entry.topics),
+                "project": entry.project ?? "",
+                "project_name": (entry.project ?? "").capitalized
+            ]
+        )
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
+    }
+
+    func renderDevlogsIndexPage(devlogIndex: [String: [ContentItem]], navigationTopics: [Topic]) -> String {
+        let projectList = devlogIndex.keys.sorted().map { projectSlug in
+            let entries = devlogIndex[projectSlug] ?? []
+            let githubURL = entries.first(where: { $0.github != nil })?.github ?? ""
+            let githubIcon = githubURL.isEmpty ? "" : "<a href=\"\(githubURL)\"><i class=\"fab fa-github\"></i></a>"
+            return render(
+                devlogProjectItemTemplate,
+                with: [
+                    "project_slug": projectSlug,
+                    "project_name": projectSlug.capitalized,
+                    "entry_count": "\(entries.count)",
+                    "github_icon": githubIcon
+                ]
+            )
+        }.joined()
+
+        let body = render(
+            devlogsIndexTemplate,
+            with: [
+                "project_list": projectList
+            ]
+        )
+        return renderPage(withContent: body, navigationTopics: navigationTopics)
+    }
     
     private func renderPostListItem(_ post: ContentItem, includeYear: Bool) -> String {
         render(
@@ -157,6 +224,18 @@ struct TemplateEngine {
                 "title": post.title,
                 "date": dateToString(post.date ?? Date(), includeYear: includeYear),
                 "topics": renderTopicLabels(for: post.topics)
+            ]
+        )
+    }
+
+    private func renderDevlogListItem(_ entry: ContentItem) -> String {
+        render(
+            devlogItemTemplate,
+            with: [
+                "path": entry.path,
+                "title": entry.title,
+                "date": dateToString(entry.date ?? Date(), includeYear: true),
+                "topics": renderTopicLabels(for: entry.topics)
             ]
         )
     }

@@ -10,21 +10,25 @@ import Foundation
 enum ContentItemType {
     case post
     case project
-    
+    case devlog
+
     static func infer(from metadata: [String: String]) throws -> ContentItemType {
         // Check for distinctive metadata
-        if metadata["date"] != nil {
+        if let dateValue = metadata["date"], let projectValue = metadata["project"], !projectValue.isEmpty {
+            return .devlog
+        } else if metadata["date"] != nil {
             return .post
         } else if metadata["order"] != nil && metadata["image"] != nil {
             return .project
         }
         throw GenerationError(message: "Could not infer content item type")
     }
-    
+
     var subFolder: String {
         switch self {
             case .post: return "posts"
             case .project: return "work"
+            case .devlog: return "devlogs"
         }
     }
 }
@@ -106,11 +110,16 @@ struct ContentItem {
 
     // post specific
     let date: Date?
-    
+
     // project specific
     let order: Int?
     let headerImage: String?
-    
+
+    // devlog specific
+    let project: String?
+    let github: String?
+    let description: String?
+
     // Factory
     static func post(title: String, date: Date, path: String, html: String, topics: [Topic]) -> ContentItem {
         ContentItem(
@@ -121,10 +130,13 @@ struct ContentItem {
             topics: topics,
             date: date,
             order: nil,
-            headerImage: nil
+            headerImage: nil,
+            project: nil,
+            github: nil,
+            description: nil
         )
     }
-    
+
     static func project(title: String, order: Int, path: String, image: String, html: String) -> ContentItem {
         ContentItem(
             type: .project,
@@ -134,7 +146,26 @@ struct ContentItem {
             topics: [],
             date: nil,
             order: order,
-            headerImage: image
+            headerImage: image,
+            project: nil,
+            github: nil,
+            description: nil
+        )
+    }
+
+    static func devlog(title: String, date: Date, path: String, html: String, project: String, topics: [Topic], github: String?, description: String?) -> ContentItem {
+        ContentItem(
+            type: .devlog,
+            title: title,
+            html: html,
+            path: path,
+            topics: topics,
+            date: date,
+            order: nil,
+            headerImage: nil,
+            project: project,
+            github: github,
+            description: description
         )
     }
 }

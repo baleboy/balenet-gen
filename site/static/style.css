@@ -91,6 +91,14 @@ main {
     border-bottom: 1px solid #ffffff;
   }
 
+  h2 a {
+    color: #FFFFFF;
+  }
+
+  h2 a:hover {
+    color: #00FFFF;
+  }
+
   h1 {
     font-family: 'SpectNext', sans-serif;
     font-weight: normal;
