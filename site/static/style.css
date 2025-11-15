@@ -106,13 +106,13 @@ main {
   }
 
   .title-wrapper a,
-  .primary-nav a,
+  .primary-nav a:not(.topic-label),
   .post-list a {
     color: #FFFFFF;
   }
 
   .title-wrapper a:hover,
-  .primary-nav a:hover,
+  .primary-nav a:not(.topic-label):hover,
   .post-list a:hover {
     color: #00FFFF;
   }
