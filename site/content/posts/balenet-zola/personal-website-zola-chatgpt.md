@@ -1,7 +1,7 @@
 ---
 title:  Creating a personal website with Zola and ChatGPT
 date:  2023-04-13
-topics: ai, programming
+topics: ai, devlog
 ---
 
 To create this site, I used a static website generator called [Zola](https://www.getzola.org).

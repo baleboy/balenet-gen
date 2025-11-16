@@ -1,7 +1,7 @@
 ---
 title: How I finally got into coding agents
 date: 2025-11-06
-topics: ai, programming
+topics: ai, devlog
 ---
 
 My experience with AI assisted coding until now was limited to [Github Copilot’s autocomplete](/posts/garmin-game/) and [copying and pasting code between my editor and ChatGPT](/posts/ai-designed-this-app/). This however is how AI coding was done a year ago, nowadays the hot topic is agentic coding and its radical cousin, vibe coding. I had not really grasped agentic coding until now, but a few weeks ago at work we had a workshop with Claude Code and things started to click, so I decided to give it a try for my personal projects, namely this website.

@@ -1,7 +1,7 @@
 ---
 title: Balenet-gen: a static site generator written in Swift
 date: 2025-01-10
-topics: programming, ai
+topics: devlog, ai
 ---
 
 In my never-ending quest to get back to software development, I decided to write my own static site generator for this website. As programming language I picked Swift because I'm learning it at the moment and I needed an excuse to practice, although Python would have probably been the better choice.

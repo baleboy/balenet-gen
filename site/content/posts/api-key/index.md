@@ -1,7 +1,7 @@
 ---
 title:  Managing API keys in Xcode and Github actions
 date:  2025-11-15
-topics: ai, programming
+topics: ai, devlog
 ---
 
 Recently I started working again on my [iOS lockscreen widget for public transports timetables](https://github.com/baleboy/hsl-widget). I paired with Claude Code instead of ChatGPT Codex this time to see how much different it would be, and also because according to reviews it has slightly better results in coding tasks.
