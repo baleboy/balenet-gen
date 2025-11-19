@@ -178,10 +178,6 @@
         <lastmod>2024-01-28</lastmod>
     </url>
     <url>
-        <loc>https://www.balenet.com/topics/management/</loc>
-        <lastmod>2025-04-12</lastmod>
-    </url>
-    <url>
         <loc>https://www.balenet.com/topics/pizza/</loc>
         <lastmod>2025-04-16</lastmod>
     </url>
@@ -192,5 +188,9 @@
     <url>
         <loc>https://www.balenet.com/topics/tech/</loc>
         <lastmod>2025-10-27</lastmod>
+    </url>
+    <url>
+        <loc>https://www.balenet.com/topics/work/</loc>
+        <lastmod>2025-04-12</lastmod>
     </url>
 </urlset>
