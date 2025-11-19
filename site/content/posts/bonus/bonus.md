@@ -1,7 +1,7 @@
 ---
 title:  Designing a bonus plan
 date:  2023-09-20
-topics: management
+topics: work
 ---
 
 ![_7c0dc804-67a4-4066-bdfb-dfdc9e2fac85.jpeg](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/4fab83cd-1510-479b-b0d8-08e82273822d/49E2EC9A-4C21-4935-80E3-DDA28C58AD78_2/1IC0nLyMvqnaU0CGlF3BwQapfLbrBzVbYw1x6yyFkaQz/_7c0dc804-67a4-4066-bdfb-dfdc9e2fac85.jpeg)

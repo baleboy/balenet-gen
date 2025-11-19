@@ -1,7 +1,7 @@
 ---
 title:  Book notes: It doesn't have to be crazy at work
 date:  2023-09-03
-topics: books, management
+topics: books, work
 ---
 
 ![crazy-work-bookmain.png](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/FAC6E4E9-C3D8-4247-8A69-19000B53F144/E15724A0-CC91-4708-AD32-716FADFA4A87_2/EpHmSkV3mu3xIIXW1txGhELHguNSdhszbrLRAl1tKO8z/crazy-work-bookmain.png)

@@ -1,7 +1,7 @@
 ---
 title: Book notes: Smart & Gets Things Done
 date: 2025-04-12
-topics: books, management
+topics: books, work
 ---
 
 I've been interviewing a lot of people lately, and I felt like I had to up my interview game. There is a book I always wanted to read but never got to, [Smart & Get Things Done  - Joel Spolky's Concise Guide to Finding the Best Techincal Talent](https://www.amazon.com/Smart-Gets-Things-Done-Technical/dp/1590598385). It's pretty old (first published in 2007) and not available as an audiobook nor as an e-book, which is why I never read it. This time I decided it was time and ordered the physical book.

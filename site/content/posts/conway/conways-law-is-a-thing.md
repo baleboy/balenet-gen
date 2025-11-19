@@ -1,7 +1,7 @@
 ---
 title:  Conway's law is a thing (notes on Team Topologies)
 date:  2024-02-28
-topics: books, management
+topics: books, work
 ---
 
 I dislike it when people quote "laws", "rules" and other platitudes related to software engineering. Often they are a way to kill a discussion, or just hide the fact that you don't know what you are talking about. ["Adding people to a late project only makes it later"](https://en.wikipedia.org/wiki/Brooks's_law), ["You can't produce a baby in one month by getting nine women pregnant"](https://www.goodreads.com/quotes/172818-you-can-t-produce-a-baby-in-one-month-by-getting), ["the Pareto principle"](https://en.wikipedia.org/wiki/Pareto_principle) have all been thrown at me at times that I found unhelpful. In the worst case, the discussion turns into a pissing contest about who knows more of these rules.
