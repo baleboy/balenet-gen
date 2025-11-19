@@ -1,7 +1,7 @@
 ---
 title:  The dreaded roadmap
 date: 2024-03-05
-topics: management
+topics: work
 ---
 
 ![DALL·E 2024-03-04 14.20.32 - An illustrative drawing of a roadmap depicting a specific journey with planned stops along the route in a 16_9 format. The map should detail a path ma.jpeg](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/44A29372-3BB1-4FEB-BDE0-7E50BB4101F6/8ECEA6E1-CAAF-41B4-8A9C-B4FE883D6BC6_2/1ybeRA9IuErb7wJNhq6eT8NGGHx3hBE84jubxFIxyHgz/DALLE%202024-03-04%2014.20.32%20-%20An%20illustrative%20drawing%20of%20a%20roadmap%20depicting%20a%20specific%20journey%20with%20planned%20stops%20along%20the%20route%20in%20a%2016_9%20format.%20The%20map%20should%20detail%20a%20path%20ma.jpeg)

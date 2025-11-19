@@ -1,7 +1,7 @@
 ---
 title:  Book Notes: Ask Your Developer
 date:  2023-07-12
-topics: books, management
+topics: books, work
 ---
 
 ![FWljfUVWYAQ4t2R.jpeg](https://res.craft.do/user/full/58e85b69-1aa6-c3c8-74ac-daf2b8beae9a/doc/8A6ABB99-5F26-4557-B2BB-AC1EE74E4562/03AAC2D4-E85F-410D-948D-7D1A10A47084_2/vmnjZEza7LDzgP4xbReTkzSwguBTkcBZwmQb3NCok4Mz/FWljfUVWYAQ4t2R.jpeg)
