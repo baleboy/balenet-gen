@@ -10,7 +10,7 @@ My experience with AI assisted coding until now was limited to [Github Copilot�
 
 ## Sticker shocker: first test with Claude Code
 
-Installing Claude Code was very easy with NPM, and I was soon presented with the first choice: how to be billed. The monthly plan is insanely expensive at 200USD per month, but there is also a usage-based plan enabled by giving your anthropic API key to Claude Code which is what I picked.
+Installing Claude Code was very easy with NPM, and I was soon presented with the first choice: how to be billed. The monthly plan is insanely expensive at 200USD per month, but there is also a usage-based plan enabled by giving your anthropic API key to Claude Code which is what I picked (update: there is actually a 20USD plan comparable to OpenAI's, and that's what I'm using at the moment).
 
 My first task was to make it possible to run my generator from the command line. Since it’s written in Swift I’ve used XCode to develop it, but I couldn’t easily figure out how to install it in my executable path, so I asked Claude to give me a few options and somehow (I’ve lost the chat unfortunately) ended up selecting a solution based on Make. After some back and forth, Claude created a Makefile that was able to build the tool and install it in my /usr/local/bin folder, without ever having to open the IDE. Cool! Out of curiosity I went to check my Anthropic Console and found out that this 10 minute exercise had cost me three dollars! 
 
