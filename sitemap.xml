@@ -2,13 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.balenet.com/</loc>
-        <lastmod>2025-11-15</lastmod>
+        <lastmod>2025-12-08</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/about/</loc>
     </url>
     <url>
         <loc>https://www.balenet.com/work/</loc>
+    </url>
+    <url>
+        <loc>https://www.balenet.com/posts/pizza-apps/</loc>
+        <lastmod>2025-12-08</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/posts/api-key/</loc>
@@ -179,7 +183,7 @@
     </url>
     <url>
         <loc>https://www.balenet.com/topics/pizza/</loc>
-        <lastmod>2025-04-16</lastmod>
+        <lastmod>2025-12-08</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/topics/productivity/</loc>
