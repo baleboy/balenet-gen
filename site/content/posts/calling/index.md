@@ -10,8 +10,8 @@ I have worked with many product managers in my career and I have not been often 
 
 Partly, I think, it depends on the type of products I have worked on. The only mobile apps I have worked closely with were the [Meego](https://balenet.com/work/n9/) apps, for example email. There were some strong PM leads there who would look at the daily builds and demand changes from designers and/or engineers. The turnaround was very slow though, and it took days and sometimes more to see the changes. But other than that it’s been mainly backend or low-level systems with nothing visible but a list of functional and performance requirements.
 
-One big difference is that I am building things for myself, so I’m both the PM and the user. Great PMs are good at uncovering user needs and problems to solve that are not necessarily (and in fact shouldn’t be) their own. As I’ve heard somewhere, a great PM is in love with the process, not the product.
+One reason I find it so enjoyable is that I am building things for myself, so I’m both the PM and the user. Great PMs are good at uncovering user needs and problems to solve that are not necessarily (and in fact shouldn’t be) their own. As I’ve heard somewhere, a great PM is in love with the process, not the product.
 
-But what I think is liberating about product managing an AI agent is that the human element is removed. I can be much more assertive than with real human beings (I am, unfortunately, a nice guy) and I can request back-and-forth changes without fearing protests from team members feeling unmotivated, stressed or underutilized.
+Finally, I don't think I would enjoy doing this in a team setting. What I think is liberating about product managing an AI agent is that the human element is removed. I can be much more assertive than with real human beings (I am, unfortunately, a nice guy) and I can request back-and-forth changes without fearing protests from team members feeling unmotivated, stressed or underutilized.
 
 Maybe there will be a new role called “Vibe coding PM” in the near future that I can apply for.
