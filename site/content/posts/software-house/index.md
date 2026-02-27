@@ -1,5 +1,5 @@
 ---
-title: I fulfilled my childhood dream of owning a Software House
+title: I fulfilled my childhood dream of owning a software house
 date: 2026-2-27
 topics: hobbies, devlog
 ---
@@ -45,17 +45,20 @@ When you register a toiminimi, the company's contact details are public and you'
 I wondered whether I should register a toiminimi or a proper limited company (osake yhtio or Oy). My conclusion was that for a side project, toiminimi is the right choice. An Oy gives you better tax optimisation at higher income levels (flat 20% corporate tax, dividend strategies), but adds real overhead - bookkeeping, financial statements, and more.  I can always upgrade later if the money justifies it (fat chance).
 
 Last but not least, your employer will most likely want to know about your side hustle, to ensure that it doesn't interfere with your regular job, and that you don't use company resources (including intellectual property) to do it. Also, you are generally not allowed to compete with your employer. Most companies have a process for this and it's quite straightforward, I got my approval in a couple of days. This might seem like overkill, but it doesn't cost anything and it protects you from future troubles.
+
 ## Getting a D-U-N-S number
 
 Apple requires organisations to have a D-U-N-S number from Dun & Bradstreet (D&B). It's a universal business identifier that Apple uses to verify your company exists. Getting this number and making Apple accept it was the hardest part of this process and took me almost a month.
+
 ### Requesting the number
 
-You can request a D-U-N-S number through [Apple's dedicated lookup tool](https://developer.apple.com/enroll/duns-lookup/) or directly from D&B. In my case, D&B had already created a record for Baleware automatically from the Finnish national registry. They confirmed this with a case resolution email containing my D-U-N-S number. Easy enough.
+You can request a D-U-N-S number through [Apple's dedicated lookup tool](https://developer.apple.com/enroll/duns-lookup/) or directly from D&B. In my case, D&B had already created a record for Baleware automatically from the Finnish national registry. They confirmed this with a case resolution email containing my D-U-N-S number.
+
 ### The problem: an incomplete profile
 
 When I tried to convert my Apple Developer account, Apple replied that they couldn't determine my legal entity type because my D&B profile was incomplete. D&B said the case was resolved. Apple said it wasn't. Welcome to the support loop.
 
-The core issue: D&B had created a DUNS record in their global system, but the legal entity type field (sole proprietorship) wasn't populated in a way that Apple could read. And D&B's Finnish portal couldn't even find my company when I searched by Y-tunnus.
+The issue was that D&B had created a DUNS record in their global system, but the legal entity type field (sole proprietorship) wasn't populated in a way that Apple could read. And D&B's Finnish portal couldn't even find my company when I searched by Y-tunnus.
 
 ### What I tried (in roughly this order)
 
