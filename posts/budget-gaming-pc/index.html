@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Balenet</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
   </head>
   <body>
-    <div class="page-shell">
-      <div class="social-icons">
-        <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
-      </div>
-      <header>
-        <div class="header-top">
-          <div class="title-wrapper">
-            <h1><a href="/">Balenet</a></h1>
-          </div>
+    <header class="site-header">
+      <div class="sinclair-rainbow"></div>
+      <div class="header-inner">
+        <h1 class="site-title"><a href="/">Balenet</a></h1>
+        <div class="header-right">
           <ul class="primary-nav">
-            <li><a class="topic-label" href="/work/">Work</a></li>
+            <li><a href="/work/">Work</a></li>
+            <li><a href="/about/">About</a></li>
           </ul>
+          <div class="social-icons">
+            <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
+          </div>
         </div>
-      </header>
+      </div>
+    </header>
+    <div class="page-shell">
       <main>
 <article>
     <h2>Building a budget gaming PC in 2025</h2>
     <div class="post-meta">
         <time>9 February 2025</time>
-        <span class="topic-labels"><a class="topic-label" href="/topics/gaming/">Gaming</a> <a class="topic-label" href="/topics/tech/">Tech</a></span>
+        <span class="topic-labels"><a class="topic-label topic-green" href="/topics/gaming/">Gaming</a> <a class="topic-label topic-blue" href="/topics/tech/">Tech</a></span>
     </div>
     <div class="post-body">
         <img src="closed-build.jpeg" alt="Finished build"/><p>I used to build my own PCs until I moved to Mac in 2006. Recently I had to try my hand at it again because of a request by a family member.</p><p>My "customer" wanted a PC that would run Roblox better than the 2014 iMac he was using and which kept resetting due to an overheated GPU, even at the lowest graphics quality setting. To make things harder he gave me a budget of 500 Euros, and although I appreciated the restrain this put some serious limitations on the choice of components.</p><p>The end result met the requirements and was fun to build. It costed 540 Euros, only slightly over budget, and can run Roblox at medium quality without a hitch. I could have spent 120 EUR more for a much better graphics card, but I had to work within my budget.</p><p>Some things about the building process are exactly the same as 20 years ago, others have changed:</p><ul><li>The majority of the components are connected in the same way as they used to be</li><li>SSDs have replaced hard drives (it's been a while now)</li><li>Youtube has a lot of tutorials and you will likely find a walkthrough of your exact build or close to it</li><li>On the other hand paper manuals have gotten much worse and are basically useless</li><li>The site <a href="https://pcpartpicker.com">PCPartpicker</a> is a godsend to check component compatibility and prices, as well as seeing what other people have built</li></ul><h2>Picking the parts</h2><p>Since I didn't know where to start, I googled "budget gaming PC" and landed on this article:</p><p><a href="https://www.tomshardware.com/best-picks/best-pc-builds-gaming">https://www.tomshardware.com/best-picks/best-pc-builds-gaming</a></p><p>The <a href="https://pcpartpicker.com/b/PCsXsY">final build</a> ended up being pretty close, but I went for a full AMD (CPU + GPU) setup. The article recommends the Intel Arc A380 GPU, and I would have really liked to give it a chance since <a href="/work/intel-gfx/">I have worked on it</a>, but fearing driver incompatibilities I decided against it. It was also considerably more expensive than the RX 6400 I went with.</p><p>Although I've alwasy been an Intel user, this time I wanted to try an AMD CPU, attracted by its reputation of having better price/performance ratio and lower power consumption.</p><p>At this point I realized that in 2025 you don't start a new project with a Google search, but with a chat with an AI, so I asked <a href="https://claude.ai/">Claude</a> for a recommendation. Here is its first answer after I clarified the requirements (I initially gave it a budget of 800 EUR):</p><p><code>Here's a suggested build that should work well:</code></p><p><code>CPU: AMD Ryzen 5 5600 (around 130-150 EUR)</code></p><ul><li><code>Great value for gaming</code></li><li><code>Includes a decent stock cooler</code></li><li><code>6 cores/12 threads is plenty for these games</code></li></ul><p><code>GPU: AMD RX 6600 (around 250-280 EUR)</code></p><ul><li><code>More than enough for Roblox and Fortnite</code></li><li><code>Can handle 1080p gaming at high settings</code></li><li><code>Good power efficiency</code></li></ul><p><code>Motherboard: B550M motherboard (around 90-110 EUR)</code></p><ul><li><code>MSI B550M PRO-VDH or similar</code></li><li><code>Has all the features you need</code></li><li><code>Good upgrade path</code></li></ul><p><code>RAM: 16GB (2x8GB) DDR4-3200 (around 50-60 EUR)</code></p><ul><li><code>Two sticks for dual-channel performance</code></li><li><code>16GB is plenty for these games</code></li></ul><p><code>Storage:</code></p><ul><li><code>500GB NVMe SSD (around 45-55 EUR)</code></li><li><code>Optional: 1TB HDD (around 45 EUR) if more storage needed</code></li></ul><p><code>Case: Budget ATX case with good airflow (around 50-60 EUR)</code></p><ul><li><code>Look for ones with mesh front panel</code></li><li><code>Should include at least 2 fans</code></li></ul><p><code>Power Supply: 550W 80+ Bronze (around 60-70 EUR)</code></p><ul><li><code>More than enough for this build</code></li><li><code>Leave room for potential upgrades</code></li></ul><p>We then went back and forth about CPU and GPU (Claude confirmed that AMD is the better budget choice) and once everything was decided I got a list of parts available in Finland and an estimate of the total price of 823 EUR. At this point I realized that there had to be a website for PC builders to make the whole process easier so I asked and Claude answered:</p><p><code>Yes! The most popular one is PCPartPicker (</code><a href="http://pcpartpicker.com"><code>pcpartpicker.com</code></a><code>). It's an excellent tool that:</code></p><ol><li><code>Checks component compatibility automatically</code></li><li><code>Shows the best prices from different retailers</code></li><li><code>Calculates power consumption</code></li><li><code>Warns about potential issues (like if a CPU cooler might block RAM slots)</code></li><li><code>Has a direct Finnish version (</code><a href="http://fi.pcpartpicker.com"><code>fi.pcpartpicker.com</code></a><code>)</code></li></ol><p>It even created a <a href="https://fi.pcpartpicker.com/user/baleboy/saved/9f7ZFT">part list</a> for my PC on PC Partpicker which I found amazing.</p><p>Using PC part picker I identified the Finnish on-line shops that sold the components and bought the cheapest ones. To stay within the 500 Euros budget I selected the Radeon RX 6400, which in retrospect was a mistake, but more on this later.</p><p>Here are the shops I used:</p><ul><li><a href="https://www.jimms.fi">Jimm's</a> for the case</li><li><a href="https://www.verkkokauppa.com/fi/etusivu">Verkkokauppa</a> for the CPU</li><li><a href="https://datatronic.fi">Datatronic</a> for motherboard, memory, SSD and PSU</li><li><a href="https://ktverkkokauppa.fi">KTVerkkokauppa</a> for the GPU which was on discount</li></ul><h2>The build</h2><p>I was a bit uncertain about the build process, of which I remembered very little from my past experiences. I started with the motherboard's instructions, but frankly they were not generous with details. Luckily I found this <a href="https://www.youtube.com/watch?v=BxFKqG1KOlo">video walkthrough of a similar build on Youtube</a>, which gave me confidence. Among other things, it showed that there is a SSD slot with heatsink that I hadn't realized was there and that the instructions made no mentions of.</p><img src="opened-build.jpeg" alt="Open case"/><p>After a first smoke test I attached the screen and the BIOS menu appeared!</p><p>As I was putting the memory banks next to each other I had a nagging feeling that this wasn't right, and the BIOS confirmed it with a message saying that I should place them in alternate slots. Funny how memory (my memory, not the RAM) works.</p><p>It was now time to install Windows. No more need for pirated CDs (ahem), today the process is to <a href="https://www.microsoft.com/en-us/software-download/windows11">download the ISO image from Microsoft</a> and flash it to a USB memory stick. Here I found another hiccup because I was flashing the USB from Mac. I used the command line as instructed in <a href="https://discussions.apple.com/thread/255485219?answerId=260193685022#260193685022">this forum post</a>, but when the Windows installer launched on the PC it wouldn't find any driver files. After some more googling, it turns out that this happens when flashing the USB from Mac as I did (I can't find the link anymore), so I booted the iMac into Windows and repeated the flashing procedure. After that I was able to continue.</p><p>Except that now the installation process stopped because there was no network, due to the fact that the drivers for the motherboard's on-board Wifi chip weren't included in the Windows disk. I had to download them from MSI's website, copy them to another USB stick and install them from the command line. After this the installation finally completed, and all the hardware was properly configured.</p><h2>Benchmarks</h2><p>The first benchmark I ever ran was 3DMark 2001. I watched its lobby scene, ripped straight off the Matrix, countless times, not just to measure performance but just to look at it because it was cool as hell.</p><p><div class="video-container">
@@ -44,9 +46,11 @@
     </div>
 </article>
     </main>
-    <footer>
-        <p>&copy; 2026 Francesco Balestrieri - <a href="/about/">Credits</a></p>
-    </footer>
     </div>
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Francesco Balestrieri</span>
+      </div>
+    </footer>
   </body>
 </html>

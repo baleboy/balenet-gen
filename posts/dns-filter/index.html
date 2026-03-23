@@ -1,38 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Balenet</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
   </head>
   <body>
-    <div class="page-shell">
-      <div class="social-icons">
-        <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
-      </div>
-      <header>
-        <div class="header-top">
-          <div class="title-wrapper">
-            <h1><a href="/">Balenet</a></h1>
-          </div>
+    <header class="site-header">
+      <div class="sinclair-rainbow"></div>
+      <div class="header-inner">
+        <h1 class="site-title"><a href="/">Balenet</a></h1>
+        <div class="header-right">
           <ul class="primary-nav">
-            <li><a class="topic-label" href="/work/">Work</a></li>
+            <li><a href="/work/">Work</a></li>
+            <li><a href="/about/">About</a></li>
           </ul>
+          <div class="social-icons">
+            <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
+          </div>
         </div>
-      </header>
+      </div>
+    </header>
+    <div class="page-shell">
       <main>
 <article>
     <h2>DNS Filtering with Pi-hole and NextDNS</h2>
     <div class="post-meta">
         <time>27 October 2025</time>
-        <span class="topic-labels"><a class="topic-label" href="/topics/tech/">Tech</a></span>
+        <span class="topic-labels"><a class="topic-label topic-blue" href="/topics/tech/">Tech</a></span>
     </div>
     <div class="post-body">
         <p>With a teenager in the house, I thought it might be a good idea to protect my home network from unwanted content, or at least know what sites are being accessed. The most common way to do it seems to be through a DNS filter, and I thought it would be a fun experiment to set up something local as opposed to rely on an external, possibly paid service.</p><p>A little bit of research brought me to the <a href="https://pi-hole.net">Pi-hole project</a>, which turns a Raspberry Pi into a DNS filter (and more), and to the <a href="https://www.raspberrypi.com/products/raspberry-pi-zero-2-w/">Raspberry Pi Zero 2 W</a>, a low-power version of the Raspberry Pi that is still more than enough to run this service and can stay on for 24 hours a day without drawing too much power.</p><h2>Pi-hole DNS filtering over Wi-Fi</h2><p>After acquiring a Pi Zero, the first step was to install <a href="https://www.raspberrypi.com/software/operating-systems/">Raspberry OS Lite</a> on an SD card and plug it in the board. The installer asks for the Wi-Fi SSID and password and enables ssh, so the board is ready to be logged in over wireless at first boot.</p><p>After that, installing Pi-hole was a breeze with the command line below:</p><pre><code>curl -sSL https://install.pi-hole.net | bash
@@ -44,9 +46,11 @@ media-amazon.com
     </div>
 </article>
     </main>
-    <footer>
-        <p>&copy; 2026 Francesco Balestrieri - <a href="/about/">Credits</a></p>
-    </footer>
     </div>
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Francesco Balestrieri</span>
+      </div>
+    </footer>
   </body>
 </html>

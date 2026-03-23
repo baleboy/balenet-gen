@@ -1,69 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Balenet</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inconsolata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/425a6b9b56.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
   </head>
   <body>
-    <div class="page-shell">
-      <div class="social-icons">
-        <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
-        <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
-      </div>
-      <header>
-        <div class="header-top">
-          <div class="title-wrapper">
-            <h1><a href="/">Balenet</a></h1>
-          </div>
+    <header class="site-header">
+      <div class="sinclair-rainbow"></div>
+      <div class="header-inner">
+        <h1 class="site-title"><a href="/">Balenet</a></h1>
+        <div class="header-right">
           <ul class="primary-nav">
-            <li><a class="topic-label" href="/work/">Work</a></li>
+            <li><a href="/work/">Work</a></li>
+            <li><a href="/about/">About</a></li>
           </ul>
+          <div class="social-icons">
+            <a href="https://linkedin.com/in/frbale"><i class="fab fa-linkedin"></i></a>
+            <a href="https://github.com/baleboy"><i class="fab fa-github"></i></a>
+          </div>
         </div>
-      </header>
+      </div>
+    </header>
+    <div class="page-shell">
       <main>
 <section class="topic-page">
     <h2>Hobbies</h2>
-    <ul class="topics-nav"><li class="nav-topic"><a href="/topics/ai/">Ai</a></li><li class="nav-topic"><a href="/topics/books/">Books</a></li><li class="nav-topic"><a href="/topics/devlog/">Devlog</a></li><li class="nav-topic"><a href="/topics/gaming/">Gaming</a></li><li class="nav-topic"><a href="/topics/hobbies/">Hobbies</a></li><li class="nav-topic"><a href="/topics/pizza/">Pizza</a></li><li class="nav-topic"><a href="/topics/productivity/">Productivity</a></li><li class="nav-topic"><a href="/topics/tech/">Tech</a></li><li class="nav-topic"><a href="/topics/work/">Work</a></li></ul>
+    <ul class="topics-nav"><li class="nav-topic topic-teal"><a href="/topics/ai/">Ai</a></li><li class="nav-topic topic-pink"><a href="/topics/books/">Books</a></li><li class="nav-topic topic-yellow"><a href="/topics/devlog/">Devlog</a></li><li class="nav-topic topic-green"><a href="/topics/gaming/">Gaming</a></li><li class="nav-topic topic-blue"><a href="/topics/hobbies/">Hobbies</a></li><li class="nav-topic topic-blue"><a href="/topics/pizza/">Pizza</a></li><li class="nav-topic topic-pink"><a href="/topics/productivity/">Productivity</a></li><li class="nav-topic topic-blue"><a href="/topics/tech/">Tech</a></li><li class="nav-topic topic-red"><a href="/topics/work/">Work</a></li></ul>
     <ul class="post-list">
         <li>
-    <h3 class="post-heading">
+    <div class="post-heading">
         <a href="/posts/software-house/">I fulfilled my childhood dream of owning a software house</a>
-        <span class="topic-labels"><a class="topic-label" href="/topics/hobbies/">Hobbies</a> <a class="topic-label" href="/topics/devlog/">Devlog</a></span>
-    </h3>
+        <span class="topic-labels"><a class="topic-label topic-blue" href="/topics/hobbies/">Hobbies</a> <a class="topic-label topic-yellow" href="/topics/devlog/">Devlog</a></span>
+    </div>
     <div class="post-meta">
         <time>27 February 2026</time>
     </div>
 </li>
 <li>
-    <h3 class="post-heading">
+    <div class="post-heading">
         <a href="/posts/gunpla-level-3-sazabi/">Gunpla Level 3: RG MSN-04 Sazabi, and peak gunpla</a>
-        <span class="topic-labels"><a class="topic-label" href="/topics/hobbies/">Hobbies</a></span>
-    </h3>
+        <span class="topic-labels"><a class="topic-label topic-blue" href="/topics/hobbies/">Hobbies</a></span>
+    </div>
     <div class="post-meta">
         <time>28 January 2024</time>
     </div>
 </li>
 <li>
-    <h3 class="post-heading">
+    <div class="post-heading">
         <a href="/posts/gunpla-2/">Gunpla Level 2: MG Gundam Wing EW and MG Nu Gundam RX-93 Ver.Ka</a>
-        <span class="topic-labels"><a class="topic-label" href="/topics/hobbies/">Hobbies</a></span>
-    </h3>
+        <span class="topic-labels"><a class="topic-label topic-blue" href="/topics/hobbies/">Hobbies</a></span>
+    </div>
     <div class="post-meta">
         <time>14 October 2023</time>
     </div>
 </li>
 <li>
-    <h3 class="post-heading">
+    <div class="post-heading">
         <a href="/posts/gunpla-1/">My Gunpla progression: Level 1, Gundam RX-78-2 RG</a>
-        <span class="topic-labels"><a class="topic-label" href="/topics/hobbies/">Hobbies</a></span>
-    </h3>
+        <span class="topic-labels"><a class="topic-label topic-blue" href="/topics/hobbies/">Hobbies</a></span>
+    </div>
     <div class="post-meta">
         <time>4 May 2023</time>
     </div>
@@ -72,9 +74,11 @@
     </ul>
 </section>
     </main>
-    <footer>
-        <p>&copy; 2026 Francesco Balestrieri - <a href="/about/">Credits</a></p>
-    </footer>
     </div>
+    <footer>
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Francesco Balestrieri</span>
+      </div>
+    </footer>
   </body>
 </html>
