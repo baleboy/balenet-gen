@@ -163,19 +163,19 @@ struct TemplateEngine {
     
     private func renderTopicLabels(for topics: [Topic]) -> String {
         guard !topics.isEmpty else { return "" }
-        
+
         let labels = topics.map { topic in
-            "<a class=\"topic-label\" href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a>"
+            "<a class=\"topic-label \(topic.colorClass)\" href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a>"
         }.joined(separator: " ")
-        
+
         return "<span class=\"topic-labels\">\(labels)</span>"
     }
-    
+
     private func renderTopicsNavigation(_ topics: [Topic]) -> String {
         guard !topics.isEmpty else { return "" }
-        
+
         let items = topics.map { topic in
-            "<li class=\"nav-topic\"><a href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a></li>"
+            "<li class=\"nav-topic \(topic.colorClass)\"><a href=\"/topics/\(topic.slug)/\">\(topic.displayName)</a></li>"
         }.joined()
         return "<ul class=\"topics-nav\">\(items)</ul>"
     }

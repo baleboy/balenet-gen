@@ -36,6 +36,14 @@ struct Topic: Hashable {
     var displayName: String {
         name.capitalized
     }
+
+    /// Returns a stable CSS color class based on the topic slug.
+    /// Ensures the same topic always gets the same color everywhere.
+    var colorClass: String {
+        let colors = ["topic-blue", "topic-red", "topic-pink", "topic-green", "topic-teal", "topic-yellow"]
+        let hash = slug.unicodeScalars.reduce(0) { $0 &+ Int($1.value) }
+        return colors[abs(hash) % colors.count]
+    }
     
     init?(rawValue: String) {
         let trimmed = rawValue.trimmingCharacters(in: .whitespacesAndNewlines)
