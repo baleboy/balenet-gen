@@ -1,6 +1,6 @@
 ## About
 
-I'm Francesco Balestrieri, a software engineering manager based in Finland. I've spent most of my career working on mobile platforms and developer tools, including stints at Nokia, Intel and Mapbox. These days I'm interested in AI-assisted development, product thinking, and the intersection of the two.
+I'm Francesco Balestrieri, a software engineering manager based in Finland. I've spent most of my career working on mobile platforms and developer tools, including stints at Nokia, Intel and Mapbox and I'm currently at Ōura. Occasionally I publish apps as [Baleware](https://www.baleware.com), my one-man indie development shop.
 
 This site is where I write about software engineering, side projects, gaming, pizza and whatever else catches my attention. I write for myself, but if you find anything interesting I'd love to hear about it.
 
