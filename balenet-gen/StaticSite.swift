@@ -171,7 +171,7 @@ struct StaticSite {
         let markdownURL = contentURL.appendingPathComponent("about.md")
         let markdown = try String(contentsOf: markdownURL, encoding: .utf8)
         let aboutHTML = template.renderPage(
-            withContent: parser.html(from: markdown),
+            withContent: "<div class=\"post-body\">" + parser.html(from: markdown) + "</div>",
             navigationTopics: navigationTopics
         )
         

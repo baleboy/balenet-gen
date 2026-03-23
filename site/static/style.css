@@ -415,7 +415,7 @@ article h2 {
 .post-body {
     font-size: 1.1rem;
     line-height: 1.75;
-    color: var(--color-on-surface-variant);
+    color: var(--color-on-surface);
 }
 
 .post-body p {
