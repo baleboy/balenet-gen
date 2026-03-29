@@ -2,13 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.balenet.com/</loc>
-        <lastmod>2026-02-27</lastmod>
+        <lastmod>2026-03-29</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/about/</loc>
     </url>
     <url>
         <loc>https://www.balenet.com/work/</loc>
+    </url>
+    <url>
+        <loc>https://www.balenet.com/posts/ai-design/</loc>
+        <lastmod>2026-03-29</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/posts/software-house/</loc>
@@ -175,7 +179,7 @@
     </url>
     <url>
         <loc>https://www.balenet.com/topics/ai/</loc>
-        <lastmod>2025-12-24</lastmod>
+        <lastmod>2026-03-29</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/topics/books/</loc>
@@ -183,7 +187,7 @@
     </url>
     <url>
         <loc>https://www.balenet.com/topics/devlog/</loc>
-        <lastmod>2026-02-27</lastmod>
+        <lastmod>2026-03-29</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/topics/gaming/</loc>
