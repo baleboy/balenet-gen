@@ -4,7 +4,7 @@ date:  2026-03-29
 topics: ai, devlog
 ---
 
-Coding with AI is mostly a solved problem, but design is still in its infancy, especially for native mobile applications. Here are a few approaches I tried, and what worked for me.
+It's been almost two years since I [posted about using AI to design an app](https://balenet.com/posts/ai-designed-this-app/). As with everything else with AI, things have evolved a lot since then. However while coding with AI is mostly a solved problem, design seems to be still in its infancy, especially for native mobile applications. Here are a few approaches I tried recently, and what worked for me.
 
 ## Put it in words
 
