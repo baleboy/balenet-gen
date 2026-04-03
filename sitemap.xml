@@ -2,13 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.balenet.com/</loc>
-        <lastmod>2026-03-29</lastmod>
+        <lastmod>2026-04-03</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/about/</loc>
     </url>
     <url>
         <loc>https://www.balenet.com/work/</loc>
+    </url>
+    <url>
+        <loc>https://www.balenet.com/posts/painters/</loc>
+        <lastmod>2026-04-03</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/posts/ai-design/</loc>
@@ -211,6 +215,6 @@
     </url>
     <url>
         <loc>https://www.balenet.com/topics/work/</loc>
-        <lastmod>2026-01-26</lastmod>
+        <lastmod>2026-04-03</lastmod>
     </url>
 </urlset>
