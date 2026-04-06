@@ -1,5 +1,5 @@
 ---
-title: How painters felt when photography came out
+title: Is AI doing to coding what photography did to painting?
 date:  2026-4-3
 topics: work
 ---
