@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><style>
+    .sinclair-rainbow {
+        background: linear-gradient(to right, #FF0000 20%, #FFD429 20%, #FFD429 40%, #00E04B 40%, #00E04B 60%, #00CACE 60%, #00CACE 80%, #2C7DFC 80%);
+        height: 4px;
+        width: 100%;
+    }
+</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&amp;family=Inconsolata:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#ffffff",
+              "secondary-container": "#00696c",
+              "primary-dim": "#00e6e6",
+              "primary-container": "#00ffff",
+              "error-container": "#9f0519",
+              "on-tertiary": "#4a0001",
+              "on-tertiary-fixed": "#3a0001",
+              "on-primary": "#006767",
+              "tertiary": "#ff7162",
+              "inverse-primary": "#006a6a",
+              "inverse-surface": "#f9f9f9",
+              "secondary-fixed-dim": "#4ae9ed",
+              "on-primary-fixed-variant": "#006262",
+              "surface": "#0e0e0e",
+              "on-surface-variant": "#ababab",
+              "tertiary-dim": "#e2241f",
+              "primary-fixed-dim": "#00e6e6",
+              "on-background": "#ffffff",
+              "outline-variant": "#484848",
+              "secondary-fixed": "#5df8fc",
+              "on-secondary": "#005b5d",
+              "on-secondary-fixed-variant": "#006668",
+              "surface-container-low": "#131313",
+              "surface-container-lowest": "#000000",
+              "secondary-dim": "#4ae9ed",
+              "on-tertiary-container": "#000000",
+              "on-error": "#490006",
+              "error-dim": "#d7383b",
+              "primary-fixed": "#00f5f5",
+              "inverse-on-surface": "#555555",
+              "primary": "#c1fffe",
+              "tertiary-fixed": "#ff9385",
+              "surface-tint": "#c1fffe",
+              "tertiary-container": "#f9362c",
+              "on-primary-container": "#005d5d",
+              "secondary": "#5df8fc",
+              "on-primary-fixed": "#004343",
+              "on-secondary-container": "#dbffff",
+              "surface-variant": "#262626",
+              "surface-container-high": "#1f1f1f",
+              "surface-bright": "#2c2c2c",
+              "background": "#0e0e0e",
+              "outline": "#757575",
+              "surface-dim": "#0e0e0e",
+              "on-tertiary-fixed-variant": "#7a0004",
+              "tertiary-fixed-dim": "#ff7c6c",
+              "surface-container": "#191919",
+              "on-secondary-fixed": "#004749",
+              "error": "#ff716c",
+              "on-error-container": "#ffa8a3",
+              "surface-container-highest": "#262626",
+              "sinclair-red": "#FF0000"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inconsolata"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inconsolata', monospace;
+        }
+    </style>
+</head>
+<body class="bg-black selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col">
+<!-- TopNavBar Component -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-black flex flex-col w-full">
+<div class="sinclair-rainbow"></div>
+<div class="flex justify-between items-center max-w-[820px] mx-auto px-6 py-4 w-full bg-black">
+<div class="text-2xl font-black text-cyan-400 font-headline tracking-tighter uppercase">
+      BALENET
+    </div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-white font-headline tracking-tighter uppercase text-sm hover:bg-zinc-900 transition-colors px-2 py-1 active:translate-y-0.5" href="#">WORK</a>
+<a class="text-white font-headline tracking-tighter uppercase text-sm hover:bg-zinc-900 transition-colors px-2 py-1 active:translate-y-0.5" href="#">LABS</a>
+<a class="text-white font-headline tracking-tighter uppercase text-sm hover:bg-zinc-900 transition-colors px-2 py-1 active:translate-y-0.5" href="#">ABOUT</a>
+</div>
+<button class="text-cyan-400 hover:bg-zinc-900 transition-colors p-2 rounded active:translate-y-0.5">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[820px] mx-auto px-6 pt-16 pb-24 flex-grow w-full">
+<!-- Topic Header -->
+<header class="mb-16">
+<div class="flex items-center gap-3 mb-4">
+<span class="text-[10px] font-headline font-bold tracking-[0.3em] text-zinc-500 uppercase">FILTERING BY TOPIC</span>
+<div class="h-[1px] flex-grow bg-zinc-800"></div>
+</div>
+<h1 class="text-7xl md:text-9xl font-headline font-black text-cyan-400 uppercase tracking-tighter leading-none">
+                LINUX
+            </h1>
+<p class="mt-6 text-zinc-400 max-w-xl text-lg leading-relaxed font-body">
+                A collection of deep-dives, kernel explorations, and terminal-centric workflows curated for the modern sysadmin and enthusiast.
+            </p>
+</header>
+<!-- Filtered List Section -->
+<section class="space-y-16">
+<!-- Post Item 1 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h2 class="text-2xl font-headline font-bold text-white group-hover:text-cyan-400 transition-colors">
+                        Hardening the Kernel: A Modern Approach
+                    </h2>
+<span class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">2024.05.12</span>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                    Exploring the latest security modules and compile-time flags to ensure your distribution remains impenetrable in an evolving threat landscape.
+                </p>
+<div class="flex flex-wrap gap-2"><span class="px-3 py-1 rounded-sm bg-[#FF3B30] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Security</span>
+<span class="px-3 py-1 rounded-sm bg-[#00E04B] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Kernel</span>
+<span class="px-3 py-1 rounded-sm bg-[#2C7DFC] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">DevOps</span></div>
+<div class="mt-10 h-[1px] w-full bg-zinc-900 group-hover:bg-cyan-900/50 transition-colors"></div>
+</article>
+<!-- Post Item 2 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h2 class="text-2xl font-headline font-bold text-white group-hover:text-cyan-400 transition-colors">
+                        Wayland vs X11: The Final Transition
+                    </h2>
+<span class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">2024.04.28</span>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                    Why 2024 is the year to finally ditch legacy display servers and embrace the stutter-free future of desktop composition.
+                </p>
+<div class="flex flex-wrap gap-2"><span class="px-3 py-1 rounded-sm bg-[#00CACE] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Display</span>
+<span class="px-3 py-1 rounded-sm bg-[#FF2FB5] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">GUI</span></div>
+<div class="mt-10 h-[1px] w-full bg-zinc-900 group-hover:bg-cyan-900/50 transition-colors"></div>
+</article>
+<!-- Post Item 3 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h2 class="text-2xl font-headline font-bold text-white group-hover:text-cyan-400 transition-colors">
+                        Dotfile Management with Stow and Git
+                    </h2>
+<span class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">2024.03.15</span>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                    A clean, symlink-based approach to syncing your configurations across multiple machines without the bloat of specialized managers.
+                </p>
+<div class="flex flex-wrap gap-2"><span class="px-3 py-1 rounded-sm bg-[#FFD429] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Workflow</span>
+<span class="px-3 py-1 rounded-sm bg-[#00E04B] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Automation</span></div>
+<div class="mt-10 h-[1px] w-full bg-zinc-900 group-hover:bg-cyan-900/50 transition-colors"></div>
+</article>
+<!-- Post Item 4 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h2 class="text-2xl font-headline font-bold text-white group-hover:text-cyan-400 transition-colors">
+                        Btrfs: The Only Filesystem You Need?
+                    </h2>
+<span class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">2024.02.02</span>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                    Snapshots, subvolumes, and transparent compression. Why I moved from Ext4 and never looked back.
+                </p>
+<div class="flex flex-wrap gap-2"><span class="px-3 py-1 rounded-sm bg-[#2C7DFC] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Storage</span>
+<span class="px-3 py-1 rounded-sm bg-[#FF3B30] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">System</span></div>
+<div class="mt-10 h-[1px] w-full bg-zinc-900 group-hover:bg-cyan-900/50 transition-colors"></div>
+</article>
+</section>
+<!-- Back Link -->
+<div class="mt-24 flex justify-center">
+<a class="flex items-center gap-2 text-cyan-400 font-body font-bold text-sm tracking-widest hover:text-white transition-colors group" href="#">
+<span class="text-zinc-600 group-hover:text-cyan-400 transition-colors">balenet:~$</span>
+<span class="material-symbols-outlined text-base" data-icon="arrow_back">arrow_back</span>
+                RETURN TO ALL TOPICS
+                <span class="w-2 h-4 bg-cyan-400 animate-pulse ml-1 inline-block align-middle"></span>
+</a>
+</div>
+</main>
+<!-- Footer Component -->
+<footer class="docked full-width bottom-0 bg-black border-t border-zinc-800 w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="text-white font-['Inconsolata'] text-xs uppercase tracking-widest font-bold">
+            (C) 1982 SINCLAIR RESEARCH LTD / BALENET
+        </div>
+<div class="flex gap-8">
+<a class="font-['Inconsolata'] text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors" href="#">CREDITS</a>
+<a class="font-['Inconsolata'] text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors" href="#">SOURCE</a>
+<a class="font-['Inconsolata'] text-xs uppercase tracking-widest text-zinc-500 hover:text-white transition-colors" href="#">SYSTEM</a>
+</div>
+</footer>
+</body></html>

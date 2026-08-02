@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Inconsolata:wght@200..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "zx-black": "#000000",
+              "zx-blue": "#0000D7",
+              "zx-red": "#D70000",
+              "zx-magenta": "#D700D7",
+              "zx-green": "#00D700",
+              "zx-cyan": "#00D7D7",
+              "zx-yellow": "#D7D700",
+              "zx-white": "#D7D7D7",
+              "zx-bright-red": "#FF0000",
+              "zx-bright-cyan": "#00FFFF",
+              "on-surface": "#ffffff",
+              "surface": "#000000",
+              "primary": "#00FFFF",
+              "outline-variant": "#484848",
+              "sinclair-red": "#FF0000"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inconsolata"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #000000;
+            background-image: 
+                linear-gradient(180deg, rgba(255, 0, 0, 0.05) 0%, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.05) 0%, transparent 1px);
+            background-size: 100% 4px, 4px 100%;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .sinclair-rainbow {
+            background: linear-gradient(to right, #FF0000 20%, #FFD429 20%, #FFD429 40%, #00E04B 40%, #00E04B 60%, #00CACE 60%, #00CACE 80%, #2C7DFC 80%);
+            height: 4px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="text-zx-white font-body selection:bg-zx-bright-cyan selection:text-zx-black">
+<header class="fixed top-0 left-0 right-0 z-50 bg-black flex flex-col w-full">
+<div class="sinclair-rainbow"></div>
+<div class="flex justify-between items-center max-w-[820px] mx-auto px-6 py-4 w-full">
+<div class="flex items-center gap-8">
+<h1 class="text-2xl font-black text-zx-bright-cyan tracking-tighter uppercase font-headline">BALENET</h1>
+<nav class="hidden md:flex gap-6">
+<a class="text-yellow-400 font-bold font-label transition-transform active:translate-y-0.5 duration-200" href="#">WORK</a>
+<a class="text-white font-bold font-label hover:bg-zinc-900 px-2 transition-colors uppercase" href="#">LABS</a>
+<a class="text-white font-bold font-label hover:bg-zinc-900 px-2 transition-colors uppercase" href="#">ABOUT</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 text-zx-bright-cyan">
+<a class="hover:bg-zinc-900 transition-colors p-2 rounded" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</a>
+</div>
+</div>
+</header>
+<main class="max-w-[820px] mx-auto px-6 pt-32 pb-12 space-y-16">
+<!-- Hero Section -->
+<section class="space-y-6">
+<p class="text-xl md:text-2xl leading-relaxed text-zx-white max-w-2xl font-body">
+            Software engineer and digital curator focusing on high-performance systems and editorial-grade user interfaces. Currently exploring the intersection of terminal aesthetics and modern web frameworks.
+        </p>
+<div class="flex gap-4">
+<a class="text-zx-bright-cyan hover:underline underline-offset-4 font-label uppercase tracking-widest text-xs" href="#">LinkedIn</a>
+<a class="text-zx-bright-cyan hover:underline underline-offset-4 font-label uppercase tracking-widest text-xs" href="#">GitHub</a>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="space-y-6">
+<div class="flex items-baseline justify-between">
+<h2 class="text-2xl font-bold font-headline tracking-tight uppercase text-zx-bright-cyan">Posts</h2>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-1.5 rounded-sm bg-[#2C7DFC] text-white font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Blue</button>
+<button class="px-4 py-1.5 rounded-sm bg-[#FF3B30] text-white font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Red</button>
+<button class="px-4 py-1.5 rounded-sm bg-[#FF2FB5] text-white font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Pink</button>
+<button class="px-4 py-1.5 rounded-sm bg-[#00E04B] text-black font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Green</button>
+<button class="px-4 py-1.5 rounded-sm bg-[#00CACE] text-black font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Teal</button>
+<button class="px-4 py-1.5 rounded-sm bg-[#FFD429] text-black font-label text-xs uppercase tracking-wider transition-all hover:brightness-125 border-b-2 border-r-2 border-black/40">Yellow</button>
+</div>
+</section>
+<!-- Content Listing -->
+<section class="space-y-12">
+<!-- Year Group 2024 -->
+<div class="space-y-8">
+<div class="flex items-center gap-4">
+<span class="text-sm font-label text-zx-bright-red tracking-[0.2em] font-bold">2024</span>
+<div class="h-[1px] flex-grow bg-zx-white/20"></div>
+</div>
+<div class="grid gap-12">
+<!-- Post 1 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h3 class="text-2xl font-headline font-bold text-white group-hover:text-zx-bright-cyan transition-colors">
+                            Architecture of a Modern Mainframe
+                        </h3>
+<time class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">MAR 14</time>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                        Exploring the transition from monolithic hardware stacks to distributed, memory-safe micro-kernels in high-availability environments.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-sm bg-[#2C7DFC] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Engineering</span>
+<span class="px-3 py-1 rounded-sm bg-[#FF3B30] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Rust</span>
+</div>
+</article>
+<!-- Post 2 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h3 class="text-2xl font-headline font-bold text-white group-hover:text-zx-bright-cyan transition-colors">
+                            Low-Level Typography in High-Level Apps
+                        </h3>
+<time class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">JAN 28</time>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                        How to implement pixel-perfect rendering pipelines for custom fonts while maintaining accessibility and layout responsiveness.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-sm bg-[#FF2FB5] text-white text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Design</span>
+<span class="px-3 py-1 rounded-sm bg-[#00CACE] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">UI/UX</span>
+</div>
+</article>
+</div>
+</div>
+<!-- Year Group 2023 -->
+<div class="space-y-8">
+<div class="flex items-center gap-4">
+<span class="text-sm font-label text-zx-bright-red tracking-[0.2em] font-bold">2023</span>
+<div class="h-[1px] flex-grow bg-zx-white/20"></div>
+</div>
+<div class="grid gap-12">
+<!-- Post 3 -->
+<article class="group cursor-pointer">
+<div class="flex flex-col md:flex-row md:items-baseline justify-between gap-2 mb-2">
+<h3 class="text-2xl font-headline font-bold text-white group-hover:text-zx-bright-cyan transition-colors">
+                            The Cyber-Curator Manifesto
+                        </h3>
+<time class="text-sinclair-red font-body font-bold text-xs whitespace-nowrap tracking-widest">NOV 02</time>
+</div>
+<p class="text-zinc-400 mb-6 leading-relaxed line-clamp-2 font-body">
+                        Refining the definition of digital ownership and the ethical responsibility of preserving early internet aesthetic history.
+                    </p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 rounded-sm bg-[#00E04B] text-black text-[10px] font-headline font-bold uppercase tracking-wider border-b-2 border-r-2 border-black/40">Theory</span>
+</div>
+</article>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full py-8 px-6 bg-black border-t border-zinc-800">
+<div class="max-w-[820px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-white font-bold font-headline uppercase">BALENET</span>
+<p class="text-zinc-500 font-body text-[10px] tracking-widest uppercase">© 1982 SINCLAIR RESEARCH LTD / BALENET</p>
+</div>
+<div class="flex gap-6 font-body text-xs uppercase tracking-widest">
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">CREDITS</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SOURCE</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SYSTEM</a>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inconsolata:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-surface": "#ffffff",
+              "secondary-container": "#00696c",
+              "primary-dim": "#00e6e6",
+              "primary-container": "#00ffff",
+              "error-container": "#9f0519",
+              "on-tertiary": "#4a0001",
+              "on-tertiary-fixed": "#3a0001",
+              "on-primary": "#006767",
+              "tertiary": "#ff7162",
+              "inverse-primary": "#006a6a",
+              "inverse-surface": "#f9f9f9",
+              "secondary-fixed-dim": "#4ae9ed",
+              "on-primary-fixed-variant": "#006262",
+              "surface": "#0e0e0e",
+              "on-surface-variant": "#ababab",
+              "tertiary-dim": "#e2241f",
+              "primary-fixed-dim": "#00e6e6",
+              "on-background": "#ffffff",
+              "outline-variant": "#484848",
+              "secondary-fixed": "#5df8fc",
+              "on-secondary": "#005b5d",
+              "on-secondary-fixed-variant": "#006668",
+              "surface-container-low": "#131313",
+              "surface-container-lowest": "#000000",
+              "secondary-dim": "#4ae9ed",
+              "on-tertiary-container": "#000000",
+              "on-error": "#490006",
+              "error-dim": "#d7383b",
+              "primary-fixed": "#00f5f5",
+              "inverse-on-surface": "#555555",
+              "primary": "#c1fffe",
+              "tertiary-fixed": "#ff9385",
+              "surface-tint": "#c1fffe",
+              "tertiary-container": "#f9362c",
+              "on-primary-container": "#005d5d",
+              "secondary": "#5df8fc",
+              "on-primary-fixed": "#004343",
+              "on-secondary-container": "#dbffff",
+              "surface-variant": "#262626",
+              "surface-container-high": "#1f1f1f",
+              "surface-bright": "#2c2c2c",
+              "background": "#0e0e0e",
+              "outline": "#757575",
+              "surface-dim": "#0e0e0e",
+              "on-tertiary-fixed-variant": "#7a0004",
+              "tertiary-fixed-dim": "#ff7c6c",
+              "surface-container": "#191919",
+              "on-secondary-fixed": "#004749",
+              "error": "#ff716c",
+              "on-error-container": "#ffa8a3",
+              "surface-container-highest": "#262626"
+            },
+            fontFamily: {
+              "headline": ["Space Grotesk"],
+              "body": ["Inconsolata"],
+              "label": ["Space Grotesk"]
+            },
+            borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        .spectrum-key:active {
+            transform: translateY(2px);
+            box-shadow: 0 0px 0px rgba(0,255,255,0.2);
+        }
+    
+        .sinclair-rainbow {
+            background: linear-gradient(to right, #FF0000 20%, #FFD429 20%, #FFD429 40%, #00E04B 40%, #00E04B 60%, #00CACE 60%, #00CACE 80%, #2C7DFC 80%);
+            height: 4px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-black font-body min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center w-full px-6 py-4 bg-black flex flex-col"><div class="sinclair-rainbow"></div><div class="flex justify-between items-center w-full px-6 py-4"><div class="text-2xl font-black text-cyan-400 font-headline tracking-tighter uppercase">BALENET</div><div class="flex items-center gap-6"><div class="hidden md:flex items-center gap-6"><a class="text-yellow-400 font-headline tracking-tighter uppercase transition-colors hover:bg-zinc-900 px-2 py-1 active:translate-y-0.5" href="#">WORK</a><a class="text-white font-headline tracking-tighter uppercase transition-colors hover:bg-zinc-900 px-2 py-1 active:translate-y-0.5" href="#">LABS</a><a class="text-white font-headline tracking-tighter uppercase transition-colors hover:bg-zinc-900 px-2 py-1 active:translate-y-0.5" href="#">ABOUT</a></div><div class="flex items-center gap-4 text-cyan-400"><button class="hover:bg-zinc-900 p-2 rounded transition-colors active:translate-y-0.5"><span class="material-symbols-outlined" data-icon="terminal">terminal</span></button></div></div></div></nav>
+<!-- Main Content Canvas -->
+<main class="max-w-[820px] mx-auto px-6 pt-32 pb-24">
+<!-- Page Header -->
+<header class="mb-16">
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-4 uppercase">
+                Work<span class="text-tertiary-container">_</span>
+</h1>
+<p class="text-on-surface-variant max-w-xl text-lg leading-relaxed font-body">
+                Selected digital dossiers and experimental interfaces. A curation of high-precision engineering and editorial aesthetics.
+            </p>
+</header>
+<!-- Project Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Project Card 1 -->
+<article class="spectrum-key group relative flex flex-col gap-6 p-4 rounded-DEFAULT bg-[#212121] hover:shadow-[0_8px_0_0_rgba(0,0,0,1),0_0_40px_-10px_rgba(0,255,255,0.12)] transition-all duration-200 cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-lg bg-surface-container-high">
+<img alt="Cybersecurity interface" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAe4ZlsM9xQ2lPoraWAJ9_vBA_k_JrByg2vAUjovmL3gpS8rYs5D595A_BL0QfCBuhJFK4rkkTCHSwHHBLLZL4IMQQcc0DhArxwXIG9-zel6Y9RRnhKYrDiYFe6NUm6IJ4bNzBTXUHUuD9geSMDjCWWDjv3k3TAso2sWXQQ8pAXrOLElnOrQK_cdXL3Z7AzMPG5H-E62C7c458lHuLBIlGGwehawepl0eHIuUmJPEBsngDiGmfOWQCETzvcMWLA_qISqSiPZ-ymVJM"/>
+</div>
+<div class="flex flex-col gap-2 px-2 pb-2">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-on-surface tracking-tight font-headline">NEURAL_OS</h2>
+<span class="text-tertiary-container text-xs font-bold tracking-widest font-body uppercase">2024</span>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-0.5 rounded-full bg-cyan-400/10 text-cyan-400 text-[10px] font-bold font-label uppercase">Interface</span>
+<span class="px-3 py-0.5 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-bold font-label uppercase">Rust</span>
+</div>
+</div>
+</article>
+<!-- Project Card 2 -->
+<article class="spectrum-key group relative flex flex-col gap-6 p-4 rounded-DEFAULT bg-[#212121] hover:shadow-[0_8px_0_0_rgba(0,0,0,1),0_0_40px_-10px_rgba(0,255,255,0.12)] transition-all duration-200 cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-lg bg-surface-container-high">
+<img alt="Generative art flow" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPvGu2i3v-qXgcQIDHdESViC484Nvfv5vMlBDex3ZL5aGauaAb694v_-Wga85lddLwxSRfjGqH62omIk133wAVRDzEzz83L46B8ZzN3uy53MMZVoL3yzp1c-FsTmfYoIRZq0UmB38uDh_UbHTn-F9QfEh2nRuc_4nzmtPSIyE2fZO46-OYSfs8HGXs44pCMWdlw3nbnRcKFpgLZPCOtjj-sjfp7KzyYsZBwqATAJJsHm_xoq42ekyHMABeGDnxaZxyFMdaDXaNMZE"/>
+</div>
+<div class="flex flex-col gap-2 px-2 pb-2">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-on-surface tracking-tight font-headline">VOID_GRAPH</h2>
+<span class="text-tertiary-container text-xs font-bold tracking-widest font-body uppercase">2023</span>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-0.5 rounded-full bg-pink-500/10 text-pink-400 text-[10px] font-bold font-label uppercase">Visualizer</span>
+<span class="px-3 py-0.5 rounded-full bg-blue-500/10 text-blue-400 text-[10px] font-bold font-label uppercase">WebGL</span>
+</div>
+</div>
+</article>
+<!-- Project Card 3 -->
+<article class="spectrum-key group relative flex flex-col gap-6 p-4 rounded-DEFAULT bg-[#212121] hover:shadow-[0_8px_0_0_rgba(0,0,0,1),0_0_40px_-10px_rgba(0,255,255,0.12)] transition-all duration-200 cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-lg bg-surface-container-high">
+<img alt="Satellite data stream" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABITRWC2_GmedE1krvw1c8hOP7wk0Z_6SfWDREimhJyVEWsiWyUqEdUpGcGgmeIs7hOvejqv7_X-dlkPVznCJo7AqftsQSW7lWZcMu19U88AHQBqxwOlj3HNNJ57rvvumuj9-zytMLACoj09W9ZHqt7PrUenRhxjdKNe-IBO3LWOZFtJfEH77ylmE5fFJ84Ehm9zYKCq9GQgF4CjDmLS8A1vfSV7bnCF0SzrqeuII9z8zQlFhMHAHG0z9p1UA57VfGXpp-auX4BgA"/>
+</div>
+<div class="flex flex-col gap-2 px-2 pb-2">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-on-surface tracking-tight font-headline">CORE_LINK</h2>
+<span class="text-tertiary-container text-xs font-bold tracking-widest font-body uppercase">2023</span>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-0.5 rounded-full bg-teal-500/10 text-teal-400 text-[10px] font-bold font-label uppercase">Protocol</span>
+<span class="px-3 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 text-[10px] font-bold font-label uppercase">API</span>
+</div>
+</div>
+</article>
+<!-- Project Card 4 -->
+<article class="spectrum-key group relative flex flex-col gap-6 p-4 rounded-DEFAULT bg-[#212121] hover:shadow-[0_8px_0_0_rgba(0,0,0,1),0_0_40px_-10px_rgba(0,255,255,0.12)] transition-all duration-200 cursor-pointer">
+<div class="aspect-video w-full overflow-hidden rounded-lg bg-surface-container-high">
+<img alt="Server mainframe" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMUgtbh-XAenQTTQfVznQlS7tQykvkA5JoUJ3oeRqZmPtaCbTn0OpH2pOQoEzqx1aLWKgKuG7m_U1DiHO_acxtipVb9JgvwVWxNKrSiGuJRToneRWSXKfbmIkIcyCJDKXWTctKJGJqaJYVLzeU6tvZUeqp57ANWi0rAGzHuCNF5GILqMuHGDRUNSYngFnlMy5M6KZcBqxbhphHjNcYD2HsS4qb7LE1-XZweQ7uoyWM2xy15STL9RyYAbTwLwcyCnd4LgB8mRid6oM"/>
+</div>
+<div class="flex flex-col gap-2 px-2 pb-2">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-on-surface tracking-tight font-headline">BALENET_KRNL</h2>
+<span class="text-tertiary-container text-xs font-bold tracking-widest font-body uppercase">2022</span>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-0.5 rounded-full bg-red-500/10 text-red-400 text-[10px] font-bold font-label uppercase">Kernel</span>
+<span class="px-3 py-0.5 rounded-full bg-green-500/10 text-green-400 text-[10px] font-bold font-label uppercase">C++</span>
+</div>
+</div>
+</article>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-black border-t border-zinc-800 font-body text-xs uppercase tracking-widest">
+<div class="text-white font-bold">(C) 1982 SINCLAIR RESEARCH LTD / BALENET</div>
+<div class="flex gap-6">
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">CREDITS</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SOURCE</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SYSTEM</a>
+<span class="text-cyan-400">WORK</span>
+</div>
+</footer>
+</body></html>

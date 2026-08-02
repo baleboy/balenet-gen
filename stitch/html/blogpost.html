@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inconsolata:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-surface": "#ffffff",
+                        "secondary-container": "#0000D7",
+                        "primary-dim": "#00FFFF",
+                        "primary-container": "#00FFFF",
+                        "error-container": "#D70000",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#ffffff",
+                        "on-primary": "#000000",
+                        "tertiary": "#FF0000",
+                        "inverse-primary": "#0000D7",
+                        "inverse-surface": "#ffffff",
+                        "secondary-fixed-dim": "#0000D7",
+                        "on-primary-fixed-variant": "#000000",
+                        "surface": "#000000",
+                        "on-surface-variant": "#D7D7D7",
+                        "tertiary-dim": "#FF0000",
+                        "primary-fixed-dim": "#00FFFF",
+                        "on-background": "#ffffff",
+                        "outline-variant": "#484848",
+                        "secondary-fixed": "#0000D7",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed-variant": "#ffffff",
+                        "surface-container-low": "#131313",
+                        "surface-container-lowest": "#000000",
+                        "secondary-dim": "#0000D7",
+                        "on-tertiary-container": "#000000",
+                        "on-error": "#ffffff",
+                        "error-dim": "#FF0000",
+                        "primary-fixed": "#00FFFF",
+                        "inverse-on-surface": "#000000",
+                        "primary": "#00FFFF",
+                        "tertiary-fixed": "#FF0000",
+                        "surface-tint": "#00FFFF",
+                        "tertiary-container": "#FF0000",
+                        "on-primary-container": "#000000",
+                        "secondary": "#0000D7",
+                        "on-primary-fixed": "#000000",
+                        "on-secondary-container": "#ffffff",
+                        "surface-variant": "#262626",
+                        "surface-container-high": "#1f1f1f",
+                        "surface-bright": "#2c2c2c",
+                        "background": "#000000",
+                        "outline": "#757575",
+                        "surface-dim": "#000000",
+                        "on-tertiary-fixed-variant": "#ffffff",
+                        "tertiary-fixed-dim": "#FF0000",
+                        "surface-container": "#191919",
+                        "on-secondary-fixed": "#ffffff",
+                        "error": "#FF0000",
+                        "on-error-container": "#ffffff",
+                        "surface-container-highest": "#262626"
+                    },
+                    fontFamily: {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inconsolata"],
+                        "label": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inconsolata', monospace;
+        }
+        .markdown-content h2, 
+        .markdown-content h3, 
+        .markdown-content h4, 
+        .markdown-content h5, 
+        .markdown-content h6 {
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 0.5rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: #00FFFF;
+            text-transform: uppercase;
+        }
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 2rem 0;
+            border: 2px solid #ffffff;
+        }
+        .markdown-content th, 
+        .markdown-content td {
+            border: 1px solid #ffffff;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .markdown-content th {
+            background-color: #0000D7;
+            color: #ffffff;
+        }
+        .markdown-content blockquote {
+            border-left: 8px solid #FFD700;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #ffffff;
+            background: #191919;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .markdown-content a {
+            color: #FFFF00;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .markdown-content a:hover {
+            background-color: #FFFF00;
+            color: #000000;
+        }
+        .markdown-content code {
+            background-color: #0000D7;
+            padding: 0.2rem 0.4rem;
+            color: #ffffff;
+        }
+        .markdown-content pre {
+            background-color: #000000;
+            border: 4px solid #ffffff;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 2rem 0;
+            position: relative;
+            box-shadow: 8px 8px 0px #0000D7;
+        }
+        .markdown-content pre::before {
+            content: "K: ";
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+            color: #ffffff;
+        }
+        .sinclair-rainbow {
+            height: 4px;
+            width: 100%;
+            background: linear-gradient(to right, #FF0000 25%, #FFFF00 25%, #FFFF00 50%, #00FF00 50%, #00FF00 75%, #00FFFF 75%);
+        }
+        .zx-image-border {
+            border: 4px solid #ffffff;
+            padding: 4px;
+            background: #000000;
+        }
+        .zx-tag {
+            border: 1px solid currentColor;
+            padding: 2px 8px;
+        }
+    </style>
+</head>
+<body class="selection:bg-yellow-400 selection:text-black">
+<!-- TopNavBar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-black border-t-4 border-t-[#FF0000]" style="border-top: 4px solid; border-image: linear-gradient(to right, #FF0000 25%, #FFD429 25%, #FFD429 50%, #00E04B 50%, #00E04B 75%, #00FFFF 75%) 1;">
+<div class="flex justify-between items-center w-full px-6 py-4 mx-auto max-w-[820px]">
+<div class="text-2xl font-black text-cyan-400 font-headline tracking-tighter uppercase">
+                BALENET
+            </div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex gap-6">
+<a class="text-yellow-400 font-bold font-headline transition-colors hover:bg-zinc-900 px-2" href="#">WORK</a>
+<a class="text-white font-bold font-headline transition-colors hover:bg-zinc-900 px-2" href="#">LABS</a>
+<a class="text-white font-bold font-headline transition-colors hover:bg-zinc-900 px-2" href="#">ABOUT</a>
+</div>
+<div class="flex gap-4 text-cyan-400">
+<button class="hover:bg-zinc-900 transition-colors p-2 active:translate-y-0.5">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content Shell -->
+<main class="pt-32 pb-24 px-6 max-w-[820px] mx-auto w-full font-body">
+<!-- Article Header -->
+<header class="mb-16">
+<h2 class="text-5xl md:text-6xl font-bold font-headline tracking-tight mb-6 leading-tight text-white border-b-4 border-white pb-4">
+                Architecting Reactive Systems in the Terminal Age
+            </h2>
+<div class="flex flex-wrap items-center gap-4 font-body">
+<span class="text-yellow-400 font-bold tracking-widest text-sm uppercase">
+                    OCT 24, 2024
+                </span>
+<div class="flex gap-2">
+<span class="px-3 py-0.5 rounded-sm bg-[#2C7DFC] text-white font-label text-[10px] uppercase tracking-wider border-b-2 border-r-2 border-black/40">SYSTEMS</span>
+<span class="px-3 py-0.5 rounded-sm bg-[#FF3B30] text-white font-label text-[10px] uppercase tracking-wider border-b-2 border-r-2 border-black/40">REACTIVE</span>
+<span class="text-zinc-400 text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">schedule</span> 12 min read
+                    </span>
+</div>
+</div>
+</header>
+<!-- Post Body -->
+<article class="markdown-content text-lg leading-relaxed text-on-surface-variant">
+<p class="text-on-surface text-xl mb-8 leading-relaxed">
+                The evolution of backend architecture is shifting back to a lean, deterministic approach. In this dossier, we explore the implementation of low-latency streams within high-concurrency environments.
+            </p>
+<h2>01. The Core Infrastructure</h2>
+<p>
+                Modern reactive systems demand more than just async/await patterns. We are looking at <code>event-driven</code> hardware-accelerated processing that bypasses traditional bottlenecking.
+            </p>
+<div class="w-4/5 mx-auto my-12 zx-image-border">
+<img alt="Clean server room with cyan lights" class="w-full h-auto" data-alt="Modern high-tech server rack illuminated with cyan neon light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3DH1Si7H9xdEES5Knw27djRNq8w8H7svqztgxFNENmgd3Ij2jTLyz5-djnhye8ta1X8uz4rvoSsDi76JUMpnUs65GTo18etOVpOM0tvAnlFYQaWgKYeErYSC-VKti6XVbBt7WZb0bwvWwJOUXjLGR-BwXJnzxPbX51lgF8XEweQvbL2qYqTbdiI4XN65ryO4xrVCt4BAblNml7dRewzlhVJol-4Vt-r3MhQHrWl_bRWK2stYM3847fk_guz9vlF515dLbmr3T01Q"/>
+</div>
+<p>
+                When we talk about the "Mainframe-as-Art," we refer to the aesthetic precision of a well-optimized stack. Every cycle counts, every memory allocation is a design choice.
+            </p>
+<h3>The Performance Matrix</h3>
+<p>
+                Below is a comparison of our current throughput metrics across different node clusters.
+            </p>
+<table>
+<thead>
+<tr>
+<th>Cluster ID</th>
+<th>Throughput (req/s)</th>
+<th>Latency (P99)</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ALPHA-01</td>
+<td>45,000</td>
+<td>1.2ms</td>
+<td class="text-primary-container font-bold">OPTIMAL</td>
+</tr>
+<tr>
+<td>BETA-09</td>
+<td>32,400</td>
+<td>4.8ms</td>
+<td class="text-yellow-400 font-bold">STABLE</td>
+</tr>
+<tr>
+<td>GAMMA-03</td>
+<td>12,900</td>
+<td>12.1ms</td>
+<td class="text-red-500 font-bold">DEGRADED</td>
+</tr>
+</tbody>
+</table>
+<div class="sinclair-rainbow my-12 opacity-50"></div>
+<h2>02. Visualizing the Data Flow</h2>
+<p>
+                The following lecture provides an in-depth breakdown of the packet-switching logic used in the Balenet core. It serves as a visual guide to the theory we've discussed.
+            </p>
+<!-- Responsive YouTube Embed -->
+<div class="relative w-full aspect-video my-12 zx-image-border">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" class="absolute top-0 left-0 w-full h-full" frameborder="0" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Balenet Technical Deep Dive"></iframe>
+</div>
+<blockquote>
+                "Software is a reflection of the machine it inhabits. If the code is cluttered, the machine is burdened. If the code is clear, the machine is free."
+            </blockquote>
+<h2>03. Implementation Sample</h2>
+<p>
+                Here is the initialization logic for the Balenet Stream Listener. Notice the lack of overhead in the registration phase.
+            </p>
+<pre><code>// Initializing the Balenet Core Listener
+const listener = balenet.createStream({
+    id: "STREAM_ALPHA",
+    buffer: 1024,
+    mode: "reactive"
+});
+
+listener.on("data", (packet) =&gt; {
+    // Hardware accelerated processing
+    process.accelerate(packet.payload);
+    console.log(`[SYS] Packet processed: ${packet.hash}`);
+});</code></pre>
+<h2>Summary</h2>
+<p>
+                We continue to push the boundaries of what the terminal can represent. It isn't just a tool; it's a medium for high-precision intelligence.
+            </p>
+</article>
+<!-- Post Tags / Footer Metadata -->
+<footer class="mt-20 pt-10 border-t-2 border-white">
+<div class="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 zx-image-border flex items-center justify-center overflow-hidden">
+<img alt="Francesco Balestrieri" class="w-full h-full object-cover grayscale contrast-125" data-alt="Close up portrait of a developer in high contrast lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlGoCBNSAwc32I0ZDG_LZgfeuaysTGPptmeLodnais_Ml4hJZC3yfIar1te3dxW5nWggkyFA217wIScTtPFuT8j7hrovBeAsPLwFcMYhFdEc4QQYI2GTyHwSY7S3ND94HpofLmzgb-d_l3ce34jC1tDLyKmGQZv4bG8eKG_cvkU2MuSgcWd3d02Oy8YpyYT9gDWtKwz_aef7ucfE_UC6-D-0QBMjrb1rS-MMPTGjWbW7KEVUW8tXkd0d8HVa4RR7lRcKzAnqvPQhQ"/>
+</div>
+<div>
+<div class="text-on-surface font-headline font-bold uppercase tracking-tighter">Francesco Balestrieri</div>
+<div class="text-yellow-400 text-xs font-body font-bold">LEAD ARCHITECT @ BALENET</div>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 text-cyan-400 font-headline font-bold hover:bg-cyan-400 hover:text-black px-2 transition-colors">
+<span class="material-symbols-outlined text-sm">share</span> SHARE
+                    </button>
+<button class="flex items-center gap-2 text-cyan-400 font-headline font-bold hover:bg-cyan-400 hover:text-black px-2 transition-colors">
+<span class="material-symbols-outlined text-sm">bookmark</span> SAVE
+                    </button>
+</div>
+</div>
+<div class="sinclair-rainbow mt-8 h-1"></div>
+</footer>
+</main>
+<!-- Global Footer -->
+<footer class="w-full py-8 px-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-black border-t border-zinc-800 font-['Inconsolata'] text-xs uppercase tracking-widest">
+<div class="flex items-center gap-4">
+<span class="text-white font-bold">BALENET</span>
+<span class="text-zinc-500">(C) 1982 SINCLAIR RESEARCH LTD / BALENET</span>
+</div>
+<div class="flex gap-8">
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">CREDITS</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SOURCE</a>
+<a class="text-zinc-500 hover:text-white transition-colors" href="#">SYSTEM</a>
+</div>
+</footer>
+</body></html>
