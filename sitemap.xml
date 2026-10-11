@@ -2,13 +2,17 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://www.balenet.com/</loc>
-        <lastmod>2026-07-31</lastmod>
+        <lastmod>2026-10-11</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/about/</loc>
     </url>
     <url>
         <loc>https://www.balenet.com/work/</loc>
+    </url>
+    <url>
+        <loc>https://www.balenet.com/posts/tonys-pizza/</loc>
+        <lastmod>2026-10-11</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/posts/frictionless-notes/</loc>
@@ -203,7 +207,7 @@
     </url>
     <url>
         <loc>https://www.balenet.com/topics/pizza/</loc>
-        <lastmod>2025-12-08</lastmod>
+        <lastmod>2026-10-11</lastmod>
     </url>
     <url>
         <loc>https://www.balenet.com/topics/productivity/</loc>
