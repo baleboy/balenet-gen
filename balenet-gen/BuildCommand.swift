@@ -25,6 +25,12 @@ struct BuildCommand: ParsableCommand {
     )
     var templates: String?
     
+    @Flag(
+        name: .long,
+        help: "Include items marked 'draft: true' in their front matter"
+    )
+    var drafts: Bool = false
+    
     func run() throws {
         let sourceURL = URL(fileURLWithPath: source ?? FileManager.default.currentDirectoryPath)
         
@@ -41,7 +47,8 @@ struct BuildCommand: ParsableCommand {
             baseURL: Config.siteURL,
             sourceURL: sourceURL,
             buildURL: outputURL,
-            templateDirectory: templateDirectory
+            templateDirectory: templateDirectory,
+            includeDrafts: drafts
         )
         site.build()
     }

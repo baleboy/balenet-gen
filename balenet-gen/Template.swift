@@ -98,7 +98,8 @@ struct TemplateEngine {
                 with: [
                     "path": project.path,
                     "image": project.headerImage ?? "",
-                    "title": project.title
+                    "title": project.title,
+                    "draft_badge": draftBadge(for: project)
                 ]
             )
         }.joined()
@@ -119,7 +120,8 @@ struct TemplateEngine {
                 "title": post.title,
                 "date": dateToString(post.date ?? Date()),
                 "body": post.html,
-                "topics": renderTopicLabels(for: post.topics)
+                "topics": renderTopicLabels(for: post.topics),
+                "draft_banner": draftBanner(for: post)
             ]
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
@@ -130,7 +132,8 @@ struct TemplateEngine {
             projectTemplate,
             with: [
                 "title": project.title,
-                "body": project.html
+                "body": project.html,
+                "draft_banner": draftBanner(for: project)
             ]
         )
         return renderPage(withContent: body, navigationTopics: navigationTopics)
@@ -156,9 +159,20 @@ struct TemplateEngine {
                 "path": post.path,
                 "title": post.title,
                 "date": dateToString(post.date ?? Date(), includeYear: includeYear),
-                "topics": renderTopicLabels(for: post.topics)
+                "topics": renderTopicLabels(for: post.topics),
+                "draft_badge": draftBadge(for: post)
             ]
         )
+    }
+    
+    private func draftBanner(for item: ContentItem) -> String {
+        guard item.isDraft else { return "" }
+        return "<div class=\"draft-banner\">Draft &mdash; not published</div>"
+    }
+    
+    private func draftBadge(for item: ContentItem) -> String {
+        guard item.isDraft else { return "" }
+        return "<span class=\"draft-badge\">Draft</span>"
     }
     
     private func renderTopicLabels(for topics: [Topic]) -> String {

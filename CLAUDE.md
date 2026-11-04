@@ -165,6 +165,8 @@ source/
 - `order`: Integer for sorting (higher = appears first)
 - `image`: Filename of header image (relative to project folder)
 
+**Drafts** (posts or projects): add `draft: true` to the front matter. Drafts are skipped by default (no page, no index/topic/sitemap entry, no assets copied). Pass `--drafts` to include them. `make serve` includes drafts by default (`make serve DRAFTS=` to exclude); `make render`/`publish` never do unless `DRAFTS=1` is set.
+
 ### Custom Ink Modifiers
 
 **youtubeEmbed()** (Ink+Modifiers.swift:12) - Converts YouTube links ending with `#embed` into embedded iframe players. Example: `[Video](https://youtube.com/watch?v=ID#embed)`

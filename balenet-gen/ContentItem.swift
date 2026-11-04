@@ -111,6 +111,7 @@ struct ContentItem {
     let html: String
     let path: String
     let topics: [Topic]
+    let isDraft: Bool
 
     // post specific
     let date: Date?
@@ -120,26 +121,28 @@ struct ContentItem {
     let headerImage: String?
     
     // Factory
-    static func post(title: String, date: Date, path: String, html: String, topics: [Topic]) -> ContentItem {
+    static func post(title: String, date: Date, path: String, html: String, topics: [Topic], isDraft: Bool = false) -> ContentItem {
         ContentItem(
             type: .post,
             title: title,
             html: html,
             path: path,
             topics: topics,
+            isDraft: isDraft,
             date: date,
             order: nil,
             headerImage: nil
         )
     }
     
-    static func project(title: String, order: Int, path: String, image: String, html: String) -> ContentItem {
+    static func project(title: String, order: Int, path: String, image: String, html: String, isDraft: Bool = false) -> ContentItem {
         ContentItem(
             type: .project,
             title: title,
             html: html,
             path: path,
             topics: [],
+            isDraft: isDraft,
             date: nil,
             order: order,
             headerImage: image

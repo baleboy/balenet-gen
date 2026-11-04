@@ -7,6 +7,9 @@ RELEASE_BINARY = $(RELEASE_DIR)/$(BINARY_NAME)
 SITE_DIR = site
 SITE_BUILD_DIR = $(SITE_DIR)/build
 
+# Set DRAFTS=1 to include draft items (make serve includes them by default)
+RENDER_FLAGS = $(if $(DRAFTS),--drafts,)
+
 .PHONY: all build render clean clean-site clean-build test serve publish
 
 all: build render
@@ -22,7 +25,7 @@ build:
 render: build
 	@echo "Rendering site into $(SITE_BUILD_DIR)..."
 	@rm -rf $(SITE_BUILD_DIR)
-	@$(RELEASE_BINARY) -s $(SITE_DIR) -o build
+	@$(RELEASE_BINARY) -s $(SITE_DIR) -o build $(RENDER_FLAGS)
 
 clean:
 	@echo "Cleaning build artifacts..."
@@ -42,6 +45,7 @@ test:
 	@./scripts/test.sh
 
 .PHONY: serve
+serve: DRAFTS = 1
 serve: render
 	@echo "Serving site from $(SITE_BUILD_DIR) on http://localhost:8000 ..."
 	@cd $(SITE_DIR) && ( \

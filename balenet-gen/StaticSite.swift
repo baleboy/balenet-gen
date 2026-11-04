@@ -38,8 +38,9 @@ struct StaticSite {
     let buildURL: URL
     let contentURL: URL
     let projectsURL: URL
+    let includeDrafts: Bool
     
-    init(title: String, baseURL: URL, sourceURL: URL, buildURL: URL, templateDirectory: URL) throws {
+    init(title: String, baseURL: URL, sourceURL: URL, buildURL: URL, templateDirectory: URL, includeDrafts: Bool = false) throws {
         
         self.title = title
         self.baseURL = baseURL
@@ -47,6 +48,7 @@ struct StaticSite {
         self.buildURL = buildURL
         self.contentURL = sourceURL.appendingPathComponent("content")
         self.projectsURL = contentURL.appendingPathComponent("work")
+        self.includeDrafts = includeDrafts
         
         template = try TemplateEngine(title: title, directory: templateDirectory)
     }
@@ -247,6 +249,19 @@ struct StaticSite {
                 options: []
             )
             
+            // Parse markdown first so drafts can be skipped before anything is written
+            let items = try fileURLs
+                .filter { $0.pathExtension == "md" }
+                .map { try parseItem(folder: folder, markdownURL: $0) }
+            
+            if items.contains(where: \.isDraft) {
+                guard includeDrafts else {
+                    print("Skipping draft: \(type.subFolder)/\(folder)")
+                    continue
+                }
+                print("Including draft: \(type.subFolder)/\(folder)")
+            }
+            
             // Create appropriate subfolder in build directory
             let buildFolderURL = buildURL.appendingPathComponent(type.subFolder)
                 .appendingPathComponent(folder)
@@ -255,22 +270,17 @@ struct StaticSite {
                 withIntermediateDirectories: true
             )
             
-            for fileURL in fileURLs {
-                if fileURL.pathExtension == "md" {
-                    let item = try parseItem(folder: folder, markdownURL: fileURL)
-                    let target = RenderTarget(
-                        item: item,
-                        outputDirectory: buildFolderURL
-                    )
-                    targets.append(target)
-                } else {
-                    // copy post asset files to build folder
-                    let destinationURL = buildFolderURL.appendingPathComponent(fileURL.lastPathComponent)
-                    try fileManager.copyItem(
-                        at: fileURL,
-                        to: destinationURL
-                    )
-                }
+            for item in items {
+                targets.append(RenderTarget(item: item, outputDirectory: buildFolderURL))
+            }
+            
+            // copy asset files to build folder
+            for fileURL in fileURLs where fileURL.pathExtension != "md" {
+                let destinationURL = buildFolderURL.appendingPathComponent(fileURL.lastPathComponent)
+                try fileManager.copyItem(
+                    at: fileURL,
+                    to: destinationURL
+                )
             }
         }
         
@@ -285,19 +295,25 @@ struct StaticSite {
         let title = parsed.metadata["title"] ?? "Untitled"
         let path = "/\(type.subFolder)/\(folder)/"
         let html = parsed.html
+        let isDraft = Self.isTruthy(parsed.metadata["draft"])
         
         switch type {
         case .post:
             let dateString = parsed.metadata["date"] ?? ""
             let date = dateFormatter.date(from: dateString) ?? Date()
             let topics = Topic.parseList(from: parsed.metadata["topics"])
-            return .post(title: title, date: date, path: path, html: html, topics: topics)
+            return .post(title: title, date: date, path: path, html: html, topics: topics, isDraft: isDraft)
         case .project:
             let orderString = parsed.metadata["order"] ?? ""
             let order = Int(orderString) ?? 0
             let image = "\(folder)/\(parsed.metadata["image"] ?? "")"
-            return .project(title: title, order: order, path: path, image: image, html: html)
+            return .project(title: title, order: order, path: path, image: image, html: html, isDraft: isDraft)
         }
+    }
+    
+    private static func isTruthy(_ value: String?) -> Bool {
+        guard let value else { return false }
+        return ["true", "yes", "1"].contains(value.trimmingCharacters(in: .whitespaces).lowercased())
     }
     
 }
