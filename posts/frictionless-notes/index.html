@@ -31,13 +31,18 @@
     <div class="page-shell">
       <main>
 <article>
+    
     <h2>Frictionless note taking with Apple Shortcuts and Google Docs</h2>
     <div class="post-meta">
         <time>31 July 2026</time>
         <span class="topic-labels"><a class="topic-label topic-pink" href="/topics/productivity/">Productivity</a></span>
     </div>
     <div class="post-body">
-        <p>The stock iOS notes app has been my go-to "brain dump" tool for a while. I like the fact that I can use the Share extension from more or less any context and save an image, link, web page and whatnot in a new note. The only thing I don't like about it is that I need to categorize the note when I create it, and the UI to do it is cumbersome.</p><p>I've been thinking about creating a replacement that works in the exact same way, but uses AI to classify the note in the background. To validate the idea, I put together a duct-and-tape equivalent that actually works surprisingly well and may end up being the Final Solution.</p><p>As the storage system for my notes I chose a single Google Doc named "Brain Dump". I like to use Google Docs for this type of applications because it's easy to read and modify by hand later. Also, Google Docs has a comprehensive API and ready integrations with any AI tool, in my case Claude. This is important because I would like my LLM to be aware of my notes when I'm chatting with it (more on this later).</p><p>The backend is handled by a Google App Script that receives the note content, uses Gemini to classify it and appends it to the Google Doc. Anybody can ask an AI to create this script in seconds like I did, so I don't know what's the point in sharing it, but here it is:</p><pre><code>const DOC_ID = &lt;from the doc URL&gt;
+        <p>The stock iOS notes app has been my go-to &quot;brain dump&quot; tool for a while. I like the fact that I can use the Share extension from more or less any context and save an image, link, web page and whatnot in a new note. The only thing I don't like about it is that I need to categorize the note when I create it, and the UI to do it is cumbersome.</p>
+<p>I've been thinking about creating a replacement that works in the exact same way, but uses AI to classify the note in the background. To validate the idea, I put together a duct-and-tape equivalent that actually works surprisingly well and may end up being the Final Solution.</p>
+<p>As the storage system for my notes I chose a single Google Doc named &quot;Brain Dump&quot;. I like to use Google Docs for this type of applications because it's easy to read and modify by hand later. Also, Google Docs has a comprehensive API and ready integrations with any AI tool, in my case Claude. This is important because I would like my LLM to be aware of my notes when I'm chatting with it (more on this later).</p>
+<p>The backend is handled by a Google App Script that receives the note content, uses Gemini to classify it and appends it to the Google Doc. Anybody can ask an AI to create this script in seconds like I did, so I don't know what's the point in sharing it, but here it is:</p>
+<pre><code>const DOC_ID = &lt;from the doc URL&gt;
 const MODEL  = 'gemini-flash-latest';
 
 const PROPS  = PropertiesService.getScriptProperties();
@@ -103,10 +108,10 @@ function enrich(text) {
   const prompt =
     'Classify this personal note. The user is an Italian engineering manager in Helsinki; ' +
     'notes may be in English, Italian, or Finnish. Return ONLY JSON, no markdown:\n' +
-    '{"summary":"one concise line in English, max 120 chars",' +
-    '"tags":["1-4 kebab-case tags"],' +
-    '"language":"ISO code of the note\'s language (en/it/fi/...)"}\n\n' +
-    'Note:\n"""\n' + text + '\n"""';
+    '{&quot;summary&quot;:&quot;one concise line in English, max 120 chars&quot;,' +
+    '&quot;tags&quot;:[&quot;1-4 kebab-case tags&quot;],' +
+    '&quot;language&quot;:&quot;ISO code of the note\'s language (en/it/fi/...)&quot;}\n\n' +
+    'Note:\n&quot;&quot;&quot;\n' + text + '\n&quot;&quot;&quot;';
 
   return callGemini(prompt);
 }
@@ -115,12 +120,12 @@ function enrichLink(note, url, page) {
   const prompt =
     'Summarize and classify a web page the user saved to their notes. ' +
     'The user is an Italian engineering manager in Helsinki. Return ONLY JSON:\n' +
-    '{"title":"the page title, cleaned up, max 80 chars",' +
-    '"summary":"2-3 sentences on what the page says, in English",' +
-    '"tags":["1-4 kebab-case tags"]}\n\n' +
-    "User's own note (may be empty): " + note + '\n' +
+    '{&quot;title&quot;:&quot;the page title, cleaned up, max 80 chars&quot;,' +
+    '&quot;summary&quot;:&quot;2-3 sentences on what the page says, in English&quot;,' +
+    '&quot;tags&quot;:[&quot;1-4 kebab-case tags&quot;]}\n\n' +
+    &quot;User's own note (may be empty): &quot; + note + '\n' +
     'URL: ' + url + '\nPage title: ' + page.title + '\n' +
-    'Page text:\n"""\n' + page.text + '\n"""';
+    'Page text:\n&quot;&quot;&quot;\n' + page.text + '\n&quot;&quot;&quot;';
   return callGemini(prompt);   // factor the fetch/parse out of enrich() into callGemini()
 }
 
@@ -142,7 +147,7 @@ function fetchPageText(url) {
     .replace(/&lt;style[\s\S]*?&lt;\/style&gt;/gi, ' ')
     .replace(/&lt;[^&gt;]+&gt;/g, ' ')
     .replace(/&amp;nbsp;/g, ' ').replace(/&amp;amp;/g, '&amp;')
-    .replace(/&amp;quot;/g, '"').replace(/&amp;#39;/g, "'")
+    .replace(/&amp;quot;/g, '&quot;').replace(/&amp;#39;/g, &quot;'&quot;)
     .replace(/&amp;lt;/g, '&lt;').replace(/&amp;gt;/g, '&gt;')
     .replace(/\s+/g, ' ')
     .trim();
@@ -178,7 +183,14 @@ function callGemini(prompt, useUrlContext) {
   const jsonText = body.candidates[0].content.parts[0].text;
   return JSON.parse(jsonText.replace(/```json|```/g, '').trim());
 }
-</code></pre><p>It's pretty straightforward, the only thing worth mentioning is that when recording URLs the script looks into the page's content and adds it to the context, asking for a summary. I wasn't able to get logs out of the script so the diagnostic information is appended directly in the document.</p><p>On the client side I used Shortcuts, available on iOS, MacOS and WatchOS. I hadn't used Shortcuts before and was pleasantly surprised by their capabilities. It's a visual scripting language that looks simple but is actually quite powerful, for example it can query any URL and parse the response or extract text from an image. I created different shortucts for text input, voice, clipboard and share sheet.</p><p>Here is an example of the Shortcut Editor for the "Dump Voice" shortcut:</p><img src="shortcut.png" alt="Shortcut editor for dump voice"/><p>To make it even more seamless, I have configured this shortcut to respond to "double back tap" (found in the iOS accessibility settings).</p><p>I've been using this system for a few weeks now, and find it very useful. The real missing piece is easy navigation of the notes, the Google Doc is already unwieldy and will become even worse. For that I would need to build a full stack which is the next step now that I have proven that the idea is worthy.</p>
+</code></pre>
+<p>It's pretty straightforward, the only thing worth mentioning is that when recording URLs the script looks into the page's content and adds it to the context, asking for a summary. I wasn't able to get logs out of the script so the diagnostic information is appended directly in the document.</p>
+<p>On the client side I used Shortcuts, available on iOS, MacOS and WatchOS. I hadn't used Shortcuts before and was pleasantly surprised by their capabilities. It's a visual scripting language that looks simple but is actually quite powerful, for example it can query any URL and parse the response or extract text from an image. I created different shortucts for text input, voice, clipboard and share sheet.</p>
+<p>Here is an example of the Shortcut Editor for the &quot;Dump Voice&quot; shortcut:</p>
+<img src="shortcut.png" alt="Shortcut editor for dump voice">
+<p>To make it even more seamless, I have configured this shortcut to respond to &quot;double back tap&quot; (found in the iOS accessibility settings).</p>
+<p>I've been using this system for a few weeks now, and find it very useful. The real missing piece is easy navigation of the notes, the Google Doc is already unwieldy and will become even worse. For that I would need to build a full stack which is the next step now that I have proven that the idea is worthy.</p>
+
     </div>
 </article>
     </main>

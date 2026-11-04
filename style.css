@@ -394,6 +394,40 @@ h1 {
     filter: brightness(1.2);
 }
 
+/* ===== Drafts (only rendered with --drafts) ===== */
+.draft-banner {
+    margin-bottom: 1.5rem;
+    padding: 8px 12px;
+    font-family: var(--font-label);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--tag-yellow),
+        var(--tag-yellow) 12px,
+        #e6bd1f 12px,
+        #e6bd1f 24px
+    );
+}
+
+.draft-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 6px;
+    font-family: var(--font-label);
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+    vertical-align: middle;
+    color: #000;
+    background-color: var(--tag-yellow);
+}
+
 /* ===== Images ===== */
 img {
     max-width: 100%;
