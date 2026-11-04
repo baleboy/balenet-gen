@@ -42,7 +42,7 @@ Though I wasted some time, I'm happy that I went back and forth with the impleme
 
 ## Choosing a Markdown parser
 
-Initially, Claude created its own barebones Markdown parser, which was a nice idea in terms of learning exercise but felt like too much work. Instead I found a Swift package named [Ink](https://github.com/JohnSundell/Ink) and decided to use that. I later found a [comparison of Swift markdown parsers](Swift MD parsers: https://www.loopwerk.io/articles/2021/review-markdown-parsers/) that supported my choice.
+Initially, Claude created its own barebones Markdown parser, which was a nice idea in terms of learning exercise but felt like too much work. Instead I found a Swift package named [Ink](https://github.com/JohnSundell/Ink) and decided to use that. I later found a [comparison of Swift markdown parsers](https://www.loopwerk.io/articles/2021/review-markdown-parsers/) that supported my choice.
 
 Although Ink is capable of processing metadata like `title`, `date` etc. (the so called "front matter"), at first I kept using my own implementation for that. Later I switched fully to Ink, which meant that I had to fix the front matter in all the MD files to follow Ink's metadata format.
 

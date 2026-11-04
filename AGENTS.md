@@ -1,22 +1,22 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-The CLI source lives in `balenet-gen/`, with `BuildCommand.swift` handling argument parsing and `StaticSite.swift` orchestrating file IO and rendering. Configurable text and metadata defaults sit in `Config.swift`; reusable presentation logic is kept in `Template.swift` and `Ink+Modifiers.swift`. The Xcode project `balenet-gen.xcodeproj` is the canonical build definition, and the `Makefile` proxies common actions. Generated output is written to `build/` relative to the chosen source tree; `.build/` is an intermediate derived-data directory and should not be committed.
+The generator lives in `src/`: `cli.ts` parses arguments, `site.ts` orchestrates file IO and rendering, `template.ts` fills the HTML templates, `markdown.ts` handles front matter and markdown-it plugins, `content.ts` holds the content model and topics, and `dev.ts` is the live-reload dev server. Site configuration (title, URL) is in `config.ts`. Content, templates and static assets live under `site/`; generated output goes to `site/build/` and must not be committed.
 
 ## Build, Test, and Development Commands
-- `make build` — invokes `xcodebuild` in Release mode into `.build/`.
-- `make install PREFIX=/custom/path` — copies the Release binary into the specified `bin`.
-- `make clean` — removes `.build/` to ensure a fresh build.
-After a build, run `./.build/Build/Products/Release/balenet-gen --help` to smoke-test argument parsing. For ad-hoc generation, point the tool at a content root: `./.build/Build/Products/Release/balenet-gen -s ./example-site -o ./example-site/build`.
+- `npm run dev` — build with drafts, serve on localhost:8000, rebuild and reload on changes.
+- `npm run build` — render `site/` into `site/build/`.
+- `npm test` — run the `node:test` suites in `test/`.
+- `npm run typecheck` — run `tsc` (no emit).
+- `npm run deploy` — build and push `site/build/` to `gh-pages`.
+
+Node runs the `.ts` files directly; there is no compile step.
 
 ## Coding Style & Naming Conventions
-Use 4-space indentation and keep lines under ~120 characters. Follow Swift API Design Guidelines: `UpperCamelCase` for types (`StaticSite`), `lowerCamelCase` for functions and properties (`generateHomepage`). Group related helpers with `extension` blocks when adding behavior. Prefer explicit `guard` or `switch` over implicit optionals to keep failure paths obvious. Any new string or HTML templates belong in `Template.swift` or a dedicated helper rather than inline literals.
+Use 4-space indentation and keep lines under ~120 characters. `PascalCase` for types and classes, `camelCase` for functions and variables. Only erasable TypeScript syntax is allowed (no `enum`, `namespace` or parameter properties), and relative imports include the `.ts` extension. HTML markup belongs in `site/templates/` or `template.ts`, not scattered through other modules.
 
-## Tagging & Content Metadata
-Front matter supports a comma-separated `tags` key (e.g. `tags: work, software`). Keep tag names short and meaningful—the generator normalises them into `/tags/<slug>/` routes, surfaces them on the home page, each post, and exposes a tag index under `/tags/`.
+## Content Metadata
+Front matter is `key: value` lines between `---` fences. Posts need `title` and `date` (YYYY-MM-DD) and may have a comma-separated `topics` list, which becomes `/topics/<slug>/` pages. Projects need `title`, `order` and `image`. `draft: true` keeps an item out of published builds.
 
 ## Testing Guidelines
-There is no XCTest target yet; changes are validated by running the generator against real content. Before opening a PR, execute `make build` and render a sample tree (for example `./.build/Build/Products/Release/balenet-gen -s ../balenet-content -o build`) to catch regressions in parsing or HTML output. When adding automated tests, scaffold an XCTest target under `balenet-genTests` and mirror content fixtures inside a `Fixtures/` folder so they can be reused in future cases.
-
-## Commit & Pull Request Guidelines
-Use short, imperative commit messages (`Add homepage pagination`) similar to the existing history. Keep unrelated changes in separate commits. PRs should state the user-visible effect, reference any issue, and enumerate manual verification steps (commands run, sample source/output paths). Attach screenshots only when the generated HTML changes layout or styling.
+Run `npm run typecheck && npm test` before committing. End-to-end tests build into a temp directory; add fixture content under `Fixtures/` rather than depending on specific posts in `site/` where possible.

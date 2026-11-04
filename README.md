@@ -1,61 +1,65 @@
-A Swift static-site generator for my personal website, www.balenet.com.
+A static-site generator for my personal website, www.balenet.com, written in TypeScript and run directly by Node (no build step).
 
 ## Layout
 
 ```
-balenet-gen/          # Swift generator sources (TemplateEngine, StaticSite, etc.)
+src/                  # Generator sources (cli, site, template, markdown, dev server)
+test/                 # node:test suites
 site/                 # Live site content, templates, static assets, build output
 ├── content/          # Markdown posts and pages
 ├── static/           # CSS, images, fonts… copied verbatim
-├── templates/        # Runtime-loaded HTML templates used by TemplateEngine
+├── templates/        # HTML templates with {{placeholders}}
 └── build/            # Generated HTML (gitignored)
-scripts/              # Helper scripts (test.sh, publish.sh)
+Fixtures/basic-site/  # Minimal site used by the tests
+scripts/publish.sh    # Pushes site/build/ to the gh-pages branch
 ```
 
-Templates are pure HTML with `{{placeholders}}` that the generator replaces at runtime. Because they live under `site/templates`, the version used for the live site and for local development is always in sync.
+## Commands
 
-## Make Targets
+Requires Node 22.18 or newer.
 
 ```
-make build     # Compile the Swift generator into .build/…/balenet-gen
-make render    # Build + render the real site into site/build/
-make serve     # Render then serve site/build/ via python3 -m http.server
-make test      # Run the end-to-end test script against site/
-make publish   # Render and push site/build/ to the gh-pages branch for GitHub Pages
-make clean     # Remove .build/
-make clean-site# Remove site/build/
+npm install        # Install dependencies (once)
+npm run dev        # Build with drafts, serve on localhost:8000, live reload on changes
+npm run build      # Render site/ into site/build/
+npm test           # Run the tests
+npm run typecheck  # Type-check with tsc
+npm run deploy     # Build and push site/build/ to the gh-pages branch
+npm run clean      # Remove site/build/
 ```
+
+`npm run dev` accepts `-- --port <n>`, `-- --no-drafts` and `-- --no-open`.
+
+## Drafts
+
+Add `draft: true` to a post's or project's front matter to keep it out of the published site. `npm run dev` shows drafts with a banner; `npm run build` and `npm run deploy` skip them entirely.
 
 ## GitHub Pages Publishing
 
-`make publish` compiles the generator, renders the site into `site/build/`, and pushes that directory to the `gh-pages` branch using a temporary git worktree.
+Pushing to `main` runs `.github/workflows/publish.yml`, which installs dependencies, runs the tests and calls `npm run deploy`. That renders the site into `site/build/` and pushes it to the `gh-pages` branch using a temporary git worktree.
 
-Before running it the first time:
+Before the first publish:
 
-1. Enable GitHub Pages for this repository, selecting the `gh-pages` branch and the root folder. Pages will create the initial branch if it doesn’t exist.
-2. If you use a custom domain, create or update `site/static/CNAME` with the domain so that every publish keeps the mapping.
+1. Enable GitHub Pages for this repository, selecting the `gh-pages` branch and the root folder.
+2. If you use a custom domain, keep it in `site/static/CNAME` so every publish preserves the mapping.
 
-With that in place:
-
-```
-make publish
-```
-
-The script will reuse the existing branch (creating it on demand), commit the rendered files, and push them to origin. You can override the branch or commit message without editing the script:
+You can override the branch or commit message:
 
 ```
 GITHUB_PAGES_BRANCH=production-pages \
 GITHUB_PAGES_COMMIT_MESSAGE="Publish site for launch" \
-make publish
+npm run deploy
 ```
 
 ## Command-line Usage
 
 ```
-USAGE: balenet-gen [--source <source>] [--output <output>]
+USAGE: node src/cli.ts [--source <source>] [--output <output>] [--templates <dir>] [--drafts]
 
 OPTIONS:
-  -s, --source <source>   Source directory containing content (defaults to current directory)
-  -o, --output <output>   Output directory for generated site (default: build)
-  -h, --help              Show help information.
+  -s, --source <source>     Source directory containing content (default: current directory)
+  -o, --output <output>     Output directory, relative to source (default: build)
+  -t, --templates <dir>     Template directory, relative to source (default: <source>/templates)
+      --drafts              Include items marked 'draft: true' in their front matter
+  -h, --help                Show help information.
 ```

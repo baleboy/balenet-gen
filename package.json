@@ -1,0 +1,29 @@
+{
+  "name": "balenet-gen",
+  "version": "2.0.0",
+  "description": "Static site generator for www.balenet.com",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "bin": {
+    "balenet-gen": "src/cli.ts"
+  },
+  "scripts": {
+    "build": "node src/cli.ts --source site --output build",
+    "dev": "node src/dev.ts",
+    "test": "node --test",
+    "typecheck": "tsc",
+    "deploy": "npm run build && ./scripts/publish.sh",
+    "clean": "rm -rf site/build"
+  },
+  "dependencies": {
+    "markdown-it": "^15.0.3"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.2.0",
+    "@types/node": "^24.19.2",
+    "typescript": "^7.0.2"
+  }
+}

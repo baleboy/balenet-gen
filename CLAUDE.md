@@ -4,178 +4,68 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-balenet-gen is a static site generator written in Swift for generating www.balenet.com. It converts Markdown files with front matter into HTML pages using the Ink parser library by John Sundell.
+balenet-gen is a static site generator written in TypeScript (Node) for generating www.balenet.com. It converts Markdown files with front matter into HTML pages using markdown-it.
 
-## Building and Running
+## Commands
 
-This is an Xcode-based Swift project.
-
-### Prerequisites
-
-Ensure xcode-select points to Xcode.app (not Command Line Tools):
+Requires Node 22.18+ (Node runs the `.ts` sources directly via type stripping; there is no compile step).
 
 ```bash
-# Check current setting
-xcode-select -p
-
-# If it shows /Library/Developer/CommandLineTools, point it to Xcode
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+npm install          # once
+npm run dev          # build with drafts, serve on http://localhost:8000, rebuild + live reload on changes
+npm run build        # render site/ into site/build/ (drafts excluded)
+npm test             # node:test suites in test/
+npm run typecheck    # tsc --noEmit
+npm run deploy       # build, then push site/build/ to the gh-pages branch (scripts/publish.sh)
+npm run clean        # remove site/build/
 ```
 
-### Build and Run
+`npm run dev` options: `npm run dev -- --port 3000 --no-drafts --no-open`.
 
-Build and run using Xcode or command line:
+CLI: `node src/cli.ts --source <dir> --output <dir relative to source> [--templates <dir>] [--drafts]`.
 
-```bash
-# Build in Xcode (Cmd+B) or via command line
-xcodebuild -project balenet-gen.xcodeproj -scheme balenet-gen build
-
-# Run the generator
-./balenet-gen --source <content-directory> --output <build-directory>
-
-# Default usage (source is current directory, output is ./build)
-./balenet-gen
-```
-
-### Installing System-Wide
-
-Use the Makefile to build and install:
-
-```bash
-# Build the project
-make
-
-# Build and install to /usr/local/bin (requires sudo)
-make install
-
-# Install to custom location
-make install PREFIX=~/.local
-
-# Uninstall
-make uninstall
-
-# Clean build artifacts
-make clean
-```
-
-After installation, run `balenet-gen` from anywhere without the `./` prefix.
-
-## Development Workflow
-
-### Watch Mode (Auto-rebuild on Changes)
-
-Use `fswatch` to automatically rebuild when content changes:
-
-```bash
-# Install fswatch (if not already installed)
-brew install fswatch
-
-# Watch content and static directories, rebuild on changes
-fswatch -o content/ static/ | xargs -n1 -I{} ./balenet-gen --source . --output build
-```
-
-Alternative using a script (`watch.sh`):
-```bash
-#!/bin/bash
-echo "Watching for changes..."
-fswatch -o content/ static/ | while read num; do
-    echo "Changes detected, rebuilding..."
-    ./balenet-gen --source . --output build
-    echo "Build complete!"
-done
-```
+Because type stripping only erases types, avoid TypeScript-only runtime syntax (`enum`, `namespace`, parameter properties); `erasableSyntaxOnly` in tsconfig enforces this. Relative imports use the `.ts` extension.
 
 ## Architecture
 
-### Core Components
+- **src/cli.ts** — argument parsing (`node:util` parseArgs), entry point.
+- **src/site.ts** — `StaticSite.build()`: deletes the build dir, copies `static/`, generates posts and projects, homepage, topic pages, projects page, about page and `sitemap.xml`.
+- **src/content.ts** — `ContentItem` model (posts and projects share one shape), type inference, topics (slug, display name, hash-derived color class).
+- **src/markdown.ts** — front matter parsing and markdown-it with two plugins: YouTube `#embed` links become iframes, and image-only paragraphs render without `<p>`.
+- **src/template.ts** — `TemplateEngine`: fills `{{placeholder}}` HTML templates from `site/templates/`.
+- **src/dev.ts** — dev server: runs the CLI in a child process on each change (so src/ edits apply too), serves `site/build/` and pushes reloads over server-sent events. The reload script is injected at serve time only, never written to disk.
+- **src/config.ts** — site title and URL.
 
-**StaticSite** (StaticSite.swift:11) - Main generator orchestrator
-- Coordinates the entire site generation process
-- Manages file system operations (copy static files, create directories)
-- Uses Ink parser with custom modifiers for Markdown processing
-- Generates four types of pages: homepage, projects page, about page, and individual content items
+### Content Processing
 
-**ContentItem** (ContentItem.swift:32) - Unified content model
-- Represents both posts and projects using a single struct with optional fields
-- Type is inferred from metadata: `date` indicates a post, `order` + `image` indicates a project
-- Factory methods: `ContentItem.post()` and `ContentItem.project()`
-- Posts have: title, date, path, html
-- Projects have: title, order, path, headerImage, html
-
-**TemplateEngine** (Template.swift:10) - HTML generation
-- Generates all HTML output using string interpolation
-- Provides: `renderHomePage()`, `renderProjectsPage()`, `renderPost()`, `renderProject()`, `renderPage()`
-- Contains common header/footer with site navigation and styling
-
-**BuildCommand** (BuildCommand.swift:4) - CLI entry point
-- Uses Swift ArgumentParser for command-line interface
-- Accepts `--source` and `--output` options
-- Entry point in main.swift:13 calls `BuildCommand.main()`
-
-### Content Processing Flow
-
-1. **StaticSite.build()** orchestrates the process (StaticSite.swift:50):
-   - Deletes existing build directory
-   - Copies static files from `static/` to build output
-   - Generates homepage (sorted posts by date descending)
-   - Generates projects page (sorted by order descending)
-   - Generates about page from `content/about.md`
-
-2. **generateItemsFromDirectory()** (StaticSite.swift:131):
-   - Scans `content/posts/` or `content/work/` subdirectories
-   - For each folder: processes Markdown, copies assets
-   - Returns list of ContentItem objects for index generation
-
-3. **parseItem()** (StaticSite.swift:180):
-   - Parses Markdown with Ink parser
-   - Infers type from metadata using `ContentItemType.infer()`
-   - Creates appropriate ContentItem (post or project)
-
-4. **generateHtmlFromMarkdown()** (StaticSite.swift:202):
-   - Calls parseItem() to get ContentItem
-   - Uses Template to generate HTML based on type
-   - Writes `index.html` to appropriate folder in build directory
+Each subfolder of `content/posts/` or `content/work/` is one item. All `.md` files in it are parsed; every other entry (images, subfolders) is copied next to the generated `index.html`. Drafts are detected before anything is written, so a skipped draft leaves nothing in the build.
 
 ### Directory Structure
 
-Expected source directory layout:
 ```
-source/
+site/
 ├── static/          # CSS, images, favicon (copied as-is to build/)
-├── content/
-│   ├── about.md     # About page content
-│   ├── posts/       # Blog posts
-│   │   └── post-folder/
-│   │       ├── index.md    # Post markdown with date metadata
-│   │       └── [assets]    # Post-specific images/files
-│   └── work/        # Projects
-│       └── project-folder/
-│           ├── index.md    # Project markdown with order/image metadata
-│           └── [assets]    # Project-specific images/files
+├── templates/       # HTML templates with {{placeholders}}
+└── content/
+    ├── about.md
+    ├── posts/<folder>/<any>.md + assets
+    └── work/<folder>/<any>.md + assets
 ```
 
 ### Metadata Format
 
-**Posts** require:
-- `title`: Post title
-- `date`: YYYY-MM-DD format
+Front matter is simple `key: value` lines between `---` fences (plain strings, not YAML).
 
-**Projects** require:
-- `title`: Project title
-- `order`: Integer for sorting (higher = appears first)
-- `image`: Filename of header image (relative to project folder)
+**Posts** require `title` and `date` (YYYY-MM-DD); optional `topics` (comma-separated).
 
-**Drafts** (posts or projects): add `draft: true` to the front matter. Drafts are skipped by default (no page, no index/topic/sitemap entry, no assets copied). Pass `--drafts` to include them. `make serve` includes drafts by default (`make serve DRAFTS=` to exclude); `make render`/`publish` never do unless `DRAFTS=1` is set.
+**Projects** require `title`, `order` (integer, higher first) and `image` (header image filename in the project folder).
 
-### Custom Ink Modifiers
+**Drafts** (posts or projects): add `draft: true`. Drafts are skipped by default (no page, no index/topic/sitemap entry, no assets copied). `npm run dev` includes them, with a banner on the page and a badge in lists; `npm run build`/`deploy` never do. Use `--drafts` on the CLI to include them explicitly.
 
-**youtubeEmbed()** (Ink+Modifiers.swift:12) - Converts YouTube links ending with `#embed` into embedded iframe players. Example: `[Video](https://youtube.com/watch?v=ID#embed)`
+## Testing
 
-## Configuration
+`test/build.test.ts` builds `site/` and a copy of `Fixtures/basic-site/` into a temp directory and checks the output (including draft handling). `test/markdown.test.ts` covers front matter, the markdown plugins and topics.
 
-**Config.swift** contains hardcoded site configuration:
-- Site title
-- Homepage intro text
-- Projects page intro text
+## Deployment
 
-To modify site text, edit Config.swift constants.
+`.github/workflows/publish.yml` runs on push to `main` on `ubuntu-latest`: `npm ci`, typecheck, tests, then `npm run deploy`.
