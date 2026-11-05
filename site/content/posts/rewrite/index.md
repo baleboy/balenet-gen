@@ -1,5 +1,5 @@
 ---
-title: Claude rewrote my static generator in Typescript, and I barely had time for a coffee
+title: Claude rewrote my static generator in Typescript while I made coffee
 date:  2026-11-05
 topics: AI, devlog
 ---

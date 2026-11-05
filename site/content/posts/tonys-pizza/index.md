@@ -1,7 +1,7 @@
 ---
 title:  Tony's Pizza Napoletana, San Francisco
 date:  2026-10-11
-topics: pizza
+topics: pizza, travel
 ---
 
 [Tony Gemignani](https://tonygemignani.com) is an American pizzaiolo and 13 times world pizza champion, and also the author of ["The Pizza Bible"](https://a.co/d/0ay186ad), my favorite book about pizza making. A few years ago he opened a restaurant in the North Beach district (i.e. the Italian quarter) of San Francisco and since I was in San Francisco for work, I had to try it. The restaurant is [Tony's Pizza Napoletana](https://tonyspizzanapoletana.com).

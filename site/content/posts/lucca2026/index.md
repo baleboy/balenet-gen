@@ -1,5 +1,5 @@
 ---
-title: Nerd Pride: my trip to Lucca Comics & Games 2026
+title: Nerd Pride: my trip trip trip to Lucca Comics & Games 2026
 date:  2026-11-04
 topics: travel, hobbies
 draft: true
